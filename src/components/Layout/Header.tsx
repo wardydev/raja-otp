@@ -17,7 +17,7 @@ const Header = () => {
             <span className="text-xs mr-1 hidden md:block lg:block">Rp</span>{" "}
             <span className="hidden md:block lg:block">100.000.000.00</span>
           </p>
-          <span className="h-12 w-[1.5px] bg-light hidden md:block lg:block"></span>
+          <span className="h-12 w-[1.5px] bg-[#ffffff41] hidden md:block lg:block"></span>
           <div className="flex items-center space-x-0 lg:space-x-3 hover:bg-light p-2 lg:px-5 rounded-md hover:bg-opacity-20 hover:cursor-pointer">
             <img
               src="https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg"

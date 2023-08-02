@@ -1,3 +1,4 @@
 import Layout from "./Layout";
+import CardContiner from "./CardContiner";
 
-export { Layout };
+export { Layout, CardContiner };

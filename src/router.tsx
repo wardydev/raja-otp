@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import {
   ApiDeveloper,
   Dashboard,
+  DepositSaldo,
   OrderProduk,
   RiwayatTransaksi,
 } from "./pages";
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/history",
     element: <RiwayatTransaksi />,
+  },
+  {
+    path: "/deposit",
+    element: <DepositSaldo />,
   },
   {
     path: "/api-developer",

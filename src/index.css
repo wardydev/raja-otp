@@ -4,6 +4,45 @@
 
 
 
+.menuItem {
+  position: relative;
+}
+.menuItem.active::before {
+  content: url("/public/icons/iKing1.svg");
+  position: absolute;
+  top: -18px;
+  right: -13px;
+}
+.menuItem.active::after {
+  content: '';
+  position: absolute;
+  bottom: -84px;
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 80px solid #fff;
+  transform: rotate(0);
+}
+.card-afiliasi {
+  position: relative;
+}
+.card-afiliasi::before {
+  content: url("/public/icons/IKing2.svg");
+  position: absolute;
+  top: 30px;
+  right: 10px;
+}
+.tab-item {
+  position: relative;
+}
+.tab-item.active::before {
+  content: url("/public/icons/IKing3.svg");
+  position: absolute;
+  top: -16px;
+  left: 4px;
+}
+
 @media only screen and (min-width: 640px) {
   .child-container {
     height: 200px;
