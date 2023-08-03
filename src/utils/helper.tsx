@@ -25,9 +25,16 @@ const DummyDataTable = [
   },
   {
     tanggal: "2023-08-02",
-    isi: "Ini adalah isi pesan kedua",
+    isi: "Ini adalah isi pesan kedua Ini adalah isi pesan kedua Ini adalah isi pesan kedua Ini adalah isi pesan kedua pesan kedua Ini adalah isi pesan kedua Ini adalah isi pesan kedua ",
     status: "Tidak Aktif",
   },
 ];
 
-export { itemsTabbar, DummyDataTable };
+const options = [
+  { label: "XL Axiata", value: "Axiata" },
+  { label: "Gojek", value: "Gojek" },
+  { label: "Gocar", value: "Gocar" },
+  { label: "Tokopedia", value: "tokopedia" },
+];
+
+export { itemsTabbar, DummyDataTable, options };

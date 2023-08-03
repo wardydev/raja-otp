@@ -12,10 +12,12 @@ const Dashboard = () => {
           <TabsBar />
         </div>
       </div>
-      <CardContiner>
-        <h2 className="text-lg font-semibold text-dark">Informasi Terkini</h2>
-        <Table />
-      </CardContiner>
+      <div className="mt-8">
+        <CardContiner>
+          <h2 className="text-lg font-semibold text-dark">Informasi Terkini</h2>
+          <Table />
+        </CardContiner>
+      </div>
     </Layout>
   );
 };
