@@ -37,7 +37,7 @@ const Menus = () => {
   const location = useLocation();
 
   return (
-    <div className="bg-gray-800 text-white px-10 pt-4">
+    <div className="bg-gray-800 text-white pt-4">
       <div className="flex items-center space-x-4">
         {tabitems.map((tabItem) => (
           <Link

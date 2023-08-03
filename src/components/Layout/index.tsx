@@ -1,13 +1,15 @@
 import { ReactNode } from "react";
 import Header from "./Header";
 import Menus from "./Menus";
+import { CardWallet } from "..";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="min-h-screen w-full bg-gradient-to-l from-primary-100 to-secondary-100 overflow-y-hidden">
+    <div className="container min-h-screen w-full bg-gradient-to-l from-primary-100 to-secondary-100 overflow-y-hidden">
       <Header />
-      <div className="hidden md:block lg:block">
+      <div className="hidden md:block lg:flex items-center justify-between px-10">
         <Menus />
+        <CardWallet />
       </div>
       <p className="text-3xl font-semibold text-light flex items-start justify-center my-4 lg:hidden md:hidden">
         <span className="text-xs mr-1">Rp</span>{" "}
