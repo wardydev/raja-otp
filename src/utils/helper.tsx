@@ -37,4 +37,23 @@ const options = [
   { label: "Tokopedia", value: "tokopedia" },
 ];
 
-export { itemsTabbar, DummyDataTable, options };
+function enterFullscreen() {
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  }
+}
+
+function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  }
+}
+
+export {
+  itemsTabbar,
+  DummyDataTable,
+  options,
+  enterFullscreen,
+  exitFullscreen,
+};

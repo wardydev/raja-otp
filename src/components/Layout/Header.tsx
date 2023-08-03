@@ -1,10 +1,23 @@
+import { useState } from "react";
 import Ilogo from "/ILogo.svg";
 import { Link } from "react-router-dom";
 import IHamburger from "/icons/IHamburgerMenu.svg";
 import IResize from "/icons/IResize.svg";
 import ISettings from "/icons/ISettings.svg";
+import { enterFullscreen, exitFullscreen } from "../../utils/helper";
 
 const Header = () => {
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+
+  const toggleFullscreen = () => {
+    if (!isFullscreen) {
+      enterFullscreen();
+    } else {
+      exitFullscreen();
+    }
+    setIsFullscreen(!isFullscreen);
+  };
+
   return (
     <header className="px-4 md:px-10 lg:px-10 py-4">
       <div className="flex justify-between items-center">
@@ -16,11 +29,12 @@ const Header = () => {
         </Link>
         <div className="flex items-center space-x-4">
           <div className="hidden md:flex lg:flex items-center space-x-4">
-            <img
-              src={IResize}
-              alt="resize-icons"
-              className="hover:opacity-50 cursor-pointer"
-            />
+            <div
+              className="cursor-pointer hover:bg-[#ffffff4a] rounded p-2"
+              onClick={toggleFullscreen}
+            >
+              <img src={IResize} alt="resize-icons" />
+            </div>
             <img
               src={ISettings}
               alt="settings-icon"
