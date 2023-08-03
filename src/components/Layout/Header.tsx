@@ -1,6 +1,8 @@
 import Ilogo from "/ILogo.svg";
 import { Link } from "react-router-dom";
 import IHamburger from "/icons/IHamburgerMenu.svg";
+import IResize from "/icons/IResize.svg";
+import ISettings from "/icons/ISettings.svg";
 
 const Header = () => {
   return (
@@ -13,21 +15,29 @@ const Header = () => {
           <img src={Ilogo} alt="Logo Rajaotp" width={150} />
         </Link>
         <div className="flex items-center space-x-4">
-          <p className="text-2xl font-semibold text-light flex items-start">
-            <span className="text-xs mr-1 hidden md:block lg:block">Rp</span>{" "}
-            <span className="hidden md:block lg:block">100.000.000.00</span>
-          </p>
+          <div className="hidden md:flex lg:flex items-center space-x-4">
+            <img
+              src={IResize}
+              alt="resize-icons"
+              className="hover:opacity-50 cursor-pointer"
+            />
+            <img
+              src={ISettings}
+              alt="settings-icon"
+              className="hover:opacity-50 cursor-pointer"
+            />
+          </div>
           <span className="h-12 w-[1.5px] bg-[#ffffff41] hidden md:block lg:block"></span>
           <div className="flex items-center space-x-0 lg:space-x-3 hover:bg-light p-2 lg:px-5 rounded-md hover:bg-opacity-20 hover:cursor-pointer">
-            <img
-              src="https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg"
-              alt="profile"
-              className="rounded-full"
-              width={50}
-            />
             <h5 className="font-medium text-light hidden md:block lg:block">
               Wardi
             </h5>
+            <img
+              src="https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg"
+              alt="profile"
+              className="rounded-full ml-4"
+              width={50}
+            />
           </div>
         </div>
       </div>
