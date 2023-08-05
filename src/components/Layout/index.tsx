@@ -1,12 +1,20 @@
-import { ReactNode } from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import Menus from "./Menus";
 import { CardWallet } from "..";
+import SidebarDrawer from "./SidebarDrawer";
+import { ILayout } from "../../utils/interfaces";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const Layout: React.FC<ILayout> = ({ children }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const toggleSidebarDrawer = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div className="container min-h-screen w-full bg-gradient-to-l from-primary-100 to-secondary-100 overflow-y-hidden">
-      <Header />
+      <Header handleDrawer={toggleSidebarDrawer} />
       <div className="hidden md:block lg:flex items-center justify-between px-10">
         <Menus />
         <CardWallet />
@@ -21,6 +29,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
           <p>&copy; 2023 - RAJAOTP</p>
         </div>
       </div>
+      <SidebarDrawer isOpen={isOpen} handleDrawer={toggleSidebarDrawer} />
     </div>
   );
 };

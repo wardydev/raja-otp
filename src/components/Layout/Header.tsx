@@ -5,9 +5,12 @@ import IHamburger from "/icons/IHamburgerMenu.svg";
 import IResize from "/icons/IResize.svg";
 import ISettings from "/icons/ISettings.svg";
 import { enterFullscreen, exitFullscreen } from "../../utils/helper";
+import CardProfile from "./CardProfile";
+import { IHeader } from "../../utils/interfaces";
 
-const Header = () => {
+const Header: React.FC<IHeader> = ({ handleDrawer }) => {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [isShowCardProfile, setIsShowCardProfile] = useState<boolean>(false);
 
   const toggleFullscreen = () => {
     if (!isFullscreen) {
@@ -18,10 +21,16 @@ const Header = () => {
     setIsFullscreen(!isFullscreen);
   };
 
+  const toggleShowCardProfile = () => {
+    setIsShowCardProfile(!isShowCardProfile);
+  };
   return (
     <header className="px-4 md:px-10 lg:px-10 py-4">
       <div className="flex justify-between items-center">
-        <div className="hover:bg-light p-2 rounded-md hover:bg-opacity-20 hover:cursor-pointer block md:hidden lg:hidden">
+        <div
+          className="hover:bg-light p-2 rounded-md hover:bg-opacity-20 hover:cursor-pointer block md:hidden lg:hidden"
+          onClick={handleDrawer}
+        >
           <img src={IHamburger} alt="hamburger menu" />
         </div>
         <Link to="/">
@@ -42,16 +51,22 @@ const Header = () => {
             />
           </div>
           <span className="h-12 w-[1.5px] bg-[#ffffff41] hidden md:block lg:block"></span>
-          <div className="flex items-center space-x-0 lg:space-x-3 hover:bg-light p-2 lg:px-5 rounded-md hover:bg-opacity-20 hover:cursor-pointer">
-            <h5 className="font-medium text-light hidden md:block lg:block">
-              Wardi
-            </h5>
-            <img
-              src="https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg"
-              alt="profile"
-              className="rounded-full ml-4"
-              width={50}
-            />
+          <div className="relative">
+            <div
+              className="flex items-center space-x-0 lg:space-x-3 hover:bg-light p-2 lg:px-5 rounded-md hover:bg-opacity-20 hover:cursor-pointer"
+              onClick={toggleShowCardProfile}
+            >
+              <h5 className="font-medium text-light hidden md:block lg:block">
+                Wardi
+              </h5>
+              <img
+                src="https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg"
+                alt="profile"
+                className="rounded-full ml-4"
+                width={50}
+              />
+            </div>
+            {isShowCardProfile && <CardProfile />}
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import {
+  Button,
   CardContiner,
   Dropdown,
   DropdownInput,
@@ -27,6 +28,9 @@ const OrderProduk = () => {
             options={options}
             defaultValue="Pilih layanan"
           />
+          <div className="mt-3">
+            <Button title="Order Nomor" />
+          </div>
         </CardContiner>
         <div className="col-span-3">
           <CardContiner>
