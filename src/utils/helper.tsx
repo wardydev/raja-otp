@@ -17,16 +17,18 @@ const itemsTabbar = [
   },
 ];
 
-const DummyDataTable = [
+const DummyDataTableOrder = [
   {
-    tanggal: "2023-08-01",
-    isi: "Ini adalah isi pesan pertama",
-    status: "Aktif",
+    virtualNumber: 6287615241625,
+    message: "Ini adalah kode OTP anda Ini adalah kode OTP",
+    otp: 237834,
+    remainingTime: 19.7,
   },
   {
-    tanggal: "2023-08-02",
-    isi: "Ini adalah isi pesan kedua Ini adalah isi pesan kedua Ini adalah isi pesan kedua Ini adalah isi pesan kedua pesan kedua Ini adalah isi pesan kedua Ini adalah isi pesan kedua ",
-    status: "Tidak Aktif",
+    virtualNumber: 6287629341610,
+    message: "Ini adalah kode OTP anda Ini adalah kode OTP",
+    otp: 67342,
+    remainingTime: 19.7,
   },
 ];
 
@@ -50,10 +52,44 @@ function exitFullscreen() {
   }
 }
 
+const menuNavItems = [
+  {
+    title: "Dashboard",
+    path: "/",
+    iconActive: "/icons/IDashboard.svg",
+    icon: "/icons/IDashboardLight.svg",
+  },
+  {
+    title: "Order Produk",
+    path: "/order",
+    iconActive: "/icons/IOrder.svg",
+    icon: "/icons/IOrderLight.svg",
+  },
+  {
+    title: "Riwayat Transaksi",
+    path: "/history",
+    iconActive: "/icons/IHistory.svg",
+    icon: "/icons/IHistoryLight.svg",
+  },
+  {
+    title: "Deposit Saldo",
+    path: "/deposit",
+    iconActive: "/icons/IDeposit.svg",
+    icon: "/icons/IDepositLight.svg",
+  },
+  {
+    title: "API Developer",
+    path: "/api-developer",
+    iconActive: "/icons/IApiDevs.svg",
+    icon: "/icons/IApiDevsLight.svg",
+  },
+];
+
 export {
   itemsTabbar,
-  DummyDataTable,
+  DummyDataTableOrder,
   options,
   enterFullscreen,
   exitFullscreen,
+  menuNavItems,
 };

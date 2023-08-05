@@ -1,37 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-
-const tabitems = [
-  {
-    title: "Dashboard",
-    path: "/",
-    iconActive: "/icons/IDashboard.svg",
-    icon: "/icons/IDashboardLight.svg",
-  },
-  {
-    title: "Order Produk",
-    path: "/order",
-    iconActive: "/icons/IOrder.svg",
-    icon: "/icons/IOrderLight.svg",
-  },
-  {
-    title: "Riwayat Transaksi",
-    path: "/history",
-    iconActive: "/icons/IHistory.svg",
-    icon: "/icons/IHistoryLight.svg",
-  },
-  {
-    title: "Deposit Saldo",
-    path: "/deposit",
-    iconActive: "/icons/IDeposit.svg",
-    icon: "/icons/IDepositLight.svg",
-  },
-  {
-    title: "API Developer",
-    path: "/api-developer",
-    iconActive: "/icons/IApiDevs.svg",
-    icon: "/icons/IApiDevsLight.svg",
-  },
-];
+import { menuNavItems } from "../../utils/helper";
 
 const Menus = () => {
   const location = useLocation();
@@ -39,7 +7,7 @@ const Menus = () => {
   return (
     <div className="bg-gray-800 text-white pt-4">
       <div className="flex items-center space-x-4">
-        {tabitems.map((tabItem) => (
+        {menuNavItems.map((tabItem) => (
           <Link
             key={tabItem.path}
             to={tabItem.path}
