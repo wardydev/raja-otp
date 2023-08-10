@@ -1,4 +1,4 @@
-import { DummyDataTableOrder } from "../../utils/helper";
+import { DummyDataInformation } from "../../utils/helper";
 
 const Table = () => {
   return (
@@ -27,15 +27,16 @@ const Table = () => {
           </tr>
         </thead>
         <tbody className="">
-          {DummyDataTableOrder.map((item, index) => (
+          {DummyDataInformation.map((item, index) => (
             <tr key={index}>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">
-                  {item.virtualNumber}
-                </div>
+                <div className="text-sm text-gray-900">{item.date}</div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">{item.message}</div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <p>selesai</p>
               </td>
             </tr>
           ))}
