@@ -1,4 +1,3 @@
-import React from "react";
 import { Button, CardContiner, Layout } from "../../components";
 import Table from "./Table";
 import ISearch from "/icons/ISearch.svg";
