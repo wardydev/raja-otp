@@ -32,6 +32,54 @@ const DummyDataTableOrder = [
   },
 ];
 
+const DummyDataInformation = [
+  {
+    date: "02 05 2023",
+    message:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+    status: true,
+  },
+  {
+    date: "02 07 2023",
+    message:
+      "elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ",
+    status: true,
+  },
+  {
+    date: "24 05 2023",
+    message:
+      "veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia ",
+    status: true,
+  },
+  {
+    date: "12 05 2023",
+    message:
+      "But I must explain to you how all this mistaken idea of denouncing pleasure and praising ",
+    status: false,
+  },
+];
+
+const DummyDataHistory = [
+  {
+    date: "02 05 2023",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+    nominal: "Rp 12.000.00",
+  },
+  {
+    date: "24 05 2023",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+    nominal: "Rp 23.000.00",
+  },
+  {
+    date: "12 05 2023",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+    nominal: "Rp 23.000.00",
+  },
+];
+
 const options = [
   { label: "XL Axiata", value: "Axiata" },
   { label: "Gojek", value: "Gojek" },
@@ -92,4 +140,6 @@ export {
   enterFullscreen,
   exitFullscreen,
   menuNavItems,
+  DummyDataInformation,
+  DummyDataHistory,
 };
