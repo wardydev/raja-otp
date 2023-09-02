@@ -3,7 +3,9 @@ import {
   ApiDeveloper,
   Dashboard,
   DepositSaldo,
+  Login,
   OrderProduk,
+  Register,
   RiwayatTransaksi,
 } from "./pages";
 
@@ -27,6 +29,14 @@ const router = createBrowserRouter([
   {
     path: "/api-developer",
     element: <ApiDeveloper />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ]);
 
