@@ -79,6 +79,17 @@
   top: 0;
   right: 450px;
 }
+.container-sign {
+  position: relative;
+}
+.container-sign::before {
+  content: url("/public/icons/IKing4.svg");
+  transform: scale(2);
+  position: absolute;
+  bottom: 20px;
+  left: 40px;
+  opacity: 0.6;
+}
 
 @media only screen and (min-width: 640px) {
   .child-container {
