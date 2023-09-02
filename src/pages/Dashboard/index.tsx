@@ -8,7 +8,7 @@ const Dashboard = () => {
     <Layout>
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols43 gap-x-0 lg:gap-x-6">
         <Card />
-        <div className="col-span-3 bg-[white] shadow-lg shadow-primary-100/10 rounded-xl">
+        <div className="col-span-3 bg-[white] shadow-lg shadow-primary-100/10 rounded-xl mt-12 lg:mt-0 md:mt-0">
           <TabsBar />
         </div>
       </div>
