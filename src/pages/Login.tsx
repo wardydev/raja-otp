@@ -1,40 +1,97 @@
-import { Link } from "react-router-dom";
-import { Button } from "../components";
+import { useState, ChangeEvent, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import { Alert, Button } from "../components";
 import Ilogo from "/ILogo.svg";
+import { usePostLoginMutation } from "../api/services/authApi";
+import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
+  const [input, setInput] = useState({ username: "", password: "" });
+  const [postLogin, result] = usePostLoginMutation();
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const [isAlert, setIsAlert] = useState<boolean>(false);
+
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setInput((prevState) => {
+      return {
+        ...prevState,
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
+
+  const handleSubmitLogin = async () => {
+    if (input.username === "" && input.password === "") {
+      return;
+    }
+    try {
+      const body = {
+        username: input.username,
+        password: input.password,
+      };
+      await postLogin(body);
+      input.username = "";
+      input.password = "";
+    } catch (err) {
+      console.log(err);
+      input.username = "";
+      input.password = "";
+    }
+  };
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      login(result?.data?.data.token);
+      if (!result?.data.success) {
+        navigate("/login");
+        setIsAlert(true);
+        setTimeout(() => {
+          setIsAlert(false);
+        }, 2000);
+      } else {
+        navigate("/");
+      }
+    }
+  }, [result]);
+
   return (
     <div className="container-sign min-h-screen bg-gradient-to-l from-primary-100 to-secondary-100 overflow-y-hidden max-w-full w-full flex flex-col lg:flex-row md:flex-row items-center justify-center space-x-0 lg:space-x-24 px-3 lg:px-0">
       <div className="bg-light p-8 w-full lg:w-1/4 rounded-2xl relative z-10 order-2 lg:order-1 mt-8 lg:mt-0 md:mt-0">
+        {isAlert && <Alert message={result?.data?.messages} types="danger" />}
         <h2 className="text-3xl font-medium mb-6 text-dark text-center border-b-4 border-primary-100 w-24 m-auto pb-1">
           Masuk
         </h2>
-        <form className="mb-4">
+        <div className="mb-4">
           <div className="mb-4">
             <input
               type="text"
               className="border border-[#e9e9e9] w-full py-3 px-2 rounded-lg focus:outline-none"
-              placeholder="No HP / Alamat Email"
+              placeholder="Username"
+              name="username"
+              value={input.username}
+              onChange={handleChangeInput}
+              required
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-6">
             <input
               type="password"
               className="border border-[#e9e9e9] w-full py-3 px-2 rounded-lg focus:outline-none"
               placeholder="Kata Sandi"
+              name="password"
+              value={input.password}
+              onChange={handleChangeInput}
+              required
             />
           </div>
-          <div className="mb-6">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox h-4 w-4 text-blue-500"
-              />
-              <span className="ml-2 text-gray-600">Remember Me</span>
-            </label>
-          </div>
-          <Button title="Masuk" />
-        </form>
+          <Button
+            title={result?.isLoading ? "Loading.." : "Masuk"}
+            handleButton={handleSubmitLogin}
+            isDisabled={input.username === "" || input.password === ""}
+          />
+        </div>
         <Link
           to="/"
           className="text-primary-100 font-medium mx-auto flex justify-center"
