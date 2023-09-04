@@ -8,23 +8,40 @@ import {
   Register,
   RiwayatTransaksi,
 } from "./pages";
+import ProtectedRoute from "./utils/protectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Dashboard />,
+    element: (
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/order",
-    element: <OrderProduk />,
+    element: (
+      <ProtectedRoute>
+        <OrderProduk />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/history",
-    element: <RiwayatTransaksi />,
+    element: (
+      <ProtectedRoute>
+        <RiwayatTransaksi />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/deposit",
-    element: <DepositSaldo />,
+    element: (
+      <ProtectedRoute>
+        <DepositSaldo />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/api-developer",
