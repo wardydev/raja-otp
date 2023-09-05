@@ -1,6 +1,21 @@
-import { DummyDataInformation } from "../../utils/helper";
+import { useState } from "react";
+import { useGetNewsQuery } from "../../api/services/homeApi";
+import { formatTimestamp } from "../../utils/functions";
+import { Pagination } from "../../components";
 
 const Table = () => {
+  const [page, setPage] = useState<number>(1);
+  const { data, isLoading, refetch } = useGetNewsQuery(page);
+
+  if (isLoading) {
+    return <h1 className="bg-[red]">LOADING</h1>;
+  }
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+    refetch();
+  };
+
   return (
     <div className="mt-4 overflow-x-auto">
       <table className="min-w-full">
@@ -27,21 +42,33 @@ const Table = () => {
           </tr>
         </thead>
         <tbody className="">
-          {DummyDataInformation.map((item, index) => (
-            <tr key={index}>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{item.date}</div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{item.message}</div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <p>selesai</p>
-              </td>
-            </tr>
-          ))}
+          {data?.data.data.map((item) => {
+            return (
+              <tr key={item.id}>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">
+                    {formatTimestamp(item.created_at)}
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div
+                    className="text-sm text-gray-900"
+                    dangerouslySetInnerHTML={{ __html: item.content }}
+                  ></div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <p>selesai</p>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
+      <Pagination
+        currentPage={data?.data.current_page ?? 1}
+        totalPages={data?.data.last_page ?? 1}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

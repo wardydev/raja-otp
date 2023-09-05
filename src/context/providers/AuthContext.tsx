@@ -7,6 +7,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 type AuthContextType = {
   isAuthenticated: boolean;
   login: (token: string) => void;
+  logout: () => void;
 };
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -19,8 +20,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(true);
+  };
+
   return (
-    <AuthContext.Provider value={{ login, isAuthenticated }}>
+    <AuthContext.Provider value={{ login, isAuthenticated, logout }}>
       {children}
     </AuthContext.Provider>
   );

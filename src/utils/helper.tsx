@@ -1,15 +1,65 @@
 const itemsTabbar = [
   {
     title: "FAQ OTP",
-    content: "lorem ipsum FAQ",
+    content: [
+      <li className="text-dark mb-1">
+        Anda dapat order banyak nomor sekaligus cukup dengan klik tombol Order
+        Nomor beberapa kali.
+      </li>,
+      <li className="text-dark mb-1">
+        Jika Anda membutuhkan 2 SMS atau lebih, Anda bisa menekan tombol Resend
+        saat SMS pertama sudah diterima.
+      </li>,
+      <li className="text-dark mb-1">
+        Apabila menurut Anda SMS yang diterima terlalu lama, Anda dapat
+        membatalkan orderan tersebut.
+      </li>,
+      <li className="text-dark mb-1">
+        Saldo Anda akan Dikembalikan apabila nomor telah dibatalkan (manual atau
+        otomatis dari sistem).
+      </li>,
+      <li className="text-dark mb-1">
+        Masa berlaku / aktif nomor yang dipesan hanya berlaku selama 20 menit.
+      </li>,
+    ],
   },
   {
     title: "Tutorial Cara Order OTP",
-    content: "lorem ipsum Tutorial Cara Order OTP",
+    content: [
+      <li className="text-dark mb-1">
+        Pilih menu Order Produk terlebih dahulu.
+      </li>,
+      <li className="text-dark mb-1">
+        Pilih Operator serta Layanan Aplikasi yang ingin digunakan.
+      </li>,
+      <li className="text-dark mb-1">
+        Selanjutnya pastikan bahwa Saldo anda mencukupi sesuai dengan harga
+        layanan.
+      </li>,
+      <li className="text-dark mb-1">
+        Apabila sudah merasa benar, maka klik tombol Order Nomor.
+      </li>,
+      <li className="text-dark mb-1">
+        Tunggu beberapa saat dan nomor akan muncul pada tabel dibawah form.
+      </li>,
+    ],
   },
   {
     title: "Tutorial Akses Laporan Transaksi",
-    content: "1. lorem ipsum Tutorial Akses Laporan Transaksi 2. asdfjasdf",
+    content: [
+      <li className="text-dark mb-1">
+        Klik tombol "Download Transaksi" terlebih dahulu.
+      </li>,
+      <li className="text-dark mb-1">
+        Pilih Tanggal Periode dan Jenis Data yang akan di download
+      </li>,
+      <li className="text-dark mb-1">
+        Klik tombol "Cari Data" untuk memulai mencari transaksi.
+      </li>,
+      <li className="text-dark mb-1">
+        Tunggu beberapa saat dan nanti akan muncul popup untuk mengunduh data.
+      </li>,
+    ],
   },
   {
     title: "Official Group Chat",

@@ -7,7 +7,7 @@ import {
 } from "./types";
 
 export const authApi = createApi({
-  reducerPath: "userApi",
+  reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
   }),

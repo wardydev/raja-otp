@@ -1,25 +1,29 @@
-import { useState } from "react";
-import Ilogo from "/ILogo.svg";
+import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
+
+import Ilogo from "/ILogo.svg";
 import IHamburger from "/icons/IHamburgerMenu.svg";
 import IResize from "/icons/IResize.svg";
 import ISettings from "/icons/ISettings.svg";
 import { enterFullscreen, exitFullscreen } from "../../utils/helper";
 import CardProfile from "./CardProfile";
 import { IHeader } from "../../utils/interfaces";
+import IKingAvatar from "/icons/IkingAvatar2.png";
+import { useGetMeQuery } from "../../api/services/userApi";
 
 const Header: React.FC<IHeader> = ({ handleDrawer }) => {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [isShowCardProfile, setIsShowCardProfile] = useState<boolean>(false);
+  const { data } = useGetMeQuery();
 
-  const toggleFullscreen = () => {
+  const toggleFullscreen = useCallback(() => {
     if (!isFullscreen) {
       enterFullscreen();
     } else {
       exitFullscreen();
     }
     setIsFullscreen(!isFullscreen);
-  };
+  }, [isFullscreen]);
 
   const toggleShowCardProfile = () => {
     setIsShowCardProfile(!isShowCardProfile);
@@ -56,11 +60,11 @@ const Header: React.FC<IHeader> = ({ handleDrawer }) => {
               className="flex items-center space-x-0 lg:space-x-3 hover:bg-light p-2 lg:px-5 rounded-md hover:bg-opacity-20 hover:cursor-pointer"
               onClick={toggleShowCardProfile}
             >
-              <h5 className="font-medium text-light hidden md:block lg:block">
-                Wardi
+              <h5 className="font-medium text-light hidden md:block lg:block capitalize">
+                {data?.data.username}
               </h5>
               <img
-                src="https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg"
+                src={IKingAvatar}
                 alt="profile"
                 className="rounded-full ml-4"
                 width={50}

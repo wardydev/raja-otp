@@ -5,6 +5,8 @@ import DropdownInput from "./DropdownInput";
 import CardWallet from "./Layout/CardWallet";
 import Button from "./Button";
 import Alert from "./Alert";
+import Outline from "./Button/Outline";
+import Pagination from "./Pagination";
 
 export {
   Layout,
@@ -14,4 +16,6 @@ export {
   CardWallet,
   Button,
   Alert,
+  Outline,
+  Pagination,
 };

@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { IButton } from "../../utils/interfaces";
 
-const Button: React.FC<IButton> = ({
+const Outline: React.FC<IButton> = ({
   title,
   handleButton,
   isDisabled = false,
@@ -12,8 +12,8 @@ const Button: React.FC<IButton> = ({
   return (
     <button
       className={`text-[white] ${
-        isDisabled ? "bg-[#bdbcbc]" : "bg-gradient-to-tr shadow-primary-100/30"
-      } from-primary-100 to-secondary-100 hover:from-primary-200 hover:to-secondary-100 p-3 rounded-lg shadow-xl w-full`}
+        isDisabled ? "bg-[#bdbcbc]" : "bg-[#c2c2c2] hover:bg-[#acacac]"
+      } p-2 rounded-lg shadow-xl w-full`}
       onClick={handleButtonAction}
       disabled={isDisabled}
     >
@@ -22,4 +22,4 @@ const Button: React.FC<IButton> = ({
   );
 };
 
-export default Button;
+export default Outline;
