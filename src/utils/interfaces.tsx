@@ -19,5 +19,17 @@ interface ILayout {
 interface IHeader {
   handleDrawer: () => void;
 }
+interface IButton {
+  title: string;
+  handleButton: () => void;
+  isDisabled: boolean;
+}
 
-export type { IDropdownItem, IDropdown, ISidebarDrawer, ILayout, IHeader };
+export type {
+  IDropdownItem,
+  IDropdown,
+  ISidebarDrawer,
+  ILayout,
+  IHeader,
+  IButton,
+};

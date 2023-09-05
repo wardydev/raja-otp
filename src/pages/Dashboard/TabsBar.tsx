@@ -33,7 +33,7 @@ const TabsBar = () => {
               activeTab === index ? "block" : "hidden"
             } bg-white p-4 rounded-md`}
           >
-            <p>{item.content}</p>
+            <ul className="list-decimal">{item.content}</ul>
           </div>
         ))}
       </div>

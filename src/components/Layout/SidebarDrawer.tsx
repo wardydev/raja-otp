@@ -3,9 +3,12 @@ import { Link, useLocation } from "react-router-dom";
 import { menuNavItems } from "../../utils/helper";
 import IClose from "/icons/IClose.svg";
 import { ISidebarDrawer } from "../../utils/interfaces";
+import IKingAvatar from "/icons/IkingAvatar2.png";
+import { useGetMeQuery } from "../../api/services/userApi";
 
 const SidebarDrawer: React.FC<ISidebarDrawer> = ({ isOpen, handleDrawer }) => {
   const location = useLocation();
+  const { data } = useGetMeQuery();
 
   return (
     <div
@@ -21,12 +24,14 @@ const SidebarDrawer: React.FC<ISidebarDrawer> = ({ isOpen, handleDrawer }) => {
         <div className="flex items-center justify-between py-8">
           <div className="flex items-center space-x-4 hover:bg-light rounded-md hover:bg-opacity-20 hover:cursor-pointer">
             <img
-              src="https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg"
+              src={IKingAvatar}
               alt="profile"
               className="rounded-full"
               width={50}
             />
-            <h5 className="font-medium text-dark">Wardi</h5>
+            <h5 className="font-medium text-dark capitalize">
+              {data?.data.username}
+            </h5>
           </div>
           <div className="bg-[#0000003b] rounded p-2" onClick={handleDrawer}>
             <img src={IClose} alt="icon-close" />
