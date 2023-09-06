@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, CardContiner, DropdownInput, Layout } from "../../components";
+import { Button, CardContiner, Layout } from "../../components";
 import Table from "./Table";
 import {
   useGetCountryQuery,
@@ -12,29 +12,11 @@ import {
   useGetOrderQuery,
   usePostNewOrderMutation,
 } from "../../api/services/orderApi";
-
-export interface CountryResponseItem {
-  id: number;
-  country_name: string;
-}
-
-export interface IOperatorResponseItem {
-  data: [string];
-}
-1;
-
-export interface IOperatorResponse {
-  success: boolean;
-  messages: string;
-  data: IOperatorResponseItem;
-}
-
-export interface ServiceByCountryResponse {
-  id: number;
-  name: string;
-  price: number;
-  icon: string;
-}
+import {
+  CountryResponseItem,
+  ServiceByCountryResponse,
+} from "../../utils/interfaces";
+import DropdownInput from "./DropdownInput";
 
 const OrderProduk = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -43,6 +25,7 @@ const OrderProduk = () => {
   const [selectedCountryService, setSelectedCountryService] = useState<
     ServiceByCountryResponse | undefined
   >();
+  const [isClearInput, setIsClearInput] = useState<boolean>(false);
 
   const { data } = useGetCountryQuery();
   const operator = useGetOperatorQuery(selectedCountry.id ?? 0);
@@ -70,6 +53,11 @@ const OrderProduk = () => {
     };
 
     postNewOrder(body);
+    order.refetch();
+    setIsClearInput(true);
+    setSelectedCountry(0);
+    setSelectedOperator("");
+    setSelectedCountryService(undefined);
   };
 
   return (
@@ -81,6 +69,7 @@ const OrderProduk = () => {
             options={data?.data ?? []}
             defaultValue={data?.data[0].country_name ?? "Server"}
             optionChange={handleSelectedCountryChange}
+            setIsClearInput={setIsClearInput}
           />
           <DropdownOperator
             label="Pilih Operator :"

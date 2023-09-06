@@ -1,18 +1,12 @@
 import React, { useCallback, useState } from "react";
-import { CountryResponseItem } from ".";
-
-interface IDropdownCountry {
-  label: string;
-  optionChange: (option: CountryResponseItem) => void;
-  options: CountryResponseItem[];
-  defaultValue: string | undefined;
-}
+import { CountryResponseItem, IDropdownCountry } from "../../utils/interfaces";
 
 const DropdownCountry: React.FC<IDropdownCountry> = ({
   label,
   options,
   defaultValue,
   optionChange,
+  setIsClearInput,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<
@@ -27,6 +21,7 @@ const DropdownCountry: React.FC<IDropdownCountry> = ({
     optionChange(option);
     setSelectedOption(option);
     setIsOpen(false);
+    setIsClearInput(false);
   };
 
   return (

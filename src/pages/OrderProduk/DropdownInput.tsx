@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { IDropdown } from "../utils/interfaces";
-import { ServiceByCountryResponse } from "../pages/OrderProduk";
-import { formatRupiah } from "../utils/functions";
+import { IDropdown, ServiceByCountryResponse } from "../../utils/interfaces";
+import { formatRupiah } from "../../utils/functions";
 
 const DropdownInput: React.FC<IDropdown> = ({
   label,
@@ -31,7 +30,7 @@ const DropdownInput: React.FC<IDropdown> = ({
   };
 
   useEffect(() => {
-    if (options.length !== 0 && options !== undefined) {
+    if (options.length !== 0 || options !== undefined) {
       setFilteredOptions(
         options.filter((opt: ServiceByCountryResponse) => {
           return opt?.name.toLowerCase().includes(inputValue);

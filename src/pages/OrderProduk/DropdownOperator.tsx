@@ -1,11 +1,5 @@
 import React, { useCallback, useState } from "react";
-
-interface IDropdownOperator {
-  label: string;
-  optionChange: (option: string) => void;
-  options: [];
-  defaultValue: string | undefined;
-}
+import { IDropdownOperator } from "../../utils/interfaces";
 
 const DropdownOperator: React.FC<IDropdownOperator> = ({
   label,

@@ -4,13 +4,12 @@ import IClose from "/icons/IClose.svg";
 import IResend from "/icons/IResend.svg";
 import IDone from "/icons/IDone.svg";
 import ButtonCopy from "./ButtonCopy";
-import { IOrderResponseItem } from "../../api/services/types";
 import { Countdown } from "../../components";
-
-interface ITableOrderProducts {
-  data: IOrderResponseItem[];
-  onChange: () => void;
-}
+import {
+  IActionColumn,
+  IInboxColumn,
+  ITableOrderProducts,
+} from "../../utils/interfaces";
 
 const Table: React.FC<ITableOrderProducts> = ({ data, onChange }) => {
   return (
@@ -81,12 +80,6 @@ const Table: React.FC<ITableOrderProducts> = ({ data, onChange }) => {
   );
 };
 
-interface IInboxColumn {
-  status: string;
-  inbox: string | null;
-  onChange: () => void;
-}
-
 const InboxColumn: React.FC<IInboxColumn> = ({ status, inbox, onChange }) => {
   useEffect(() => {
     const pollingInterval = setInterval(() => {
@@ -109,11 +102,6 @@ const InboxColumn: React.FC<IInboxColumn> = ({ status, inbox, onChange }) => {
     </td>
   );
 };
-
-interface IActionColumn {
-  status: string;
-  inbox: string | null;
-}
 
 const ActionColumn: React.FC<IActionColumn> = ({ status, inbox }) => {
   switch (true) {
