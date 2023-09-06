@@ -84,6 +84,66 @@ interface NewsResponse {
   };
 }
 
+interface CountryResponseItem {
+  id: number;
+  country_name: string;
+}
+
+interface CountryResponse {
+  success: boolean;
+  messages: string;
+  data: CountryResponseItem[];
+}
+
+interface OperatorResponse {
+  success: boolean;
+  messages: string;
+  data: [];
+}
+
+interface ServiceCountryItem {
+  id: number;
+  name: string;
+  price: number;
+  icon: string;
+}
+
+interface ServiceCountryResponse {
+  success: boolean;
+  messages: string;
+  data: ServiceCountryItem[];
+}
+interface INewOrderResponse {
+  success: boolean;
+  messages: string;
+  data: {
+    id: number;
+    number: string;
+  };
+}
+
+interface INewOrderBody {
+  service_id: number | undefined;
+  operator: string | undefined;
+}
+export interface IOrderResponseItem {
+  id: number;
+  number: number;
+  inbox: null | string;
+  status: string;
+  expired_at: number;
+  sv_name: string;
+}
+interface IOrderResponse {
+  success: boolean;
+  messages: string;
+  data: IOrderResponseItem[];
+}
+interface IOrderBody {
+  id: number | undefined;
+  number: string | undefined;
+}
+
 export type {
   LoginBody,
   LoginResponse,
@@ -91,4 +151,11 @@ export type {
   RegisterBody,
   UserResponse,
   NewsResponse,
+  CountryResponse,
+  OperatorResponse,
+  ServiceCountryResponse,
+  IOrderResponse,
+  IOrderBody,
+  INewOrderResponse,
+  INewOrderBody,
 };
