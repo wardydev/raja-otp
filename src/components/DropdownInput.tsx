@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { IDropdown, IDropdownItem } from "../utils/interfaces";
+import { IDropdown } from "../utils/interfaces";
+import { ServiceByCountryResponse } from "../pages/OrderProduk";
+import { formatRupiah } from "../utils/functions";
 
 const DropdownInput: React.FC<IDropdown> = ({
   label,
   options,
   defaultValue,
+  optionChange,
 }) => {
-  const [selectedOption, setSelectedOption] = useState<IDropdownItem | null>(
-    null
-  );
+  const [selectedOption, setSelectedOption] =
+    useState<ServiceByCountryResponse | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState(options);
@@ -17,8 +19,9 @@ const DropdownInput: React.FC<IDropdown> = ({
     setIsOpen(!isOpen);
   };
 
-  const handleOptionClick = (option: IDropdownItem) => {
+  const handleOptionClick = (option: ServiceByCountryResponse) => {
     setSelectedOption(option);
+    optionChange(option);
     setIsOpen(false);
     setInputValue("");
   };
@@ -28,11 +31,13 @@ const DropdownInput: React.FC<IDropdown> = ({
   };
 
   useEffect(() => {
-    setFilteredOptions(
-      options.filter((opt) => {
-        return opt.label.toLowerCase().includes(inputValue);
-      })
-    );
+    if (options.length !== 0 && options !== undefined) {
+      setFilteredOptions(
+        options.filter((opt: ServiceByCountryResponse) => {
+          return opt?.name.toLowerCase().includes(inputValue);
+        })
+      );
+    }
   }, [inputValue, options]);
 
   return (
@@ -49,7 +54,7 @@ const DropdownInput: React.FC<IDropdown> = ({
           className="flex w-full justify-between items-center py-4 px-4 rounded-lg shadow-md bg-[white] shadow-dark-100/5"
           onClick={toggleDropdown}
         >
-          {selectedOption ? selectedOption.label : defaultValue}
+          {selectedOption ? selectedOption.name : defaultValue}
           <svg
             className="-mr-1 ml-2 h-5 w-5"
             xmlns="http://www.w3.org/2000/svg"
@@ -82,14 +87,14 @@ const DropdownInput: React.FC<IDropdown> = ({
                 onChange={handleInputSelectValue}
               />
             </div>
-            {filteredOptions.map((option) => (
+            {filteredOptions?.map((option: ServiceByCountryResponse) => (
               <button
-                key={option.value}
+                key={option.id}
                 className="block w-full text-left px-4 py-2 text-sm hover:bg-[#e9e9e9]"
                 role="menuitem"
                 onClick={() => handleOptionClick(option)}
               >
-                {option.label}
+                {`${option.name} (${formatRupiah(option.price)})`}
               </button>
             ))}
           </div>

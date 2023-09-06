@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactNode } from "react";
 
 interface IDropdownItem {
@@ -6,8 +7,9 @@ interface IDropdownItem {
 }
 interface IDropdown {
   label: string;
-  options: IDropdownItem[];
-  defaultValue: string;
+  optionChange: (option: any) => void;
+  options: any;
+  defaultValue: string | undefined;
 }
 interface ISidebarDrawer {
   isOpen: boolean;
@@ -22,7 +24,7 @@ interface IHeader {
 interface IButton {
   title: string;
   handleButton: () => void;
-  isDisabled: boolean;
+  isDisabled?: boolean;
 }
 
 export type {
