@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export function convertToZeroPrefix(number: any) {
   const cleanedNumber = number.replace(/\D/g, "");
 
@@ -16,7 +16,6 @@ export function isEmailValid(email: string) {
   return emailRegex.test(email);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function shuffleArray(array: any) {
   const shuffledArray = [...array];
 
@@ -28,7 +27,6 @@ export function shuffleArray(array: any) {
   return shuffledArray;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function formatRupiah(angka: any) {
   const formatter = new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -40,7 +38,7 @@ export function formatRupiah(angka: any) {
 }
 
 export function formatTimestamp(timestamp: number) {
-  const date = new Date(timestamp * 1000); // Konversi timestamp ke milidetik
+  const date = new Date(timestamp * 1000);
   const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const months = [
     "Januari",
@@ -64,4 +62,24 @@ export function formatTimestamp(timestamp: number) {
   const minutes = date.getMinutes();
 
   return `${day} ${date.getDate()} ${month} ${year} pukul ${hours}:${minutes}`;
+}
+
+export function dateToTimestamp(dateString: string): any {
+  const dateObject = new Date(dateString);
+  const timestamp = dateObject.getTime() / 1000;
+
+  if (isNaN(timestamp)) {
+    return null;
+  }
+
+  return timestamp;
+}
+
+export function timestampToDateString(timestamp: number): any {
+  const date = new Date(timestamp * 1000);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
 }

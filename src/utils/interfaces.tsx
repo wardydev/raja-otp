@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactNode } from "react";
-import { IOrderResponseItem } from "../api/services/types";
+import { IHistoryDataItem, IOrderResponseItem } from "../api/services/types";
 
 interface IDropdownItem {
   label: string;
@@ -71,6 +71,9 @@ interface IActionColumn {
   status: string;
   inbox: string | null;
 }
+interface ITableHistory {
+  data: IHistoryDataItem[] | undefined;
+}
 
 export type {
   IDropdownItem,
@@ -87,4 +90,5 @@ export type {
   ITableOrderProducts,
   IInboxColumn,
   IActionColumn,
+  ITableHistory,
 };
