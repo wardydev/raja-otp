@@ -5,16 +5,15 @@ import { Pagination } from "../../components";
 
 const Table = () => {
   const [page, setPage] = useState<number>(1);
-  const { data, isLoading, refetch } = useGetNewsQuery(page);
+  const { data, isLoading } = useGetNewsQuery(page);
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+  };
 
   if (isLoading) {
     return <h1 className="bg-[red]">LOADING</h1>;
   }
-
-  const handlePageChange = (page: number) => {
-    setPage(page);
-    refetch();
-  };
 
   return (
     <div className="mt-4 overflow-x-auto">

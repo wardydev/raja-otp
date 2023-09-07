@@ -1,8 +1,11 @@
-import { DummyDataHistory } from "../../utils/helper";
+import React from "react";
+import { IHistoryDataItem } from "../../api/services/types";
+import { formatRupiah, formatTimestamp } from "../../utils/functions";
+import { ITableHistory } from "../../utils/interfaces";
 
-const Table = () => {
+const Table: React.FC<ITableHistory> = ({ data }) => {
   return (
-    <div className="mt-4 overflow-x-auto">
+    <div className="mt-4 overflow-x-auto bg-[white] px-4">
       <table className="min-w-full">
         <thead className="shadow">
           <tr>
@@ -16,7 +19,25 @@ const Table = () => {
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
+              Nomor HP
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Layanan
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
               Deskripsi
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Status
             </th>
             <th
               scope="col"
@@ -27,16 +48,31 @@ const Table = () => {
           </tr>
         </thead>
         <tbody className="">
-          {DummyDataHistory.map((item, index) => (
-            <tr key={index}>
+          {data?.map((item: IHistoryDataItem) => (
+            <tr key={item.id}>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{item.date}</div>
+                <div className="text-sm text-gray-900">
+                  {formatTimestamp(item.created_at)}
+                </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{item.description}</div>
+                <div className="text-sm text-gray-900">{item.number}</div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{item.nominal}</div>
+                <div className="text-sm text-gray-900">{item.sv_name}</div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap w-2/4">
+                <div className="text-sm text-gray-900">{item.inbox}</div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="text-sm text-gray-900">
+                  {item.status === "0" ? "refund" : "selesai"}
+                </div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="text-sm text-gray-900">
+                  {formatRupiah(item.order_price)}
+                </div>
               </td>
             </tr>
           ))}

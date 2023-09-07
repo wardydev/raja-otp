@@ -1,8 +1,22 @@
 import React from "react";
 
-const CardContiner = ({ children }: { children: React.ReactNode }) => {
+interface ICardContainer {
+  children: React.ReactNode;
+  isCustomBackground?: boolean;
+  customBackground?: string;
+}
+
+const CardContiner: React.FC<ICardContainer> = ({
+  children,
+  isCustomBackground = false,
+  customBackground,
+}) => {
   return (
-    <div className="bg-[white] shadow-lg shadow-primary-100/10 rounded-xl p-6">
+    <div
+      className={`${
+        isCustomBackground ? customBackground : "bg-[white]" ?? "bg-[white]"
+      } shadow-lg shadow-primary-100/10 rounded-xl p-6`}
+    >
       {children}
     </div>
   );

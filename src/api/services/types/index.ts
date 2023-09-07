@@ -143,6 +143,38 @@ interface IOrderBody {
   id: number | undefined;
   number: string | undefined;
 }
+interface IHistoryDataItem {
+  id: number;
+  order_price: number;
+  number: number;
+  inbox: null | string;
+  status: string;
+  created_at: number;
+  sv_name: string;
+}
+interface IHistoryResponse {
+  success: boolean;
+  messages: string;
+  data: {
+    current_page: number;
+    data: IHistoryDataItem[];
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: {
+      url: null | string;
+      label: string;
+      active: boolean;
+    }[];
+    next_page_url: string;
+    path: string;
+    per_page: number;
+    prev_page_url: null | string;
+    to: number;
+    total: number;
+  };
+}
 
 export type {
   LoginBody,
@@ -158,4 +190,6 @@ export type {
   IOrderBody,
   INewOrderResponse,
   INewOrderBody,
+  IHistoryResponse,
+  IHistoryDataItem,
 };

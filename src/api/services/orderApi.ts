@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "./helper";
 import {
+  IHistoryResponse,
   INewOrderBody,
   INewOrderResponse,
   IOrderBody,
@@ -26,7 +27,11 @@ export const orderApi = createApi({
         params: body,
       }),
     }),
+    getHistory: builder.query<IHistoryResponse, number>({
+      query: (page) => `api/order/history?page=${page}`,
+    }),
   }),
 });
 
-export const { usePostNewOrderMutation, useGetOrderQuery } = orderApi;
+export const { usePostNewOrderMutation, useGetOrderQuery, useGetHistoryQuery } =
+  orderApi;
