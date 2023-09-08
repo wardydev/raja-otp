@@ -175,6 +175,81 @@ interface IHistoryResponse {
     total: number;
   };
 }
+interface IHistoryDepositItem {
+  id: number;
+  amount: number;
+  payment: string;
+  status: string;
+  created_at: number;
+}
+interface IHistoryDepositResponse {
+  success: boolean;
+  messages: string;
+  data: {
+    current_page: number;
+    data: IHistoryDepositItem[];
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: {
+      url: null | string;
+      label: string;
+      active: boolean;
+    }[];
+    next_page_url: null | string;
+    path: string;
+    per_page: number;
+    prev_page_url: null | string;
+    to: number;
+    total: number;
+  };
+}
+
+interface ItemGetPayment {
+  pm_name: string;
+  pm_key: string;
+}
+
+interface IGetPaymentResponse {
+  success: boolean;
+  messages: string;
+  data: ItemGetPayment[];
+}
+
+interface IPostNewPaymentBody {
+  pm_key: string | undefined;
+  amount: number | undefined;
+}
+interface IPostNewPaymentResponse {
+  success: boolean;
+  messages: string;
+  data: {
+    de_amount2: number;
+    id: number;
+  };
+}
+export interface ItemDetailPayment {
+  id: number;
+  amount: number;
+  amount2: number;
+  payment: string;
+  status: string;
+  data: string;
+  created_at: string;
+  expired_at: string;
+}
+interface IGetDetailPayment {
+  success: boolean;
+  messages: string;
+  data: ItemDetailPayment;
+}
+
+interface IGetCancel {
+  success: boolean;
+  messages: string;
+  data: string;
+}
 
 export type {
   LoginBody,
@@ -192,4 +267,10 @@ export type {
   INewOrderBody,
   IHistoryResponse,
   IHistoryDataItem,
+  IHistoryDepositResponse,
+  IGetPaymentResponse,
+  IPostNewPaymentBody,
+  IPostNewPaymentResponse,
+  IGetDetailPayment,
+  IGetCancel,
 };

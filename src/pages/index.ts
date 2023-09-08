@@ -5,6 +5,8 @@ import ApiDeveloper from "./ApiDeveloper";
 import RiwayatTransaksi from "./RiwayatTransaksi";
 import Login from "./Login";
 import Register from "./Register";
+import DetailPayment from "./DetailPayment";
+import DetailPaymentById from "./DetailPayment/DetailPaymentById";
 
 export {
   Dashboard,
@@ -14,4 +16,6 @@ export {
   RiwayatTransaksi,
   Login,
   Register,
+  DetailPayment,
+  DetailPaymentById,
 };

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useGetHistoryQuery } from "../../api/services/orderApi";
 import { Button, CardContiner, Layout, Pagination } from "../../components";
 import Table from "./Table";
 import ISearch from "/icons/ISearch.svg";
-import { IHistoryDataItem } from "../../api/services/types";
+import { useGetHistoryQuery } from "../../api/services/orderApi";
 import { dateToTimestamp, timestampToDateString } from "../../utils/functions";
+import { IHistoryDataItem } from "../../api/services/types";
 
 const RiwayatTransaksi = () => {
   const [page, setPage] = useState<number>(1);

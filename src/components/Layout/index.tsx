@@ -23,7 +23,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
         <span className="text-xs mr-1">Rp</span>{" "}
         <span className="">100.000.000.00</span>
       </p>
-      <div className="child-container min-h-[709px] h-[709px] bg-light mt-10 lg:mt-[20px] rounded-t-2xl lg:rounded-tl-[40px] lg:rounded-tr-[0] pt-10 pb-6 overflow-auto px-4 md:px-10 lg:px-10">
+      <div className="child-container min-h-[709px] h-[709px] bg-[#faf3ec] mt-10 lg:mt-[20px] rounded-t-2xl lg:rounded-tl-[40px] lg:rounded-tr-[0] pt-10 pb-6 overflow-auto px-4 md:px-10 lg:px-10">
         <div className="mb-6">{children}</div>
         <div>
           <p>&copy; 2023 - RAJAOTP</p>
