@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactNode } from "react";
-import { IHistoryDataItem, IOrderResponseItem } from "../api/services/types";
+import {
+  IHistoryDataItem,
+  IOrderResponseItem,
+  ItemDetailPayment,
+} from "../api/services/types";
 
 interface IDropdownItem {
   label: string;
@@ -74,6 +78,28 @@ interface IActionColumn {
 interface ITableHistory {
   data: IHistoryDataItem[] | undefined;
 }
+interface Package {
+  name: string;
+  price: number;
+  description: string;
+  isSpecial: boolean;
+}
+
+interface PricingProps {
+  packages: Package[];
+}
+interface ITableDeposit {
+  setIsPending: React.Dispatch<React.SetStateAction<boolean>>;
+  setDepositId: React.Dispatch<React.SetStateAction<number | undefined>>;
+  depositId: number | undefined;
+}
+interface IRenderDetailAction {
+  item: ItemDetailPayment;
+  depositId: number | undefined | null;
+}
+interface IPaymentProceed {
+  setDeposit: React.Dispatch<React.SetStateAction<number | null>>;
+}
 
 export type {
   IDropdownItem,
@@ -91,4 +117,8 @@ export type {
   IInboxColumn,
   IActionColumn,
   ITableHistory,
+  PricingProps,
+  ITableDeposit,
+  IRenderDetailAction,
+  IPaymentProceed,
 };

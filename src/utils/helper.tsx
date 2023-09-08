@@ -24,7 +24,6 @@ const itemsTabbar = [
     ],
   },
   {
-    title: "Tutorial Cara Order OTP",
     content: [
       <li className="text-dark mb-1">
         Pilih menu Order Produk terlebih dahulu.
@@ -66,6 +65,32 @@ const itemsTabbar = [
     content: "lorem ipsum Official Group Chat",
   },
 ];
+
+const itemsTutorialQris = {
+  heading: <h3>Tutorial Penggunaan QRIS</h3>,
+  content: [
+    <li className="text-dark mb-1">
+      Buka aplikasi e-payment kamu, terserah bisa OVO, ShopeePay, DANA, Dll.
+    </li>,
+    <li className="text-dark mb-1">
+      Pilih metode pembayaran scan by QRIS dan klik “Bayar sekarang”.
+    </li>,
+    <li className="text-dark mb-1">
+      Selanjutnya kamu akan diarahkan ke halaman konfirmasi nominal transaksi.
+    </li>,
+    <li className="text-dark mb-1">
+      Cek kembali nominal transaksi kamu, pastikan sudah sesuai seperti
+      diaplikasi.
+    </li>,
+    <li className="text-dark mb-1">
+      Masukan PIN untuk melanjutkan transaksi.
+    </li>,
+    <li className="text-dark mb-1">Pembayaran berhasil dilakukan.</li>,
+    <li className="text-dark mb-1">
+      Permintaan akan divalidasi oleh sistem kami maksimal 30 menit.
+    </li>,
+  ],
+};
 
 const DummyDataTableOrder = [
   {
@@ -183,6 +208,29 @@ const menuNavItems = [
   },
 ];
 
+const itemPackage = [
+  {
+    name: "Paket Prajurit",
+    price: 5000,
+    description:
+      "Prajurit gak pernah ragu membela rajanya. Kalo Masih Ragu? Coba aja dulu!😏",
+    isSpecial: false,
+  },
+  {
+    name: "Paket Raja",
+    price: 50000,
+    description:
+      "Jika menjadi raja adalah pilihan terbaikmu. Coba paket ini! 🙄",
+    isSpecial: false,
+  },
+  {
+    name: "Paket Sultan",
+    price: 100000,
+    description: "Woww! Kamu berada di level yang berbeda. Nikmatilah! 😊",
+    isSpecial: true,
+  },
+];
+
 export {
   itemsTabbar,
   DummyDataTableOrder,
@@ -192,4 +240,6 @@ export {
   menuNavItems,
   DummyDataInformation,
   DummyDataHistory,
+  itemsTutorialQris,
+  itemPackage,
 };

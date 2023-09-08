@@ -6,6 +6,7 @@ import Alert from "./Alert";
 import Outline from "./Button/Outline";
 import Pagination from "./Pagination";
 import Countdown from "./Countdown";
+import LoadingSpinner from "./DotLoading";
 
 export {
   Layout,
@@ -16,4 +17,5 @@ export {
   Outline,
   Pagination,
   Countdown,
+  LoadingSpinner,
 };

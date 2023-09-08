@@ -3,6 +3,8 @@ import {
   ApiDeveloper,
   Dashboard,
   DepositSaldo,
+  DetailPayment,
+  DetailPaymentById,
   Login,
   OrderProduk,
   Register,
@@ -40,6 +42,22 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <DepositSaldo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/deposit/detail",
+    element: (
+      <ProtectedRoute>
+        <DetailPayment />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/deposit/detail/:id",
+    element: (
+      <ProtectedRoute>
+        <DetailPaymentById />
       </ProtectedRoute>
     ),
   },

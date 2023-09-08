@@ -1,76 +1,87 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-interface Package {
-  name: string;
-  price: string;
-  description: string;
-  isSpecial: boolean;
-}
-
-interface PricingProps {
-  packages: Package[];
-}
+import { formatRupiah } from "../../utils/functions";
+import { Button } from "../../components";
+import { PricingProps } from "../../utils/interfaces";
 
 const Pricing: React.FC<PricingProps> = ({ packages }) => {
+  const [pricingFlex, setPricingFlex] = useState<string>("");
   return (
-    <div className="grid lg:grid-cols-4 grid-cols-1 lg:space-x-6 space-x-0 lg:space-y-0 space-y-7">
+    <div className="grid lg:grid-cols-4 items-center grid-cols-1 lg:space-x-6 space-x-0 lg:space-y-0 space-y-7">
       {packages.map((pkg, index) => (
         <div
           key={index}
           className={
             pkg.isSpecial
-              ? "card-afiliasi bg-gradient-to-l from-primary-100 to-secondary-100 rounded-xl px-6 py-8 shadow-2xl shadow-primary-100/50 text-[white]"
-              : "bg-[white] shadow-lg shadow-primary-100/10 rounded-xl p-6 text-dark"
+              ? "card-afiliasi bg-gradient-to-l from-primary-100 to-secondary-100 rounded-xl px-6 py-8 shadow-2xl shadow-primary-100/50 text-[#e7e7e7] min-h-[290px]"
+              : "bg-[white] shadow-lg shadow-primary-100/10 rounded-xl p-6 text-[gray] min-h-[290px]"
           }
         >
           <div className="mb-3">
-            <p
-              className={`font-medium uppercase text-xs ${
-                pkg.isSpecial ? "text-[#f1ecec]" : "text-[#b0b0b0]"
-              }`}
-            >
-              Most Popular
-            </p>
+            {pkg.isSpecial && (
+              <p className={"font-medium uppercase text-xs text-[#f1ecec]"}>
+                populer
+              </p>
+            )}
             <h3 className="text-xl font-semibold mb-4">{pkg.name}</h3>
           </div>
 
-          <h3 className="text-gray-600 mb-2 text-xl font-bold">{pkg.price}</h3>
+          <h3
+            className={`${
+              pkg.isSpecial ? "text-light" : "text-dark"
+            } mb-2 text-xl font-bold`}
+          >
+            {formatRupiah(pkg.price)}
+          </h3>
           <div className="my-5">
             <p>{pkg.description}</p>
           </div>
-          <button
-            className={`block w-full bg-primary-100 text-white py-3 rounded-lg hover:bg-primary-200 text-light ${
+          <Link
+            state={{ amount: pkg.price, package: pkg.name }}
+            to="/deposit/detail"
+            className={`block w-full bg-primary-100 text-white py-3 rounded-lg hover:bg-primary-200 text-light mt-6 text-center ${
               pkg.isSpecial
-                ? "bg-[orange] hover:bg-[#ff5e00]"
+                ? "bg-[#ffa856] hover:bg-[#ffa85691]"
                 : "bg-primary-100 hover:bg-primary-200"
             }`}
           >
-            Beli
-          </button>
+            Pilih Paket
+          </Link>
         </div>
       ))}
       <div className="bg-[white] shadow-lg shadow-primary-100/10 rounded-xl p-6 text-dark">
         <div className="mb-3">
           <p className="font-medium uppercase text-xs text-[#b0b0b0]">
-            Most Popular
+            Lebih Fleksibel
           </p>
-          <h3 className="text-xl font-semibold mb-4">Paket Fleksibel</h3>
+          <h3 className="text-xl font-semibold mb-4">Paket Pangeran</h3>
         </div>
 
         <div className="flex items-center bg-[#d5d5d5] rounded-md">
-          <h4 className="py-2 px-3">Rp</h4>
+          <h4 className="py-2 px-3 font-medium">Rp</h4>
           <input
             type="number"
-            placeholder="50000"
-            className="w-full py-2 px-4 focus:outline-none border-t-2 border-r-2 border-b-2 rounded-tr-md rounded-br-md border-primary-200"
+            placeholder="100000"
+            className="w-full py-2 px-4 focus:outline-none border-t-2 border-r-2 border-b-2 rounded-tr-md rounded-br-md border-[#d5d5d5]"
+            value={pricingFlex}
+            onChange={(e) => setPricingFlex(e.target.value)}
           />
         </div>
         <div className="my-5">
-          <p>description</p>
+          <p>Yup! kalau yang ini cocok untuk semua kalangan 😄</p>
         </div>
-        <button className="block w-full bg-primary-100 text-white py-3 rounded-lg hover:bg-primary-200 text-light">
-          Beli
-        </button>
+        {pricingFlex.length !== 0 ? (
+          <Link
+            state={{ amount: Number(pricingFlex), package: "Paket Pangeran" }}
+            to="/deposit/detail"
+            className="block w-full text-white py-3 rounded-lg text-light mt-6 text-center bg-primary-100 hover:bg-primary-200 disabled:bg-dark"
+          >
+            Pilih Paket
+          </Link>
+        ) : (
+          <Button isDisabled title="Pilih Peket" handleButton={() => null} />
+        )}
       </div>
     </div>
   );
