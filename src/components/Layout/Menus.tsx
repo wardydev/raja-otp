@@ -5,7 +5,7 @@ const Menus = () => {
   const location = useLocation();
 
   return (
-    <div className="bg-gray-800 text-white pt-4">
+    <div className="bg-gray-800 text-white">
       <div className="flex items-center space-x-4">
         {menuNavItems.map((tabItem) => (
           <Link

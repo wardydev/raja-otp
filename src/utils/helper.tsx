@@ -24,6 +24,7 @@ const itemsTabbar = [
     ],
   },
   {
+    title: "Tutorial Cara Order OTP",
     content: [
       <li className="text-dark mb-1">
         Pilih menu Order Produk terlebih dahulu.

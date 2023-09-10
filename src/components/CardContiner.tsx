@@ -14,8 +14,10 @@ const CardContiner: React.FC<ICardContainer> = ({
   return (
     <div
       className={`${
-        isCustomBackground ? customBackground : "bg-[white]" ?? "bg-[white]"
-      } shadow-lg shadow-primary-100/10 rounded-xl p-6`}
+        isCustomBackground
+          ? `bg-[${customBackground}]`
+          : "bg-[white]" ?? "bg-[white]"
+      } shadow-lg shadow-primary-100/10 rounded-3xl p-6 min-h-[500px]`}
     >
       {children}
     </div>

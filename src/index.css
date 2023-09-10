@@ -16,12 +16,12 @@
 .menuItem.active::after {
   content: '';
   position: absolute;
-  bottom: -84px;
+  bottom: -80px;
   width: 0;
   height: 0;
   border-left: 50px solid transparent;
   border-right: 50px solid transparent;
-  border-bottom: 80px solid #fff;
+  border-bottom: 80px solid #faf3ec;
   transform: rotate(0);
 }
 .card-afiliasi {
@@ -108,7 +108,7 @@
 .dot {
   width: 16px;
   height: 16px;
-  background-color: #ffd000;
+  background-color: #FF720D;
   border-radius: 50%;
   animation: bounce 1.5s infinite ease-in-out;
 }
@@ -142,11 +142,23 @@
 }
 
 
+@media only screen and (min-width: 340px) {
+  .child-container {
+    min-height: 300px;
+    height: auto;
+    overflow: visible;
+  }
+}
 @media only screen and (min-width: 640px) {
   .child-container {
-    height: 200px;
     overflow: auto;
     text-align:justify;
     position: relative;
+    max-height: 27rem;
+  }
+}
+@media only screen and (min-width: 1883px) {
+  .child-container {
+    max-height: 41rem;
   }
 }

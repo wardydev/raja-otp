@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 
-import { Layout } from "../../components";
+import { Layout, LoadingSpinner } from "../../components";
 import ITime from "/icons/ITime.svg";
 import { useGetDetailPaymentQuery } from "../../api/services/depositApi";
 import { formatRupiah } from "../../utils/functions";
@@ -8,14 +8,15 @@ import { itemsTutorialQris } from "../../utils/helper";
 
 const DetailPaymentById = () => {
   const location = useLocation();
-  const { data } = useGetDetailPaymentQuery(location?.state.id);
+  const { data, isLoading } = useGetDetailPaymentQuery(location?.state.id);
 
   return (
     <Layout>
       <div className="flex items-center px-20">
-        <div className="flex items-start m space-x-6 w-full">
-          <div className="flex flex-col justify-center items-center bg-[white] p-12 rounded-xl">
-            <h3 className="text-dark font-bold mb-4 uppercase">
+        <div className="flex items-start space-x-6 w-full">
+          <div className="flex flex-col justify-center items-center bg-[white] p-12 rounded-xl relative">
+            {isLoading && <LoadingSpinner />}
+            <h3 className="text-dark font-bold uppercase">
               Scan qr code dibawah ini
             </h3>
             <img
