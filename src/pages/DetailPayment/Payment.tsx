@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Button } from "../../components";
+import { toast } from "react-toastify";
+
+import { Button, LoadingSpinner } from "../../components";
 import {
   useGetHistoryQuery,
   useGetPaymentQuery,
@@ -28,8 +30,13 @@ const Payment: React.FC<IPaymentProceed> = ({ setDeposit }) => {
       pm_key: paymentKey,
       amount: location.state?.amount,
     };
-    postNewPayment(body);
-  }, [data, location.state?.amount]);
+    const res = postNewPayment(body);
+    toast.promise(res, {
+      pending: "Tunggu sebentar..",
+      success: "Pembayaran berhasil👍",
+      error: "Maaf, Sepertinya terjadi kesalahan",
+    });
+  }, [location.state?.amount, paymentKey, postNewPayment]);
 
   useEffect(() => {
     if (newPayment.isSuccess) {
@@ -79,9 +86,9 @@ const Payment: React.FC<IPaymentProceed> = ({ setDeposit }) => {
             </h1>
           </div>
         )}
-        <div className="mb-6">
+        <div className="mb-6 relative">
+          {isLoading && <LoadingSpinner />}
           <h3 className="text-dark font-semibold">Metode Pembayaran</h3>
-          {isLoading && <h3 className="bg-[red] font-semibold">Loading...</h3>}
           {data?.data.map((item, index) => {
             return (
               <div

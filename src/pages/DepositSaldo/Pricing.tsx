@@ -42,7 +42,7 @@ const Pricing: React.FC<PricingProps> = ({ packages }) => {
             to="/deposit/detail"
             className={`block w-full bg-primary-100 text-white py-3 rounded-lg hover:bg-primary-200 text-light mt-6 text-center ${
               pkg.isSpecial
-                ? "bg-[#ffa856] hover:bg-[#ffa85691]"
+                ? "bg-[#ffffff52] hover:bg-[#ffffff41] font-medium text-primary-200"
                 : "bg-primary-100 hover:bg-primary-200"
             }`}
           >
@@ -58,20 +58,25 @@ const Pricing: React.FC<PricingProps> = ({ packages }) => {
           <h3 className="text-xl font-semibold mb-4">Paket Pangeran</h3>
         </div>
 
-        <div className="flex items-center bg-[#d5d5d5] rounded-md">
-          <h4 className="py-2 px-3 font-medium">Rp</h4>
-          <input
-            type="number"
-            placeholder="100000"
-            className="w-full py-2 px-4 focus:outline-none border-t-2 border-r-2 border-b-2 rounded-tr-md rounded-br-md border-[#d5d5d5]"
-            value={pricingFlex}
-            onChange={(e) => setPricingFlex(e.target.value)}
-          />
+        <div>
+          <div className="flex items-center bg-[#d5d5d5] rounded-md mb-1">
+            <h4 className="py-2 px-3 font-medium">Rp</h4>
+            <input
+              type="number"
+              placeholder="100000"
+              className="w-full py-2 px-4 focus:outline-none border-t-2 border-r-2 border-b-2 rounded-tr-md rounded-br-md border-[#d5d5d5]"
+              value={pricingFlex}
+              onChange={(e) => setPricingFlex(e.target.value)}
+            />
+          </div>
+          <p className="text-xs font-medium text-secondary-200">
+            *Minimum deposit: Rp 5.000
+          </p>
         </div>
         <div className="my-5">
           <p>Yup! kalau yang ini cocok untuk semua kalangan 😄</p>
         </div>
-        {pricingFlex.length !== 0 ? (
+        {pricingFlex.length !== 0 && Number(pricingFlex) >= 5000 ? (
           <Link
             state={{ amount: Number(pricingFlex), package: "Paket Pangeran" }}
             to="/deposit/detail"

@@ -96,6 +96,7 @@ interface ITableDeposit {
 interface IRenderDetailAction {
   item: ItemDetailPayment;
   depositId: number | undefined | null;
+  page: number;
 }
 interface IPaymentProceed {
   setDeposit: React.Dispatch<React.SetStateAction<number | null>>;

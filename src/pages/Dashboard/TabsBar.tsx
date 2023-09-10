@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { itemsTabbar } from "../../utils/helper";
 
 const TabsBar = () => {
   const [activeTab, setActiveTab] = useState(0);
 
-  const handleTabClick = (index: number) => {
-    setActiveTab(index);
-  };
+  const handleTabClick = useCallback(
+    (index: number) => {
+      setActiveTab(index);
+    },
+    [setActiveTab]
+  );
 
   return (
     <div className="p-6">

@@ -1,4 +1,11 @@
+import { toast } from "react-toastify";
+
 const Card = () => {
+  const handleTestToast = () => {
+    toast.error("Error Notification !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
   return (
     <div className="card-afiliasi bg-gradient-to-l from-primary-100 to-secondary-100 rounded-xl px-6 py-8 shadow-2xl shadow-primary-100/50">
       <div>
@@ -18,6 +25,14 @@ const Card = () => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime,
           recusandae!
         </p>
+        <div className="mt-4">
+          <button
+            className="bg-[#ffffff93] text-primary-100 py-2 px-4 rounded-lg"
+            onClick={handleTestToast}
+          >
+            test Toast
+          </button>
+        </div>
       </div>
     </div>
   );

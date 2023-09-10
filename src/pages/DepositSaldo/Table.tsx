@@ -8,10 +8,11 @@ import {
   useGetCancelQuery,
   useGetHistoryQuery,
 } from "../../api/services/depositApi";
-import { Pagination } from "../../components";
+import { LoadingSpinner, Pagination } from "../../components";
 import { formatRupiah, formatTimestamp } from "../../utils/functions";
 import { IRenderDetailAction, ITableDeposit } from "../../utils/interfaces";
-import { ItemDetailPayment } from "../../api/services/types";
+import { toast } from "react-toastify";
+import EmptyDataTable from "../../components/EmptyDataTable";
 
 const Table: React.FC<ITableDeposit> = ({
   setIsPending,
@@ -19,13 +20,13 @@ const Table: React.FC<ITableDeposit> = ({
   depositId,
 }) => {
   const [page, setPage] = useState<number>(1);
-  const { data, isLoading } = useGetHistoryQuery(page);
+  const { data, isLoading, isFetching } = useGetHistoryQuery(page);
 
   const handlePageChange = useCallback(
     (page: number) => {
       setPage(page);
     },
-    [page]
+    [setPage]
   );
 
   useEffect(() => {
@@ -44,12 +45,9 @@ const Table: React.FC<ITableDeposit> = ({
     }
   }, [data]);
 
-  if (isLoading) {
-    return <h1 className="text-xl bg-[red]">Loading..</h1>;
-  }
-
   return (
-    <div className="mt-4 overflow-x-auto">
+    <div className="mt-4 overflow-x-auto relative">
+      {(isLoading && <LoadingSpinner />) || (isFetching && <LoadingSpinner />)}
       <table className="min-w-full">
         <thead className="shadow">
           <tr>
@@ -97,13 +95,20 @@ const Table: React.FC<ITableDeposit> = ({
                   <div className="text-sm text-gray-900">{item.payment}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {<RenderDetailAction item={item} depositId={depositId} />}
+                  {
+                    <RenderDetailAction
+                      item={item}
+                      depositId={depositId}
+                      page={page}
+                    />
+                  }
                 </td>
               </tr>
             );
           })}
         </tbody>
       </table>
+      {data?.data.data.length === 0 && <EmptyDataTable />}
       <div>
         {data?.data.last_page !== 1 && (
           <Pagination
@@ -120,12 +125,28 @@ const Table: React.FC<ITableDeposit> = ({
 const RenderDetailAction: React.FC<IRenderDetailAction> = ({
   item,
   depositId,
+  page,
 }) => {
   const [temporaryId, setTemporaryId] = useState<number | null>(null);
-  const { isLoading } = useGetCancelQuery(temporaryId);
+  const { isLoading, isSuccess } = useGetCancelQuery(temporaryId);
+  const { refetch } = useGetHistoryQuery(page);
 
   const handleCancelDeposit = () => {
     setTemporaryId(depositId);
+
+    if (isSuccess) {
+      toast.success("Pembayaran berhasil dibatalkan!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      refetch();
+    }
   };
 
   switch (item.status) {
@@ -134,12 +155,12 @@ const RenderDetailAction: React.FC<IRenderDetailAction> = ({
         <div className="flex items-center space-x-2">
           <button
             onClick={handleCancelDeposit}
-            className="bg-[#fd4343] hover:bg-[#df4949] rounded flex py-1 px-2"
+            className="bg-[#fd4343] hover:bg-[#df4949] rounded flex py-1 px-2 text-xs font-medium"
           >
             <img src={IClose} alt="eye-icon" width={16} />
             {isLoading && "Loading.."}
           </button>
-          <button className="bg-[#3f7cff] hover:bg-[#6092ff] rounded flex py-1 px-2">
+          <button className="bg-[#3f7cff] hover:bg-[#6092ff] rounded flex py-1 px-2 text-xs font-medium">
             <Link to={`/deposit/detail/${depositId}`} state={{ id: depositId }}>
               <img src={IEye} alt="eye-icon" width={16} />
             </Link>
@@ -149,7 +170,7 @@ const RenderDetailAction: React.FC<IRenderDetailAction> = ({
     case "sukses":
       return (
         <button
-          className="bg-[#2dc542] rounded flex py-1 px-2 text-light text-xs font-medium"
+          className="bg-[#2dc542] rounded flex py-1 px-2 text-xs font-medium"
           disabled
         >
           Sukses
@@ -158,7 +179,7 @@ const RenderDetailAction: React.FC<IRenderDetailAction> = ({
     case "cancel":
       return (
         <button
-          className="bg-[#fd4343] rounded flex py-1 px-2 text-light text-xs font-medium"
+          className="bg-[#fd4343] rounded flex py-1 px-2 text-xs font-medium"
           disabled
         >
           Di batalkan

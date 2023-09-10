@@ -1,22 +1,23 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useGetNewsQuery } from "../../api/services/homeApi";
 import { formatTimestamp } from "../../utils/functions";
-import { Pagination } from "../../components";
+import { LoadingSpinner, Pagination } from "../../components";
+import EmptyDataTable from "../../components/EmptyDataTable";
 
 const Table = () => {
   const [page, setPage] = useState<number>(1);
-  const { data, isLoading } = useGetNewsQuery(page);
+  const { data, isFetching } = useGetNewsQuery(page);
 
-  const handlePageChange = (page: number) => {
-    setPage(page);
-  };
-
-  if (isLoading) {
-    return <h1 className="bg-[red]">LOADING</h1>;
-  }
+  const handlePageChange = useCallback(
+    (page: number) => {
+      setPage(page);
+    },
+    [setPage]
+  );
 
   return (
-    <div className="mt-4 overflow-x-auto">
+    <div className="mt-4 overflow-x-auto relative">
+      {isFetching && <LoadingSpinner />}
       <table className="min-w-full">
         <thead className="shadow">
           <tr>
@@ -63,11 +64,14 @@ const Table = () => {
           })}
         </tbody>
       </table>
-      <Pagination
-        currentPage={data?.data.current_page ?? 1}
-        totalPages={data?.data.last_page ?? 1}
-        onPageChange={handlePageChange}
-      />
+      {data?.data.data.length === 0 && <EmptyDataTable />}
+      {data?.data?.last_page !== undefined && data?.data?.last_page >= 1 && (
+        <Pagination
+          currentPage={data?.data.current_page ?? 1}
+          totalPages={data?.data.last_page ?? 1}
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   );
 };

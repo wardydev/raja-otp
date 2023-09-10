@@ -29,7 +29,7 @@ const Header: React.FC<IHeader> = ({ handleDrawer }) => {
     setIsShowCardProfile(!isShowCardProfile);
   };
   return (
-    <header className="px-4 md:px-10 lg:px-10 py-4">
+    <header className="px-4 md:px-10 lg:px-10 py-2">
       <div className="flex justify-between items-center">
         <div
           className="hover:bg-light p-2 rounded-md hover:bg-opacity-20 hover:cursor-pointer block md:hidden lg:hidden"
@@ -38,7 +38,7 @@ const Header: React.FC<IHeader> = ({ handleDrawer }) => {
           <img src={IHamburger} alt="hamburger menu" />
         </div>
         <Link to="/">
-          <img src={Ilogo} alt="Logo Rajaotp" width={150} />
+          <img src={Ilogo} alt="Logo Rajaotp" width={120} />
         </Link>
         <div className="flex items-center space-x-4">
           <div className="hidden md:flex lg:flex items-center space-x-4">

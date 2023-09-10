@@ -5,6 +5,7 @@ import { homeApi } from "./services/homeApi";
 import { serviceApi } from "./services/serviceApi";
 import { orderApi } from "./services/orderApi";
 import { depositApi } from "./services/depositApi";
+import { rtkQueryErrorLogger } from "./rtkQueryErrorLogger";
 
 export const store = configureStore({
   reducer: {
@@ -22,5 +23,6 @@ export const store = configureStore({
       .concat(homeApi.middleware)
       .concat(serviceApi.middleware)
       .concat(orderApi.middleware)
-      .concat(depositApi.middleware),
+      .concat(depositApi.middleware)
+      .concat(rtkQueryErrorLogger),
 });
