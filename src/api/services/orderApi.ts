@@ -20,12 +20,8 @@ export const orderApi = createApi({
         body,
       }),
     }),
-    getOrder: builder.query<IOrderResponse, IOrderBody>({
-      query: (body) => ({
-        url: "api/order",
-        method: "GET",
-        params: body,
-      }),
+    getOrder: builder.query<IOrderResponse, undefined>({
+      query: () => "api/order",
     }),
     getHistory: builder.query<IHistoryResponse, number>({
       query: (page) => `api/order/history?page=${page}`,
