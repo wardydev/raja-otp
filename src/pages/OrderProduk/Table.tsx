@@ -5,13 +5,12 @@ import IResend from "/icons/IResend.svg";
 import IDone from "/icons/IDone.svg";
 import ButtonCopy from "./ButtonCopy";
 import { Countdown } from "../../components";
-import {
-  IActionColumn,
-  IInboxColumn,
-  ITableOrderProducts,
-} from "../../utils/interfaces";
+import { IActionColumn, IInboxColumn } from "../../utils/interfaces";
+import { useGetOrderQuery } from "../../api/services/orderApi";
 
-const Table: React.FC<ITableOrderProducts> = ({ data, onChange }) => {
+const Table = () => {
+  const { data, isLoading, refetch } = useGetOrderQuery();
+
   return (
     <div className="mt-4 overflow-x-auto">
       <table className="min-w-full">
@@ -45,35 +44,33 @@ const Table: React.FC<ITableOrderProducts> = ({ data, onChange }) => {
           </tr>
         </thead>
         <tbody className="">
-          {(data &&
-            data?.map((item, index) => (
-              <tr key={index}>
-                <td className="w-20 lg:w-24 px-6 py-4 whitespace-nowrap flex justify-start">
-                  <ButtonCopy textToCopy={item.number} />
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{item.number}</div>
-                </td>
-                <InboxColumn
-                  status={item.status}
-                  inbox={item.inbox}
-                  onChange={onChange}
+          {data?.data.map((item, index) => (
+            <tr key={index}>
+              <td className="w-20 lg:w-24 px-6 py-4 whitespace-nowrap flex justify-start">
+                <ButtonCopy textToCopy={item.number} />
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="text-sm text-gray-900">{item.number}</div>
+              </td>
+              <InboxColumn
+                status={item.status}
+                inbox={item.inbox}
+                onChange={refetch}
+              />
+              <td className="px-6 py-4 whitespace-nowrap  flex justify-start">
+                <Countdown
+                  initialMinutes={
+                    item.status === "3" ? 0 : item?.expired_at ?? 0
+                  }
                 />
-                <td className="px-6 py-4 whitespace-nowrap  flex justify-start">
-                  <Countdown
-                    initialMinutes={
-                      item.status === "3" ? 0 : item?.expired_at ?? 0
-                    }
-                  />
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
-                    <ActionColumn status={item.status} inbox={item.inbox} />
-                  </div>
-                </td>
-              </tr>
-            ))) ??
-            []}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="text-sm text-gray-900">
+                  <ActionColumn status={item.status} inbox={item.inbox} />
+                </div>
+              </td>
+            </tr>
+          )) ?? []}
         </tbody>
       </table>
     </div>
@@ -93,7 +90,7 @@ const InboxColumn: React.FC<IInboxColumn> = ({ status, inbox, onChange }) => {
     return () => {
       clearInterval(pollingInterval);
     };
-  }, [status]);
+  }, [onChange, status]);
   return (
     <td className="px-6 py-4 whitespace-nowrap w-2/4">
       <div className="text-sm text-gray-900 flex flex-wrap lg:whitespace-pre-wrap">

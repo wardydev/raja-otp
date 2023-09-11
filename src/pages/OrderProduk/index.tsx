@@ -8,10 +8,7 @@ import {
 } from "../../api/services/serviceApi";
 import DropdownCountry from "./DropdownCountry";
 import DropdownOperator from "./DropdownOperator";
-import {
-  useGetOrderQuery,
-  usePostNewOrderMutation,
-} from "../../api/services/orderApi";
+import { usePostNewOrderMutation } from "../../api/services/orderApi";
 import {
   CountryResponseItem,
   ServiceByCountryResponse,
@@ -31,10 +28,6 @@ const OrderProduk = () => {
   const operator = useGetOperatorQuery(selectedCountry.id ?? 0);
   const serviceByCountry = useGetServiceCountryIdQuery(selectedCountry.id ?? 0);
   const [postNewOrder, newOrder] = usePostNewOrderMutation();
-  const order = useGetOrderQuery({
-    id: newOrder.data?.data.id,
-    number: newOrder.data?.data.number,
-  });
 
   const handleSelectedCountryChange = (option: CountryResponseItem) => {
     setSelectedCountry(option);
@@ -53,7 +46,6 @@ const OrderProduk = () => {
     };
 
     postNewOrder(body);
-    order.refetch();
     setIsClearInput(true);
     setSelectedCountry(0);
     setSelectedOperator("");
@@ -89,12 +81,8 @@ const OrderProduk = () => {
         </CardContiner>
         <div className="col-span-3">
           <CardContiner>
-            {order.isLoading && <div className="bg-[red]">Loading..</div>}
             {newOrder.isLoading && <div className="bg-[green]">Loading..</div>}
-            <Table
-              data={order.data?.data ?? []}
-              onChange={() => order.refetch()}
-            />
+            <Table />
           </CardContiner>
         </div>
       </div>
