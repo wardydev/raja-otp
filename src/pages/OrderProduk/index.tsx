@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Button, CardContiner, Layout } from "../../components";
+import { useState } from "react";
+import { Button, CardContiner, Layout, LoadingSpinner } from "../../components";
 import Table from "./Table";
 import {
   useGetCountryQuery,
@@ -8,12 +8,17 @@ import {
 } from "../../api/services/serviceApi";
 import DropdownCountry from "./DropdownCountry";
 import DropdownOperator from "./DropdownOperator";
-import { usePostNewOrderMutation } from "../../api/services/orderApi";
+import {
+  useGetOrderQuery,
+  usePostNewOrderMutation,
+} from "../../api/services/orderApi";
 import {
   CountryResponseItem,
   ServiceByCountryResponse,
 } from "../../utils/interfaces";
 import DropdownInput from "./DropdownInput";
+import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 const OrderProduk = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,12 +27,12 @@ const OrderProduk = () => {
   const [selectedCountryService, setSelectedCountryService] = useState<
     ServiceByCountryResponse | undefined
   >();
-  const [isClearInput, setIsClearInput] = useState<boolean>(false);
 
   const { data } = useGetCountryQuery();
   const operator = useGetOperatorQuery(selectedCountry.id ?? 0);
   const serviceByCountry = useGetServiceCountryIdQuery(selectedCountry.id ?? 0);
   const [postNewOrder, newOrder] = usePostNewOrderMutation();
+  const { refetch } = useGetOrderQuery();
 
   const handleSelectedCountryChange = (option: CountryResponseItem) => {
     setSelectedCountry(option);
@@ -40,16 +45,17 @@ const OrderProduk = () => {
   };
 
   const handleButtonSubmit = () => {
-    const body = {
-      service_id: selectedCountryService?.id,
-      operator: selectedOperator,
-    };
+    try {
+      const body = {
+        service_id: selectedCountryService?.id,
+        operator: selectedOperator,
+      };
 
-    postNewOrder(body);
-    setIsClearInput(true);
-    setSelectedCountry(0);
-    setSelectedOperator("");
-    setSelectedCountryService(undefined);
+      postNewOrder(body);
+      refetch();
+    } catch (err) {
+      toast.error(err);
+    }
   };
 
   return (
@@ -61,12 +67,11 @@ const OrderProduk = () => {
             options={data?.data ?? []}
             defaultValue={data?.data[0].country_name ?? "Server"}
             optionChange={handleSelectedCountryChange}
-            setIsClearInput={setIsClearInput}
           />
           <DropdownOperator
             label="Pilih Operator :"
             options={operator?.data?.data ?? []}
-            defaultValue={operator.data?.data[0] ?? "Pilih Operator"}
+            defaultValue={"Pilih Operator"}
             optionChange={handleSelectedOperatorChange}
           />
           <DropdownInput
@@ -81,8 +86,8 @@ const OrderProduk = () => {
         </CardContiner>
         <div className="col-span-3">
           <CardContiner>
-            {newOrder.isLoading && <div className="bg-[green]">Loading..</div>}
             <Table />
+            {newOrder.isLoading && <LoadingSpinner />}
           </CardContiner>
         </div>
       </div>

@@ -11,7 +11,7 @@ import {
 export const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery,
-  tagTypes: ["Order"],
+  tagTypes: ["Order, Service"],
   endpoints: (builder) => ({
     postNewOrder: builder.mutation<INewOrderResponse, INewOrderBody>({
       query: (body) => ({

@@ -25,6 +25,7 @@ interface ILayout {
 }
 interface IHeader {
   handleDrawer: () => void;
+  onCloseModal: () => void;
 }
 interface IButton {
   title: string;
@@ -60,7 +61,6 @@ interface IDropdownCountry {
   optionChange: (option: CountryResponseItem) => void;
   options: CountryResponseItem[];
   defaultValue: string | undefined;
-  setIsClearInput: React.Dispatch<React.SetStateAction<boolean>>;
 }
 interface ITableOrderProducts {
   data: IOrderResponseItem[];
@@ -69,7 +69,6 @@ interface ITableOrderProducts {
 interface IInboxColumn {
   status: string;
   inbox: string | null;
-  onChange: () => void;
 }
 interface IActionColumn {
   status: string;

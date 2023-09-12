@@ -40,7 +40,7 @@ const Pricing: React.FC<PricingProps> = ({ packages }) => {
           <Link
             state={{ amount: pkg.price, package: pkg.name }}
             to="/deposit/detail"
-            className={`block w-full bg-primary-100 text-white py-3 rounded-lg hover:bg-primary-200 text-light mt-6 text-center ${
+            className={`block w-fulltext-white py-3 rounded-lg text-light mt-6 text-center ${
               pkg.isSpecial
                 ? "bg-[#ffffff52] hover:bg-[#ffffff41] font-medium text-primary-200"
                 : "bg-primary-100 hover:bg-primary-200"

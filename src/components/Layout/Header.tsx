@@ -11,7 +11,7 @@ import { IHeader } from "../../utils/interfaces";
 import IKingAvatar from "/icons/IkingAvatar2.png";
 import { useGetMeQuery } from "../../api/services/userApi";
 
-const Header: React.FC<IHeader> = ({ handleDrawer }) => {
+const Header: React.FC<IHeader> = ({ handleDrawer, onCloseModal }) => {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [isShowCardProfile, setIsShowCardProfile] = useState<boolean>(false);
   const { data } = useGetMeQuery();
@@ -24,6 +24,11 @@ const Header: React.FC<IHeader> = ({ handleDrawer }) => {
     }
     setIsFullscreen(!isFullscreen);
   }, [isFullscreen]);
+
+  const handleCardProfile = useCallback(() => {
+    onCloseModal();
+    setIsShowCardProfile(false);
+  }, [onCloseModal, setIsShowCardProfile]);
 
   const toggleShowCardProfile = () => {
     setIsShowCardProfile(!isShowCardProfile);
@@ -70,7 +75,9 @@ const Header: React.FC<IHeader> = ({ handleDrawer }) => {
                 width={50}
               />
             </div>
-            {isShowCardProfile && <CardProfile />}
+            {isShowCardProfile && (
+              <CardProfile onCloseModal={handleCardProfile} />
+            )}
           </div>
         </div>
       </div>

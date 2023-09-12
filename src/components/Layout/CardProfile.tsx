@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Button } from "..";
@@ -6,16 +5,21 @@ import { useAuth } from "../../hooks/useAuth";
 import IKingAvatar from "/icons/IkingAvatar2.png";
 import { useGetMeQuery } from "../../api/services/userApi";
 import { formatRupiah } from "../../utils/functions";
+import { toast } from "react-toastify";
 
-const CardProfile = () => {
+const CardProfile = ({ onCloseModal }: { onCloseModal: () => void }) => {
   const { logout } = useAuth();
   const navigate = useNavigate();
   const { data } = useGetMeQuery();
 
-  const handleLogout = useCallback(() => {
-    logout();
-    navigate("/login");
-  }, [logout]);
+  const handleLogout = async () => {
+    try {
+      logout();
+      navigate("/login");
+    } catch (err) {
+      toast.error("Terjadi Kesalahan saat melakukan logout!");
+    }
+  };
 
   return (
     <div className="bg-[white] absolute top-[76px] w-[220px] -left-16 z-20 rounded-xl p-4 shadow-xl">
@@ -39,7 +43,7 @@ const CardProfile = () => {
           </p>
         </div>
         <hr className="mb-4 border-1 w-full border-[#ebebeb]" />
-        <Button title="Pengaturan Akun" />
+        <Button title="Pengaturan Akun" handleButton={onCloseModal} />
         <div className="mt-4 mb-2 w-full text-center">
           <span
             className="text-[red] font-medium cursor-pointer hover:text-[#be4343]"

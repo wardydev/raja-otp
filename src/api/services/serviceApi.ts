@@ -9,7 +9,7 @@ import {
 export const serviceApi = createApi({
   reducerPath: "serviceApi",
   baseQuery,
-  tagTypes: ["Service"],
+  tagTypes: ["Service, Order"],
   endpoints: (builder) => ({
     getCountry: builder.query<CountryResponse, undefined>({
       query: () => "api/service/country",

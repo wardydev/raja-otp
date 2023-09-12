@@ -7,6 +7,7 @@ import Login from "./Login";
 import Register from "./Register";
 import DetailPayment from "./DetailPayment";
 import DetailPaymentById from "./DetailPayment/DetailPaymentById";
+import TermCondition from "./TermCondition";
 
 export {
   Dashboard,
@@ -18,4 +19,5 @@ export {
   Register,
   DetailPayment,
   DetailPaymentById,
+  TermCondition,
 };
