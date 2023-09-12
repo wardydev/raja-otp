@@ -4,14 +4,13 @@ import {
   IHistoryResponse,
   INewOrderBody,
   INewOrderResponse,
-  IOrderBody,
   IOrderResponse,
 } from "./types";
 
 export const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery,
-  tagTypes: ["Order, Service"],
+  tagTypes: ["Order"],
   endpoints: (builder) => ({
     postNewOrder: builder.mutation<INewOrderResponse, INewOrderBody>({
       query: (body) => ({

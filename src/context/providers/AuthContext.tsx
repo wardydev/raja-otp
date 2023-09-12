@@ -21,36 +21,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const logout = async () => {
-    try {
-      const token = localStorage.getItem("token");
-
-      if (token) {
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", token);
-
-        const res = await fetch(
-          import.meta.env.VITE_API_URL + "api/auth/logout",
-          {
-            method: "GET",
-            headers: myHeaders,
-            redirect: "follow",
-          }
-        );
-        const resJson = await res.json();
-        if (resJson) {
-          toast.success("Logout berhasil");
-          localStorage.removeItem("token");
-          setIsAuthenticated(false);
-        }
-      }
-    } catch (err) {
-      toast.error("Terjadi kesalahan!");
-    }
-  };
-
   return (
-    <AuthContext.Provider value={{ login, isAuthenticated, logout }}>
+    <AuthContext.Provider value={{ login, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );

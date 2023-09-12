@@ -19,6 +19,7 @@ interface IDropdown {
 interface ISidebarDrawer {
   isOpen: boolean;
   handleDrawer: () => void;
+  openModal: () => void;
 }
 interface ILayout {
   children: ReactNode;
@@ -69,6 +70,7 @@ interface ITableOrderProducts {
 interface IInboxColumn {
   status: string;
   inbox: string | null;
+  onChange: () => void;
 }
 interface IActionColumn {
   status: string;

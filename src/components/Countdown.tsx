@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 
 interface CountdownProps {
   initialMinutes: number;
+  status: string;
 }
 
-const Countdown: React.FC<CountdownProps> = ({ initialMinutes }) => {
+const Countdown: React.FC<CountdownProps> = ({ initialMinutes, status }) => {
   const [minutes, setMinutes] = useState(initialMinutes);
   const [seconds, setSeconds] = useState(0);
 
@@ -23,6 +24,13 @@ const Countdown: React.FC<CountdownProps> = ({ initialMinutes }) => {
 
     return () => clearInterval(interval);
   }, [minutes, seconds]);
+
+  useEffect(() => {
+    if (status === "3") {
+      setMinutes(initialMinutes);
+      setSeconds(0);
+    }
+  }, [status, initialMinutes]);
 
   return (
     <div className="text-center">

@@ -1,23 +1,36 @@
 import { useNavigate } from "react-router-dom";
 
 import { Button } from "..";
-import { useAuth } from "../../hooks/useAuth";
 import IKingAvatar from "/icons/IkingAvatar2.png";
 import { useGetMeQuery } from "../../api/services/userApi";
 import { formatRupiah } from "../../utils/functions";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 const CardProfile = ({ onCloseModal }: { onCloseModal: () => void }) => {
-  const { logout } = useAuth();
   const navigate = useNavigate();
-  const { data } = useGetMeQuery();
+  const { data } = useGetMeQuery(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleLogout = async () => {
+    setIsLoading(true);
     try {
-      logout();
-      navigate("/login");
+      const token = localStorage.getItem("token");
+      const res = await fetch(
+        import.meta.env.VITE_API_URL + "api/auth/logout",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      const resJson = await res.json();
+      if (resJson) {
+        setIsLoading(false);
+        toast.success(resJson.messages);
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
     } catch (err) {
-      toast.error("Terjadi Kesalahan saat melakukan logout!");
+      toast.error("Terjadi Kesalahan!");
     }
   };
 
@@ -49,7 +62,7 @@ const CardProfile = ({ onCloseModal }: { onCloseModal: () => void }) => {
             className="text-[red] font-medium cursor-pointer hover:text-[#be4343]"
             onClick={handleLogout}
           >
-            Logout
+            {isLoading ? "Loading..." : "Logout"}
           </span>
         </div>
       </div>

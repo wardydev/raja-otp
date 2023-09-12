@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+
 import { Button, CardContiner, Layout, LoadingSpinner } from "../../components";
 import Table from "./Table";
 import {
@@ -17,8 +19,6 @@ import {
   ServiceByCountryResponse,
 } from "../../utils/interfaces";
 import DropdownInput from "./DropdownInput";
-import { toast } from "react-toastify";
-// import { toast } from "react-toastify";
 
 const OrderProduk = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,11 +28,11 @@ const OrderProduk = () => {
     ServiceByCountryResponse | undefined
   >();
 
-  const { data } = useGetCountryQuery();
+  const { data } = useGetCountryQuery(undefined);
   const operator = useGetOperatorQuery(selectedCountry.id ?? 0);
   const serviceByCountry = useGetServiceCountryIdQuery(selectedCountry.id ?? 0);
   const [postNewOrder, newOrder] = usePostNewOrderMutation();
-  const { refetch } = useGetOrderQuery();
+  const order = useGetOrderQuery(undefined);
 
   const handleSelectedCountryChange = (option: CountryResponseItem) => {
     setSelectedCountry(option);
@@ -52,11 +52,21 @@ const OrderProduk = () => {
       };
 
       postNewOrder(body);
-      refetch();
     } catch (err) {
-      toast.error(err);
+      toast.error("Terjadi kesalahan, Pastikan internet");
     }
   };
+
+  useEffect(() => {
+    if (newOrder.isSuccess) {
+      if (newOrder.data?.success) {
+        order.refetch();
+        toast.success(newOrder?.data.messages);
+      } else {
+        toast.error(newOrder?.data.messages);
+      }
+    }
+  }, [newOrder]);
 
   return (
     <Layout>

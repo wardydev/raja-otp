@@ -10,7 +10,7 @@ import { useGetOrderQuery } from "../../api/services/orderApi";
 import EmptyDataTable from "../../components/EmptyDataTable";
 
 const Table = () => {
-  const { data, isLoading } = useGetOrderQuery();
+  const { isLoading, data, refetch } = useGetOrderQuery(undefined);
   return (
     <div className="mt-4 overflow-x-auto relative">
       {isLoading && <LoadingSpinner />}
@@ -45,8 +45,8 @@ const Table = () => {
           </tr>
         </thead>
         <tbody className="">
-          {(data?.data.length !== 0 &&
-            data?.data.map((item, index) => (
+          {(data?.data?.length !== 0 &&
+            data?.data?.map((item, index) => (
               <tr key={index}>
                 <td className="w-20 lg:w-24 px-6 py-4 whitespace-nowrap flex justify-start">
                   <ButtonCopy textToCopy={item.number} />
@@ -54,12 +54,17 @@ const Table = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{item.number}</div>
                 </td>
-                <InboxColumn status={item.status} inbox={item.inbox} />
+                <InboxColumn
+                  status={item.status}
+                  inbox={item.inbox}
+                  onChange={() => refetch()}
+                />
                 <td className="px-6 py-4 whitespace-nowrap  flex justify-start">
                   <Countdown
                     initialMinutes={
                       item.status === "3" ? 0 : item?.expired_at ?? 0
                     }
+                    status={item.status}
                   />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -72,12 +77,25 @@ const Table = () => {
             []}
         </tbody>
       </table>
-      {data?.data.length === 0 && <EmptyDataTable />}
+      {data?.data?.length === 0 && <EmptyDataTable />}
     </div>
   );
 };
 
-const InboxColumn: React.FC<IInboxColumn> = ({ status, inbox }) => {
+const InboxColumn: React.FC<IInboxColumn> = ({ status, inbox, onChange }) => {
+  useEffect(() => {
+    const pollingInterval = setInterval(() => {
+      onChange();
+    }, 5000);
+
+    if (status === "3") {
+      clearInterval(pollingInterval);
+    }
+
+    return () => {
+      clearInterval(pollingInterval);
+    };
+  }, [status]);
   return (
     <td className="px-6 py-4 whitespace-nowrap w-2/4">
       <div className="text-sm text-gray-900 flex flex-wrap lg:whitespace-pre-wrap">

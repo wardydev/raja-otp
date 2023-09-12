@@ -8,8 +8,8 @@ const DetailPayment = () => {
 
   return (
     <Layout>
-      <div className="flex justify-center items-start w-full">
-        <div className="flex space-x-6">
+      <div className="lg:flex justify-center items-start w-full">
+        <div className="flex flex-col lg:flex-row space-x-0 lg:space-x-6">
           <Payment setDeposit={setDepositId} />
           <PaymentProceed depositId={depositId} />
         </div>

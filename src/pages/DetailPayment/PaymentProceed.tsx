@@ -2,12 +2,11 @@ import ITime from "/icons/ITime.svg";
 import { useGetDetailPaymentQuery } from "../../api/services/depositApi";
 import { formatRupiah } from "../../utils/functions";
 import { itemsTutorialQris } from "../../utils/helper";
-import { LoadingSpinner } from "../../components";
 import IQRCode from "/icons/IQRCode.svg";
 
 const PaymentProceedPlaceholder = () => {
   return (
-    <div className="w-[666px] bg-[white] rounded-xl p-8 flex items-center justify-center relative">
+    <div className="w-full lg:w-[666px] bg-[white] rounded-xl p-8 flex items-center justify-center relative">
       <div className="flex flex-col items-center justify-center space-y-4 w-full lg:w-2/4 text-center">
         <img src={IQRCode} alt="qr-code icon" width={92} />
         <h5 className="text-[#C5C5C5] text-lg whitespace-pre-line">
