@@ -9,6 +9,7 @@ import {
   OrderProduk,
   Register,
   RiwayatTransaksi,
+  TermCondition,
 } from "./pages";
 import ProtectedRoute from "./utils/protectedRoute";
 
@@ -72,6 +73,14 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/terms-codition",
+    element: (
+      <ProtectedRoute>
+        <TermCondition />
+      </ProtectedRoute>
+    ),
   },
 ]);
 

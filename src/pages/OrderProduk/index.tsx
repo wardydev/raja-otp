@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
-import { Button, CardContiner, Layout } from "../../components";
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+
+import { Button, CardContiner, Layout, LoadingSpinner } from "../../components";
 import Table from "./Table";
 import {
   useGetCountryQuery,
@@ -8,7 +10,10 @@ import {
 } from "../../api/services/serviceApi";
 import DropdownCountry from "./DropdownCountry";
 import DropdownOperator from "./DropdownOperator";
-import { usePostNewOrderMutation } from "../../api/services/orderApi";
+import {
+  useGetOrderQuery,
+  usePostNewOrderMutation,
+} from "../../api/services/orderApi";
 import {
   CountryResponseItem,
   ServiceByCountryResponse,
@@ -22,12 +27,12 @@ const OrderProduk = () => {
   const [selectedCountryService, setSelectedCountryService] = useState<
     ServiceByCountryResponse | undefined
   >();
-  const [isClearInput, setIsClearInput] = useState<boolean>(false);
 
-  const { data } = useGetCountryQuery();
+  const { data } = useGetCountryQuery(undefined);
   const operator = useGetOperatorQuery(selectedCountry.id ?? 0);
   const serviceByCountry = useGetServiceCountryIdQuery(selectedCountry.id ?? 0);
   const [postNewOrder, newOrder] = usePostNewOrderMutation();
+  const order = useGetOrderQuery(undefined);
 
   const handleSelectedCountryChange = (option: CountryResponseItem) => {
     setSelectedCountry(option);
@@ -40,17 +45,28 @@ const OrderProduk = () => {
   };
 
   const handleButtonSubmit = () => {
-    const body = {
-      service_id: selectedCountryService?.id,
-      operator: selectedOperator,
-    };
+    try {
+      const body = {
+        service_id: selectedCountryService?.id,
+        operator: selectedOperator,
+      };
 
-    postNewOrder(body);
-    setIsClearInput(true);
-    setSelectedCountry(0);
-    setSelectedOperator("");
-    setSelectedCountryService(undefined);
+      postNewOrder(body);
+    } catch (err) {
+      toast.error("Terjadi kesalahan, Pastikan internet");
+    }
   };
+
+  useEffect(() => {
+    if (newOrder.isSuccess) {
+      if (newOrder.data?.success) {
+        order.refetch();
+        toast.success(newOrder?.data.messages);
+      } else {
+        toast.error(newOrder?.data.messages);
+      }
+    }
+  }, [newOrder]);
 
   return (
     <Layout>
@@ -61,12 +77,11 @@ const OrderProduk = () => {
             options={data?.data ?? []}
             defaultValue={data?.data[0].country_name ?? "Server"}
             optionChange={handleSelectedCountryChange}
-            setIsClearInput={setIsClearInput}
           />
           <DropdownOperator
             label="Pilih Operator :"
             options={operator?.data?.data ?? []}
-            defaultValue={operator.data?.data[0] ?? "Pilih Operator"}
+            defaultValue={"Pilih Operator"}
             optionChange={handleSelectedOperatorChange}
           />
           <DropdownInput
@@ -81,8 +96,8 @@ const OrderProduk = () => {
         </CardContiner>
         <div className="col-span-3">
           <CardContiner>
-            {newOrder.isLoading && <div className="bg-[green]">Loading..</div>}
             <Table />
+            {newOrder.isLoading && <LoadingSpinner />}
           </CardContiner>
         </div>
       </div>

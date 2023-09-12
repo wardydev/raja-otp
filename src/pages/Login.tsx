@@ -1,7 +1,8 @@
 import { useState, ChangeEvent, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import { Alert, Button } from "../components";
+import { Button } from "../components";
 import Ilogo from "/ILogo.svg";
 import { usePostLoginMutation } from "../api/services/authApi";
 import { useAuth } from "../hooks/useAuth";
@@ -11,7 +12,6 @@ const Login = () => {
   const [postLogin, result] = usePostLoginMutation();
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [isAlert, setIsAlert] = useState<boolean>(false);
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setInput((prevState) => {
@@ -32,12 +32,9 @@ const Login = () => {
         password: input.password,
       };
       await postLogin(body);
-      input.username = "";
-      input.password = "";
+      setInput({ username: "", password: "" });
     } catch (err) {
-      console.log(err);
-      input.username = "";
-      input.password = "";
+      setInput({ username: "", password: "" });
     }
   };
 
@@ -46,12 +43,10 @@ const Login = () => {
       login(result?.data?.data.token);
       if (!result?.data.success) {
         navigate("/login");
-        setIsAlert(true);
-        setTimeout(() => {
-          setIsAlert(false);
-        }, 2000);
+        toast.error(result.data.messages);
       } else {
         navigate("/");
+        toast.success(result.data.messages);
       }
     }
   }, [result]);
@@ -59,7 +54,6 @@ const Login = () => {
   return (
     <div className="container-sign min-h-screen bg-gradient-to-l from-primary-100 to-secondary-100 overflow-y-hidden max-w-full w-full flex flex-col lg:flex-row md:flex-row items-center justify-center space-x-0 lg:space-x-24 px-3 lg:px-0">
       <div className="bg-light p-8 w-full lg:w-1/4 rounded-2xl relative z-10 order-2 lg:order-1 mt-8 lg:mt-0 md:mt-0">
-        {isAlert && <Alert message={result?.data?.messages} types="danger" />}
         <h2 className="text-3xl font-medium mb-6 text-dark text-center border-b-4 border-primary-100 w-24 m-auto pb-1">
           Masuk
         </h2>

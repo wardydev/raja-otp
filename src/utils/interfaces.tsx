@@ -19,12 +19,14 @@ interface IDropdown {
 interface ISidebarDrawer {
   isOpen: boolean;
   handleDrawer: () => void;
+  openModal: () => void;
 }
 interface ILayout {
   children: ReactNode;
 }
 interface IHeader {
   handleDrawer: () => void;
+  onCloseModal: () => void;
 }
 interface IButton {
   title: string;
@@ -60,7 +62,6 @@ interface IDropdownCountry {
   optionChange: (option: CountryResponseItem) => void;
   options: CountryResponseItem[];
   defaultValue: string | undefined;
-  setIsClearInput: React.Dispatch<React.SetStateAction<boolean>>;
 }
 interface ITableOrderProducts {
   data: IOrderResponseItem[];

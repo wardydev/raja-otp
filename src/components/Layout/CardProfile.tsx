@@ -1,21 +1,38 @@
-import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Button } from "..";
-import { useAuth } from "../../hooks/useAuth";
 import IKingAvatar from "/icons/IkingAvatar2.png";
 import { useGetMeQuery } from "../../api/services/userApi";
 import { formatRupiah } from "../../utils/functions";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
-const CardProfile = () => {
-  const { logout } = useAuth();
+const CardProfile = ({ onCloseModal }: { onCloseModal: () => void }) => {
   const navigate = useNavigate();
-  const { data } = useGetMeQuery();
+  const { data } = useGetMeQuery(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleLogout = useCallback(() => {
-    logout();
-    navigate("/login");
-  }, [logout]);
+  const handleLogout = async () => {
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(
+        import.meta.env.VITE_API_URL + "api/auth/logout",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      const resJson = await res.json();
+      if (resJson) {
+        setIsLoading(false);
+        toast.success(resJson.messages);
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
+    } catch (err) {
+      toast.error("Terjadi Kesalahan!");
+    }
+  };
 
   return (
     <div className="bg-[white] absolute top-[76px] w-[220px] -left-16 z-20 rounded-xl p-4 shadow-xl">
@@ -39,13 +56,13 @@ const CardProfile = () => {
           </p>
         </div>
         <hr className="mb-4 border-1 w-full border-[#ebebeb]" />
-        <Button title="Pengaturan Akun" />
+        <Button title="Pengaturan Akun" handleButton={onCloseModal} />
         <div className="mt-4 mb-2 w-full text-center">
           <span
             className="text-[red] font-medium cursor-pointer hover:text-[#be4343]"
             onClick={handleLogout}
           >
-            Logout
+            {isLoading ? "Loading..." : "Logout"}
           </span>
         </div>
       </div>

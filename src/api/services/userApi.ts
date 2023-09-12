@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { UserResponse } from "./types";
+import { SettingBody, SettingResponse, UserResponse } from "./types";
 import { baseQuery } from "./helper";
 
 export const userApi = createApi({
@@ -10,7 +10,14 @@ export const userApi = createApi({
     getMe: builder.query<UserResponse, undefined>({
       query: () => `api/user/me`,
     }),
+    postSetting: builder.mutation<SettingResponse, SettingBody>({
+      query: (body) => ({
+        url: "api/user/setting",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useGetMeQuery } = userApi;
+export const { useGetMeQuery, usePostSettingMutation } = userApi;

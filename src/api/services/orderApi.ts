@@ -4,7 +4,6 @@ import {
   IHistoryResponse,
   INewOrderBody,
   INewOrderResponse,
-  IOrderBody,
   IOrderResponse,
 } from "./types";
 

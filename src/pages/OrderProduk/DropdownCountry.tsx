@@ -6,7 +6,6 @@ const DropdownCountry: React.FC<IDropdownCountry> = ({
   options,
   defaultValue,
   optionChange,
-  setIsClearInput,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<
@@ -21,7 +20,6 @@ const DropdownCountry: React.FC<IDropdownCountry> = ({
     optionChange(option);
     setSelectedOption(option);
     setIsOpen(false);
-    setIsClearInput(false);
   };
 
   return (

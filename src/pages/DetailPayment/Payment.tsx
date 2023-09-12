@@ -17,9 +17,9 @@ const Payment: React.FC<IPaymentProceed> = ({ setDeposit }) => {
   const [isPending, setIsPending] = useState<boolean>(false);
   const [depositId, setDepositId] = useState<number | undefined>();
 
-  const { data, isLoading } = useGetPaymentQuery();
+  const { data, isLoading } = useGetPaymentQuery(undefined);
   const [postNewPayment, newPayment] = usePostNewPaymentMutation();
-  const historyDeposit = useGetHistoryQuery();
+  const historyDeposit = useGetHistoryQuery(1);
 
   const paymentKey = useMemo(() => {
     return data?.data[0].pm_key;
@@ -64,7 +64,7 @@ const Payment: React.FC<IPaymentProceed> = ({ setDeposit }) => {
   }, [postNewPayment, newPayment, setDeposit, historyDeposit]);
 
   return (
-    <div className="w-[454px] min-h-[578px] bg-[white] rounded-2xl p-8">
+    <div className="w-full lg:w-[454px] min-h-[578px] bg-[white] rounded-2xl p-4 lg:p-8 mb-6 lg:mb-0">
       <div>
         <div className="flex items-center space-x-2 mb-4">
           <Link to="/deposit" className="text-[#DEDEDE]">

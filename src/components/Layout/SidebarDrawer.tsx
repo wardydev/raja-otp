@@ -1,18 +1,49 @@
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import CardDrawer from "./CardDrawer";
-import { Link, useLocation } from "react-router-dom";
 import { menuNavItems } from "../../utils/helper";
 import IClose from "/icons/IClose.svg";
 import { ISidebarDrawer } from "../../utils/interfaces";
 import IKingAvatar from "/icons/IkingAvatar2.png";
 import { useGetMeQuery } from "../../api/services/userApi";
 
-const SidebarDrawer: React.FC<ISidebarDrawer> = ({ isOpen, handleDrawer }) => {
+const SidebarDrawer: React.FC<ISidebarDrawer> = ({
+  isOpen,
+  handleDrawer,
+  openModal,
+}) => {
   const location = useLocation();
-  const { data } = useGetMeQuery();
+  const { data } = useGetMeQuery(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(
+        import.meta.env.VITE_API_URL + "api/auth/logout",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      const resJson = await res.json();
+      if (resJson) {
+        setIsLoading(false);
+        toast.success(resJson.messages);
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
+    } catch (err) {
+      toast.error("Terjadi Kesalahan!");
+    }
+  };
 
   return (
     <div
-      className={`w-full h-screen fixed top-0 left-0 transition ${
+      className={`z-50 w-full h-screen fixed top-0 left-0 transition ${
         isOpen ? "bg-[#0000007e] visible" : "bg-[#0000007e] invisible"
       }`}
     >
@@ -56,6 +87,20 @@ const SidebarDrawer: React.FC<ISidebarDrawer> = ({ isOpen, handleDrawer }) => {
                 </Link>
               );
             })}
+            <div className="mt-8 space-y-2 flex flex-col justify-center">
+              <button
+                className="text-[#63ad31] rounded-lg w-full py-3 font-medium transition-all underline"
+                onClick={openModal}
+              >
+                Pengaturan
+              </button>
+              <button
+                className="text-[red] bg-[#ff00004b] hover:bg-[#ff000027] rounded-lg w-full py-3 font-medium transition-all"
+                onClick={handleLogout}
+              >
+                {isLoading ? "Loading..." : "Logout"}
+              </button>
+            </div>
           </div>
         </nav>
       </div>

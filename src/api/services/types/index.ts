@@ -54,6 +54,15 @@ interface UserResponse {
     regdate: number;
   };
 }
+interface SettingResponse {
+  success: boolean;
+  messages: string;
+  data: string;
+}
+interface SettingBody {
+  old_password: string;
+  new_password: string;
+}
 
 interface NewsResponse {
   success: boolean;
@@ -273,4 +282,6 @@ export type {
   IPostNewPaymentResponse,
   IGetDetailPayment,
   IGetCancel,
+  SettingResponse,
+  SettingBody,
 };

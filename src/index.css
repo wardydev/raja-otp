@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 .menuItem {
   position: relative;
 }
@@ -141,7 +139,6 @@
   }
 }
 
-
 @media only screen and (min-width: 340px) {
   .child-container {
     min-height: 300px;
@@ -161,4 +158,5 @@
   .child-container {
     max-height: 41rem;
   }
+  
 }

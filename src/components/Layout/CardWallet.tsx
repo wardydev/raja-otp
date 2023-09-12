@@ -4,7 +4,7 @@ import { formatRupiah } from "../../utils/functions";
 import { LoadingSpinner } from "..";
 
 const CardWallet = () => {
-  const { data, isLoading } = useGetMeQuery();
+  const { data, isLoading } = useGetMeQuery(undefined);
 
   return (
     <div className="card-wallet min-h-[70px] w-[380px] rounded-lg bg-gradient-to-r from-primary to-secondary p-5 relative">

@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import { toast } from "react-toastify";
 
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
@@ -20,13 +21,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    setIsAuthenticated(true);
-  };
-
   return (
-    <AuthContext.Provider value={{ login, isAuthenticated, logout }}>
+    <AuthContext.Provider value={{ login, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
