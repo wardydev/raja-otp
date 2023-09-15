@@ -1,6 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "./helper";
 import {
+  IGetCancel,
+  IGetFinish,
+  IGetResend,
   IHistoryResponse,
   INewOrderBody,
   INewOrderResponse,
@@ -25,8 +28,23 @@ export const orderApi = createApi({
     getHistory: builder.query<IHistoryResponse, number>({
       query: (page) => `api/order/history?page=${page}`,
     }),
+    getCancel: builder.query<IGetCancel, number>({
+      query: (id) => `api/order/cancel/${id}`,
+    }),
+    getResend: builder.query<IGetResend, number>({
+      query: (id) => `api/order/resend/${id}`,
+    }),
+    getFinish: builder.query<IGetFinish, number>({
+      query: (id) => `api/order/finish/${id}`,
+    }),
   }),
 });
 
-export const { usePostNewOrderMutation, useGetOrderQuery, useGetHistoryQuery } =
-  orderApi;
+export const {
+  usePostNewOrderMutation,
+  useGetOrderQuery,
+  useGetHistoryQuery,
+  useLazyGetCancelQuery,
+  useLazyGetResendQuery,
+  useLazyGetFinishQuery,
+} = orderApi;

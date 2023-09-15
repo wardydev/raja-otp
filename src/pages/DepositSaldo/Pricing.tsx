@@ -19,9 +19,13 @@ const Pricing: React.FC<PricingProps> = ({ packages }) => {
           }
         >
           <div className="mb-3">
-            {pkg.isSpecial && (
+            {pkg.isSpecial ? (
               <p className={"font-medium uppercase text-xs text-[#f1ecec]"}>
                 populer
+              </p>
+            ) : (
+              <p className="font-medium uppercase text-xs text-[#b0b0b0]">
+                Untuk Pemula
               </p>
             )}
             <h3 className="text-xl font-semibold mb-4">{pkg.name}</h3>
@@ -55,7 +59,7 @@ const Pricing: React.FC<PricingProps> = ({ packages }) => {
           <p className="font-medium uppercase text-xs text-[#b0b0b0]">
             Lebih Fleksibel
           </p>
-          <h3 className="text-xl font-semibold mb-4">Paket Pangeran</h3>
+          <h3 className="text-xl font-semibold mb-4">Paket Ratu</h3>
         </div>
 
         <div>

@@ -253,8 +253,17 @@ interface IGetDetailPayment {
   messages: string;
   data: ItemDetailPayment;
 }
-
 interface IGetCancel {
+  success: boolean;
+  messages: string;
+  data: string;
+}
+interface IGetResend {
+  success: boolean;
+  messages: string;
+  data: string;
+}
+interface IGetFinish {
   success: boolean;
   messages: string;
   data: string;
@@ -284,4 +293,6 @@ export type {
   IGetCancel,
   SettingResponse,
   SettingBody,
+  IGetResend,
+  IGetFinish,
 };

@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
+import { toast } from "react-toastify";
 
 import IClose from "/icons/IClose.svg";
 import IResend from "/icons/IResend.svg";
@@ -6,7 +7,12 @@ import IDone from "/icons/IDone.svg";
 import ButtonCopy from "./ButtonCopy";
 import { Countdown, LoadingSpinner } from "../../components";
 import { IActionColumn, IInboxColumn } from "../../utils/interfaces";
-import { useGetOrderQuery } from "../../api/services/orderApi";
+import {
+  useGetOrderQuery,
+  useLazyGetCancelQuery,
+  useLazyGetFinishQuery,
+  useLazyGetResendQuery,
+} from "../../api/services/orderApi";
 import EmptyDataTable from "../../components/EmptyDataTable";
 
 const Table = () => {
@@ -69,7 +75,12 @@ const Table = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">
-                    <ActionColumn status={item.status} inbox={item.inbox} />
+                    <ActionColumn
+                      status={item.status}
+                      inbox={item.inbox}
+                      itemId={item.id}
+                      onChange={() => refetch()}
+                    />
                   </div>
                 </td>
               </tr>
@@ -105,29 +116,89 @@ const InboxColumn: React.FC<IInboxColumn> = ({ status, inbox, onChange }) => {
   );
 };
 
-const ActionColumn: React.FC<IActionColumn> = ({ status, inbox }) => {
+const ActionColumn: React.FC<IActionColumn> = ({
+  status,
+  inbox,
+  itemId,
+  onChange,
+}) => {
+  const [getCancel, cancelResults] = useLazyGetCancelQuery();
+  const [getResend, resendResults] = useLazyGetResendQuery();
+  const [getFinish, finishResults] = useLazyGetFinishQuery();
+
+  const handleCancel = useCallback(() => {
+    toast.promise(getCancel(itemId), {
+      pending: "Permintaan sedang di proses",
+      success: "Item berhasil di cancel",
+      error: "Terjadi kesalahan, periksa koneksi secara berkala",
+    });
+  }, [getCancel, itemId]);
+
+  const handleResend = useCallback(() => {
+    toast.promise(getResend(itemId), {
+      pending: "Permintaan sedang di proses",
+      success: "Kode sms sudah dikirim kembali",
+      error: "Terjadi kesalahan, periksa koneksi secara berkala",
+    });
+  }, [getResend, itemId]);
+
+  const handleFinish = useCallback(() => {
+    toast.promise(getFinish(itemId), {
+      pending: "Permintaan sedang di proses",
+      success: "Item berhasil diselesaikan",
+      error: "Terjadi kesalahan, periksa koneksi secara berkala",
+    });
+  }, [getFinish, itemId]);
+
+  useEffect(() => {
+    if (cancelResults.isSuccess && cancelResults.data?.success) {
+      onChange();
+    }
+  }, [cancelResults]);
+  useEffect(() => {
+    if (resendResults.isSuccess && resendResults.data?.success) {
+      onChange();
+    }
+  }, [resendResults]);
+  useEffect(() => {
+    if (finishResults.isSuccess && finishResults.data?.success) {
+      onChange();
+    }
+  }, [finishResults]);
+
   switch (true) {
     case status === "2" && inbox === null:
       return (
-        <button className="py-1 px-2 bg-[red] hover:bg-[#bb3b3b] text-light font-medium rounded-lg flex items-center space-x-2">
+        <button
+          className="p-3 bg-[red] hover:bg-[#bb3b3b] text-light font-medium rounded-lg flex items-center space-x-2"
+          onClick={handleCancel}
+        >
           <img src={IClose} alt="" width={16} />
-          <span>Batalkan</span>
         </button>
       );
     case status === "3":
       return (
         <div className="flex items-center space-x-2">
-          <button className="p-3 bg-[#3aa524] hover:bg-[#409130] text-light font-medium rounded-lg flex items-center space-x-2">
+          <button
+            className="p-3 bg-[#3aa524] hover:bg-[#409130] text-light font-medium rounded-lg flex items-center space-x-2"
+            onClick={handleFinish}
+          >
             <img src={IDone} alt="" width={16} />
           </button>
-          <button className="p-3 bg-[#0077ff] hover:bg-[#0051ff] text-light font-medium rounded-lg flex items-center space-x-2">
+          <button
+            className="p-3 bg-[#0077ff] hover:bg-[#0051ff] text-light font-medium rounded-lg flex items-center space-x-2"
+            onClick={handleResend}
+          >
             <img src={IResend} alt="" width={16} />
           </button>
         </div>
       );
     case status === "2" && inbox !== null:
       return (
-        <button className="py-1 px-2 bg-[#3aa524] hover:bg-[#409130] text-light font-medium rounded-lg flex items-center space-x-2">
+        <button
+          className="py-1 px-2 bg-[#3aa524] hover:bg-[#409130] text-light font-medium rounded-lg flex items-center space-x-2"
+          onClick={handleFinish}
+        >
           <img src={IDone} alt="" width={16} />
         </button>
       );
