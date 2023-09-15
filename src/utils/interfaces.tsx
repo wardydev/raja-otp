@@ -75,6 +75,8 @@ interface IInboxColumn {
 interface IActionColumn {
   status: string;
   inbox: string | null;
+  itemId: number;
+  onChange: () => void;
 }
 interface ITableHistory {
   data: IHistoryDataItem[] | undefined;

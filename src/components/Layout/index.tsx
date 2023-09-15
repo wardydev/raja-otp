@@ -6,6 +6,7 @@ import SidebarDrawer from "./SidebarDrawer";
 import { ILayout } from "../../utils/interfaces";
 import ModalSettings from "./ModalSettings";
 import CardDrawer from "./CardDrawer";
+import IWhatsapp from "/icons/IWhatsapp.svg";
 
 const Layout: React.FC<ILayout> = ({ children }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -45,6 +46,13 @@ const Layout: React.FC<ILayout> = ({ children }) => {
         handleDrawer={toggleSidebarDrawer}
         openModal={handleCloseModal}
       />
+      <a
+        href="https://wa.me/087754175829"
+        className="fixed bottom-8 right-8 w-[70px] h-[70px] rounded-full bg-[#479622] hover:bg-[green] p-5 shadow-xl shadow-[#00000033] transition-all"
+        target="_blank"
+      >
+        <img src={IWhatsapp} alt="icon-whatsapp" />
+      </a>
     </div>
   );
 };

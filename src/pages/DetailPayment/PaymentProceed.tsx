@@ -3,6 +3,9 @@ import { useGetDetailPaymentQuery } from "../../api/services/depositApi";
 import { formatRupiah } from "../../utils/functions";
 import { itemsTutorialQris } from "../../utils/helper";
 import IQRCode from "/icons/IQRCode.svg";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { LoadingSpinner } from "../../components";
 
 const PaymentProceedPlaceholder = () => {
   return (
@@ -18,14 +21,21 @@ const PaymentProceedPlaceholder = () => {
 };
 
 const PaymentProceed = ({ depositId }: { depositId: number | null }) => {
-  const { data, isLoading } = useGetDetailPaymentQuery(depositId);
-  if (isLoading) {
-    <h1 className="bg-[red] font-medium">Loading...</h1>;
-  }
-  if (depositId === null)
-    return <PaymentProceedPlaceholder depositId={depositId} />;
+  const { data, isLoading, isSuccess } = useGetDetailPaymentQuery(depositId);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isSuccess && data.success) {
+      if (data?.data.status === "success") {
+        navigate("/order");
+      }
+    }
+  }, [data, isSuccess]);
+
+  if (depositId === null) return <PaymentProceedPlaceholder />;
   return (
-    <div className="w-[666px] bg-[white] rounded-xl p-8">
+    <div className="w-[666px] bg-[white] rounded-xl p-8 relative">
+      {isLoading && <LoadingSpinner />}
       <div>
         <div className="w-full bg-[#FFF1EA] border border-primary-100 rounded-lg p-3 flex items-center space-x-3 mb-7">
           <img src={ITime} alt="icon" width={24} />
