@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
+  ForgetPasswordResponse,
   LoginBody,
   LoginResponse,
   RegisterBody,
@@ -26,7 +27,21 @@ export const authApi = createApi({
         body,
       }),
     }),
+    postForgotPassword: builder.mutation<
+      ForgetPasswordResponse,
+      { email: string }
+    >({
+      query: (body) => ({
+        url: "api/auth/forgot",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
-export const { usePostLoginMutation, usePostRegisterMutation } = authApi;
+export const {
+  usePostLoginMutation,
+  usePostRegisterMutation,
+  usePostForgotPasswordMutation,
+} = authApi;

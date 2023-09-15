@@ -39,7 +39,11 @@ interface RegisterResponse {
     id: number;
   };
 }
-
+interface ForgetPasswordResponse {
+  success: boolean;
+  messages: string;
+  data: string;
+}
 interface UserResponse {
   success: boolean;
   messages: string;
@@ -295,4 +299,5 @@ export type {
   SettingBody,
   IGetResend,
   IGetFinish,
+  ForgetPasswordResponse,
 };
