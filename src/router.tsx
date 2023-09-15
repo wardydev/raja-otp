@@ -5,6 +5,7 @@ import {
   DepositSaldo,
   DetailPayment,
   DetailPaymentById,
+  ForgetPassword,
   Login,
   OrderProduk,
   Register,
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/forget-password",
+    element: <ForgetPassword />,
   },
   {
     path: "/terms-codition",

@@ -16,7 +16,7 @@ const ModalSettings: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   });
 
   const [postSetting, setting] = usePostSettingMutation();
-  const { data, isLoading } = useGetMeQuery();
+  const { data, isLoading } = useGetMeQuery(undefined);
 
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput((prevState) => {

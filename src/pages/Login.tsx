@@ -87,7 +87,7 @@ const Login = () => {
           />
         </div>
         <Link
-          to="/"
+          to="/forget-password"
           className="text-primary-100 font-medium mx-auto flex justify-center"
         >
           <span>Lupa Kata Sandi?</span>
