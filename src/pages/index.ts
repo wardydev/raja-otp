@@ -5,6 +5,10 @@ import ApiDeveloper from "./ApiDeveloper";
 import RiwayatTransaksi from "./RiwayatTransaksi";
 import Login from "./Login";
 import Register from "./Register";
+import DetailPayment from "./DetailPayment";
+import DetailPaymentById from "./DetailPayment/DetailPaymentById";
+import TermCondition from "./TermCondition";
+import ForgetPassword from "./ForgetPassword";
 
 export {
   Dashboard,
@@ -14,4 +18,8 @@ export {
   RiwayatTransaksi,
   Login,
   Register,
+  DetailPayment,
+  DetailPaymentById,
+  TermCondition,
+  ForgetPassword,
 };

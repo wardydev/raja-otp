@@ -1,31 +1,40 @@
-import { useState } from "react";
-import Ilogo from "/ILogo.svg";
+import { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
+
+import Ilogo from "/ILogo.svg";
 import IHamburger from "/icons/IHamburgerMenu.svg";
 import IResize from "/icons/IResize.svg";
 import ISettings from "/icons/ISettings.svg";
 import { enterFullscreen, exitFullscreen } from "../../utils/helper";
 import CardProfile from "./CardProfile";
 import { IHeader } from "../../utils/interfaces";
+import IKingAvatar from "/icons/IkingAvatar2.png";
+import { useGetMeQuery } from "../../api/services/userApi";
 
-const Header: React.FC<IHeader> = ({ handleDrawer }) => {
+const Header: React.FC<IHeader> = ({ handleDrawer, onCloseModal }) => {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [isShowCardProfile, setIsShowCardProfile] = useState<boolean>(false);
+  const { data } = useGetMeQuery(undefined);
 
-  const toggleFullscreen = () => {
+  const toggleFullscreen = useCallback(() => {
     if (!isFullscreen) {
       enterFullscreen();
     } else {
       exitFullscreen();
     }
     setIsFullscreen(!isFullscreen);
-  };
+  }, [isFullscreen]);
+
+  const handleCardProfile = useCallback(() => {
+    onCloseModal();
+    setIsShowCardProfile(false);
+  }, [onCloseModal, setIsShowCardProfile]);
 
   const toggleShowCardProfile = () => {
     setIsShowCardProfile(!isShowCardProfile);
   };
   return (
-    <header className="px-4 md:px-10 lg:px-10 py-4">
+    <header className="px-4 md:px-10 lg:px-10 py-2">
       <div className="flex justify-between items-center">
         <div
           className="hover:bg-light p-2 rounded-md hover:bg-opacity-20 hover:cursor-pointer block md:hidden lg:hidden"
@@ -34,7 +43,7 @@ const Header: React.FC<IHeader> = ({ handleDrawer }) => {
           <img src={IHamburger} alt="hamburger menu" />
         </div>
         <Link to="/">
-          <img src={Ilogo} alt="Logo Rajaotp" width={150} />
+          <img src={Ilogo} alt="Logo Rajaotp" width={120} />
         </Link>
         <div className="flex items-center space-x-4">
           <div className="hidden md:flex lg:flex items-center space-x-4">
@@ -56,17 +65,19 @@ const Header: React.FC<IHeader> = ({ handleDrawer }) => {
               className="flex items-center space-x-0 lg:space-x-3 hover:bg-light p-2 lg:px-5 rounded-md hover:bg-opacity-20 hover:cursor-pointer"
               onClick={toggleShowCardProfile}
             >
-              <h5 className="font-medium text-light hidden md:block lg:block">
-                Wardi
+              <h5 className="font-medium text-light hidden md:block lg:block capitalize">
+                {data?.data.username}
               </h5>
               <img
-                src="https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg"
+                src={IKingAvatar}
                 alt="profile"
                 className="rounded-full ml-4"
                 width={50}
               />
             </div>
-            {isShowCardProfile && <CardProfile />}
+            {isShowCardProfile && (
+              <CardProfile onCloseModal={handleCardProfile} />
+            )}
           </div>
         </div>
       </div>

@@ -1,21 +1,97 @@
 const itemsTabbar = [
   {
     title: "FAQ OTP",
-    content: "lorem ipsum FAQ",
+    content: [
+      <li className="text-dark mb-1">
+        Anda dapat order banyak nomor sekaligus cukup dengan klik tombol Order
+        Nomor beberapa kali.
+      </li>,
+      <li className="text-dark mb-1">
+        Jika Anda membutuhkan 2 SMS atau lebih, Anda bisa menekan tombol Resend
+        saat SMS pertama sudah diterima.
+      </li>,
+      <li className="text-dark mb-1">
+        Apabila menurut Anda SMS yang diterima terlalu lama, Anda dapat
+        membatalkan orderan tersebut.
+      </li>,
+      <li className="text-dark mb-1">
+        Saldo Anda akan Dikembalikan apabila nomor telah dibatalkan (manual atau
+        otomatis dari sistem).
+      </li>,
+      <li className="text-dark mb-1">
+        Masa berlaku / aktif nomor yang dipesan hanya berlaku selama 20 menit.
+      </li>,
+    ],
   },
   {
     title: "Tutorial Cara Order OTP",
-    content: "lorem ipsum Tutorial Cara Order OTP",
+    content: [
+      <li className="text-dark mb-1">
+        Pilih menu Order Produk terlebih dahulu.
+      </li>,
+      <li className="text-dark mb-1">
+        Pilih Operator serta Layanan Aplikasi yang ingin digunakan.
+      </li>,
+      <li className="text-dark mb-1">
+        Selanjutnya pastikan bahwa Saldo anda mencukupi sesuai dengan harga
+        layanan.
+      </li>,
+      <li className="text-dark mb-1">
+        Apabila sudah merasa benar, maka klik tombol Order Nomor.
+      </li>,
+      <li className="text-dark mb-1">
+        Tunggu beberapa saat dan nomor akan muncul pada tabel dibawah form.
+      </li>,
+    ],
   },
   {
     title: "Tutorial Akses Laporan Transaksi",
-    content: "1. lorem ipsum Tutorial Akses Laporan Transaksi 2. asdfjasdf",
+    content: [
+      <li className="text-dark mb-1">
+        Klik tombol "Download Transaksi" terlebih dahulu.
+      </li>,
+      <li className="text-dark mb-1">
+        Pilih Tanggal Periode dan Jenis Data yang akan di download
+      </li>,
+      <li className="text-dark mb-1">
+        Klik tombol "Cari Data" untuk memulai mencari transaksi.
+      </li>,
+      <li className="text-dark mb-1">
+        Tunggu beberapa saat dan nanti akan muncul popup untuk mengunduh data.
+      </li>,
+    ],
   },
   {
     title: "Official Group Chat",
     content: "lorem ipsum Official Group Chat",
   },
 ];
+
+const itemsTutorialQris = {
+  heading: <h3>Tutorial Penggunaan QRIS</h3>,
+  content: [
+    <li className="text-dark mb-1">
+      Buka aplikasi e-payment kamu, terserah bisa OVO, ShopeePay, DANA, Dll.
+    </li>,
+    <li className="text-dark mb-1">
+      Pilih metode pembayaran scan by QRIS dan klik “Bayar sekarang”.
+    </li>,
+    <li className="text-dark mb-1">
+      Selanjutnya kamu akan diarahkan ke halaman konfirmasi nominal transaksi.
+    </li>,
+    <li className="text-dark mb-1">
+      Cek kembali nominal transaksi kamu, pastikan sudah sesuai seperti
+      diaplikasi.
+    </li>,
+    <li className="text-dark mb-1">
+      Masukan PIN untuk melanjutkan transaksi.
+    </li>,
+    <li className="text-dark mb-1">Pembayaran berhasil dilakukan.</li>,
+    <li className="text-dark mb-1">
+      Permintaan akan divalidasi oleh sistem kami maksimal 30 menit.
+    </li>,
+  ],
+};
 
 const DummyDataTableOrder = [
   {
@@ -108,7 +184,7 @@ const menuNavItems = [
     icon: "/icons/IDashboardLight.svg",
   },
   {
-    title: "Order Produk",
+    title: "Order Nomor",
     path: "/order",
     iconActive: "/icons/IOrder.svg",
     icon: "/icons/IOrderLight.svg",
@@ -125,11 +201,217 @@ const menuNavItems = [
     iconActive: "/icons/IDeposit.svg",
     icon: "/icons/IDepositLight.svg",
   },
+];
+const menuNavItemsUnprotectRoutes = [
+  {
+    title: "Home",
+    path: "/landing-page",
+    iconActive: "/icons/IDashboard.svg",
+    icon: "/icons/IDashboardLight.svg",
+  },
+  {
+    title: "Ketentuan Layanan",
+    path: "/terms-codition",
+    iconActive: "/icons/IOrder.svg",
+    icon: "/icons/IOrderLight.svg",
+  },
   {
     title: "API Developer",
     path: "/api-developer",
-    iconActive: "/icons/IApiDevs.svg",
-    icon: "/icons/IApiDevsLight.svg",
+    iconActive: "/icons/IHistory.svg",
+    icon: "/icons/IHistoryLight.svg",
+  },
+  {
+    title: "Login",
+    path: "/login",
+    iconActive: "/icons/IHistory.svg",
+    icon: "/icons/IHistoryLight.svg",
+  },
+  {
+    title: "Daftar",
+    path: "/register",
+    iconActive: "/icons/IHistory.svg",
+    icon: "/icons/IHistoryLight.svg",
+  },
+];
+
+const itemPackage = [
+  {
+    name: "Paket Prajurit",
+    price: 5000,
+    description:
+      "Prajurit gak pernah ragu membela rajanya. Kalo Masih Ragu? Coba aja dulu!😏",
+    isSpecial: false,
+  },
+  {
+    name: "Paket Raja",
+    price: 50000,
+    description:
+      "Jika menjadi raja adalah pilihan terbaikmu. Coba paket ini! 🙄",
+    isSpecial: false,
+  },
+  {
+    name: "Paket Sultan",
+    price: 100000,
+    description: "Woww! Kamu berada di level yang berbeda. Nikmatilah! 😊",
+    isSpecial: true,
+  },
+];
+
+const ApiMenus = [
+  {
+    id: 1,
+    title: "Get Number",
+  },
+  {
+    id: 2,
+    title: "Get Otp / Cek Status",
+  },
+  {
+    id: 3,
+    title: "Change Status",
+  },
+  {
+    id: 4,
+    title: "Daftar Layanan",
+  },
+  {
+    id: 5,
+    title: "Daftar Negara Dan Operator",
+  },
+  {
+    id: 6,
+    title: "Get Price",
+  },
+];
+
+const ApiMenusContent = [
+  {
+    id: 1,
+    content: (
+      <div>
+        <h1 className="mb-6 text-2xl font-bold text-dark">Get Number</h1>
+        <div className="mb-8">
+          <h4 className="text-xl font-medium text-dark mb-4">URL</h4>
+          <pre className="text-[#4690ff] bg-[white] shadow p-3 rounded">
+            POST https://siotp.id/api/order
+          </pre>
+        </div>
+        <div className="mb-8">
+          <h4 className="text-xl font-medium text-dark mb-4">Example</h4>
+          <pre className="text-[#4690ff] bg-[white] shadow p-3 rounded">
+            GET
+            https://siotp.id/api/order?apikey=c6d522f62a87659cdcb73061fa6ae8cd&service=1&operator=any&country=1
+          </pre>
+        </div>
+        <div className="mb-8">
+          <h4 className="text-xl font-medium text-dark mb-4">Parameter</h4>
+          <table className="min-w-full">
+            <thead className="shadow">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  PARAMETER
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  VALUE
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  VALUE
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  DESCRIPTION
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">apikey</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">
+                    c6d522f62a87659cdcb73061fa6ae8cd
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">Yes</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">
+                    API Key anda terletak pada bagian pengaturan akun atau klik
+                    disini
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="mb-8">
+          <h4 className="text-xl font-medium text-dark mb-4">
+            Response Sukses
+          </h4>
+          <pre className="text-[#4690ff] bg-[white] shadow p-3 rounded">
+            {JSON.stringify(
+              {
+                status: "success",
+                id: 0,
+                number: "6281390023067",
+              },
+              null,
+              2
+            )}
+          </pre>
+        </div>
+        <div className="mb-8">
+          <h4 className="text-xl font-medium text-dark mb-4">Response Gagal</h4>
+          <pre className="text-[#4690ff] bg-[white] shadow p-3 rounded">
+            {JSON.stringify(
+              {
+                status: "error",
+                message:
+                  "Invalid API Key" ||
+                  "Invalid Service ID" ||
+                  "Insufficient Balance",
+              },
+              null,
+              2
+            )}
+          </pre>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 2,
+    content: <h1>content 2</h1>,
+  },
+  {
+    id: 3,
+    content: <h1>content 3</h1>,
+  },
+  {
+    id: 4,
+    content: <h1>content 4</h1>,
+  },
+  {
+    id: 5,
+    content: <h1>content 5</h1>,
+  },
+  {
+    id: 6,
+    content: <h1>content 6</h1>,
   },
 ];
 
@@ -142,4 +424,9 @@ export {
   menuNavItems,
   DummyDataInformation,
   DummyDataHistory,
+  itemsTutorialQris,
+  itemPackage,
+  menuNavItemsUnprotectRoutes,
+  ApiMenus,
+  ApiMenusContent,
 };

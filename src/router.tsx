@@ -3,28 +3,65 @@ import {
   ApiDeveloper,
   Dashboard,
   DepositSaldo,
+  DetailPayment,
+  DetailPaymentById,
+  ForgetPassword,
   Login,
   OrderProduk,
   Register,
   RiwayatTransaksi,
+  TermCondition,
 } from "./pages";
+import ProtectedRoute from "./utils/protectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Dashboard />,
+    element: (
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/order",
-    element: <OrderProduk />,
+    element: (
+      <ProtectedRoute>
+        <OrderProduk />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/history",
-    element: <RiwayatTransaksi />,
+    element: (
+      <ProtectedRoute>
+        <RiwayatTransaksi />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/deposit",
-    element: <DepositSaldo />,
+    element: (
+      <ProtectedRoute>
+        <DepositSaldo />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/deposit/detail",
+    element: (
+      <ProtectedRoute>
+        <DetailPayment />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/deposit/detail/:id",
+    element: (
+      <ProtectedRoute>
+        <DetailPaymentById />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/api-developer",
@@ -37,6 +74,14 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/forget-password",
+    element: <ForgetPassword />,
+  },
+  {
+    path: "/terms-codition",
+    element: <TermCondition />,
   },
 ]);
 

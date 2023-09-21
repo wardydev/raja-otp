@@ -1,17 +1,23 @@
-import React, { useState } from "react";
-import { IDropdown, IDropdownItem } from "../utils/interfaces";
+import React, { useCallback, useState } from "react";
+import { CountryResponseItem, IDropdownCountry } from "../../utils/interfaces";
 
-const Dropdown: React.FC<IDropdown> = ({ label, options, defaultValue }) => {
-  const [selectedOption, setSelectedOption] = useState<IDropdownItem | null>(
-    null
-  );
-  const [isOpen, setIsOpen] = useState(false);
+const DropdownCountry: React.FC<IDropdownCountry> = ({
+  label,
+  options,
+  defaultValue,
+  optionChange,
+}) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [selectedOption, setSelectedOption] = useState<
+    CountryResponseItem | undefined
+  >();
 
-  const toggleDropdown = () => {
+  const toggleDropdown = useCallback(() => {
     setIsOpen(!isOpen);
-  };
+  }, [isOpen]);
 
-  const handleOptionClick = (option: IDropdownItem) => {
+  const handleOptionClick = (option: CountryResponseItem) => {
+    optionChange(option);
     setSelectedOption(option);
     setIsOpen(false);
   };
@@ -30,7 +36,7 @@ const Dropdown: React.FC<IDropdown> = ({ label, options, defaultValue }) => {
           className="flex w-full justify-between items-center py-4 px-4 rounded-lg shadow-md bg-[white] shadow-dark-100/5"
           onClick={toggleDropdown}
         >
-          {selectedOption ? selectedOption.label : defaultValue}
+          {selectedOption ? selectedOption.country_name : defaultValue}
           <svg
             className="-mr-1 ml-2 h-5 w-5"
             xmlns="http://www.w3.org/2000/svg"
@@ -48,21 +54,21 @@ const Dropdown: React.FC<IDropdown> = ({ label, options, defaultValue }) => {
       </div>
 
       {isOpen && (
-        <div className="bg-[white] absolute top-24 left-0 w-full z-20 shadow-2xl shadow-primary-100/20 rounded-lg">
+        <div className="bg-[white] absolute top-24 left-0 w-full z-20 shadow-2xl shadow-primary-100/20 rounded-lg h-[200px] overflow-y-auto">
           <div
             className="py-1"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="options-menu"
           >
-            {options.map((option) => (
+            {options.map((option: CountryResponseItem) => (
               <button
-                key={option.value}
+                key={option.id}
                 className="block w-full text-left px-4 py-2 text-sm hover:bg-[#e9e9e9]"
                 role="menuitem"
                 onClick={() => handleOptionClick(option)}
               >
-                {option.label}
+                {option.country_name}
               </button>
             ))}
           </div>
@@ -72,4 +78,4 @@ const Dropdown: React.FC<IDropdown> = ({ label, options, defaultValue }) => {
   );
 };
 
-export default Dropdown;
+export default DropdownCountry;

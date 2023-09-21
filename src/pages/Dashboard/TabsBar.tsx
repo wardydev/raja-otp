@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { itemsTabbar } from "../../utils/helper";
 
 const TabsBar = () => {
   const [activeTab, setActiveTab] = useState(0);
 
-  const handleTabClick = (index: number) => {
-    setActiveTab(index);
-  };
+  const handleTabClick = useCallback(
+    (index: number) => {
+      setActiveTab(index);
+    },
+    [setActiveTab]
+  );
 
   return (
     <div className="p-6">
@@ -33,7 +36,7 @@ const TabsBar = () => {
               activeTab === index ? "block" : "hidden"
             } bg-white p-4 rounded-md`}
           >
-            <p>{item.content}</p>
+            <ul className="list-decimal">{item.content}</ul>
           </div>
         ))}
       </div>

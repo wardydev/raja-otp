@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 .menuItem {
   position: relative;
 }
@@ -16,12 +14,12 @@
 .menuItem.active::after {
   content: '';
   position: absolute;
-  bottom: -84px;
+  bottom: -80px;
   width: 0;
   height: 0;
   border-left: 50px solid transparent;
   border-right: 50px solid transparent;
-  border-bottom: 80px solid #fff;
+  border-bottom: 80px solid #faf3ec;
   transform: rotate(0);
 }
 .card-afiliasi {
@@ -91,11 +89,74 @@
   opacity: 0.6;
 }
 
+.cool-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  background-color: #FF720D;
+  border-radius: 50%;
+  animation: bounce 1.5s infinite ease-in-out;
+}
+
+.dot1 {
+  animation-delay: 0.1s;
+}
+
+.dot2 {
+  animation-delay: 0.3s;
+}
+
+.dot3 {
+  animation-delay: 0.5s;
+}
+
+.dot4 {
+  animation-delay: 0.7s;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+@media only screen and (max-width: 340px) {
+  .child-container {
+    height: 1800px;
+    height: auto;
+    overflow: visible;
+  }
+}
 @media only screen and (min-width: 640px) {
   .child-container {
-    height: 200px;
     overflow: auto;
     text-align:justify;
     position: relative;
+    max-height: 27rem;
   }
+}
+@media only screen and (min-width: 1883px) {
+  .child-container {
+    max-height: 41rem;
+  }
+  
 }
