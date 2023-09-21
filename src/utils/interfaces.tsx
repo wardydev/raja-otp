@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactNode } from "react";
-import {
-  IHistoryDataItem,
-  IOrderResponseItem,
-  ItemDetailPayment,
-} from "../api/services/types";
+import { IHistoryDataItem, IOrderResponseItem } from "../api/services/types";
 
 interface IDropdownItem {
   label: string;
@@ -96,8 +92,15 @@ interface ITableDeposit {
   setDepositId: React.Dispatch<React.SetStateAction<number | undefined>>;
   depositId: number | undefined;
 }
+interface ItemPayment {
+  amount: number;
+  created_at: number;
+  id: number;
+  payment: string;
+  status: string;
+}
 interface IRenderDetailAction {
-  item: ItemDetailPayment;
+  item: ItemPayment;
   depositId: number | undefined | null;
   page: number;
 }

@@ -33,7 +33,7 @@ export const depositApi = createApi({
     getDetailPayment: builder.query<IGetDetailPayment, number | null>({
       query: (id) => `api/deposit/detail/${id}`,
     }),
-    getCancel: builder.query<IGetCancel, number | null>({
+    getCancel: builder.query<IGetCancel, number | null | undefined>({
       query: (id) => `api/deposit/cancel/${id}`,
     }),
   }),

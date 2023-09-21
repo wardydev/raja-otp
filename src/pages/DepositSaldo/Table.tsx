@@ -43,7 +43,7 @@ const Table: React.FC<ITableDeposit> = ({
     if (dataIsPending) {
       setDepositId(dataIsPending[0]);
     }
-  }, [data]);
+  }, [data, setDepositId, setIsPending]);
 
   return (
     <div className="mt-4 overflow-x-auto relative">
@@ -137,7 +137,8 @@ const RenderDetailAction: React.FC<IRenderDetailAction> = ({
   depositId,
   page,
 }) => {
-  const [temporaryId, setTemporaryId] = useState<number | null>(null);
+  console.log("GUWE ITEM", item);
+  const [temporaryId, setTemporaryId] = useState<number | undefined | null>();
   const { isLoading, isSuccess } = useGetCancelQuery(temporaryId);
   const { refetch } = useGetHistoryQuery(page);
 
