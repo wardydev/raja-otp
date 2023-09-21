@@ -33,8 +33,8 @@ const Countdown: React.FC<CountdownProps> = ({ initialMinutes, status }) => {
   }, [status, initialMinutes]);
 
   return (
-    <div className="text-center">
-      <div className="font-bold">
+    <div>
+      <div className="font-bold text-primary-100 text-xl lg:text-base">
         {minutes.toString().padStart(2, "0")}:
         {seconds.toString().padStart(2, "0")}
       </div>

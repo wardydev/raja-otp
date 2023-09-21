@@ -7,6 +7,9 @@ import Outline from "./Button/Outline";
 import Pagination from "./Pagination";
 import Countdown from "./Countdown";
 import LoadingSpinner from "./DotLoading";
+import MenusUnprotectRoutes from "./MenusUnprotectRoutes";
+import LayoutUnprotectRoutes from "./LayoutUnprotectRoutes";
+import SidebarDrawerUnprotectRoutes from "./SidebarDrawerUnprotectRoutes";
 
 export {
   Layout,
@@ -18,4 +21,7 @@ export {
   Pagination,
   Countdown,
   LoadingSpinner,
+  MenusUnprotectRoutes,
+  LayoutUnprotectRoutes,
+  SidebarDrawerUnprotectRoutes,
 };

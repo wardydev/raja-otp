@@ -81,11 +81,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/terms-codition",
-    element: (
-      <ProtectedRoute>
-        <TermCondition />
-      </ProtectedRoute>
-    ),
+    element: <TermCondition />,
   },
 ]);
 

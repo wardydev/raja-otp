@@ -19,6 +19,7 @@ import {
   ServiceByCountryResponse,
 } from "../../utils/interfaces";
 import DropdownInput from "./DropdownInput";
+import { useGetMeQuery } from "../../api/services/userApi";
 
 const OrderProduk = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,6 +28,7 @@ const OrderProduk = () => {
   const [selectedCountryService, setSelectedCountryService] = useState<
     ServiceByCountryResponse | undefined
   >();
+  const me = useGetMeQuery(undefined);
 
   const { data } = useGetCountryQuery(undefined);
   const operator = useGetOperatorQuery(selectedCountry.id ?? 0);
@@ -62,6 +64,7 @@ const OrderProduk = () => {
       if (newOrder.data?.success) {
         order.refetch();
         toast.success(newOrder?.data.messages);
+        me.refetch();
       } else {
         toast.error(newOrder?.data.messages);
       }

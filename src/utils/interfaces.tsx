@@ -19,7 +19,7 @@ interface IDropdown {
 interface ISidebarDrawer {
   isOpen: boolean;
   handleDrawer: () => void;
-  openModal: () => void;
+  openModal?: () => void;
 }
 interface ILayout {
   children: ReactNode;
@@ -104,6 +104,10 @@ interface IRenderDetailAction {
 interface IPaymentProceed {
   setDeposit: React.Dispatch<React.SetStateAction<number | null>>;
 }
+interface ICardDataTable {
+  data: IOrderResponseItem[] | undefined;
+  onChange: () => void;
+}
 
 export type {
   IDropdownItem,
@@ -125,4 +129,5 @@ export type {
   ITableDeposit,
   IRenderDetailAction,
   IPaymentProceed,
+  ICardDataTable,
 };

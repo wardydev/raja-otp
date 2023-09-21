@@ -34,9 +34,9 @@ const Pagination: React.FC<PaginationProps> = ({
 
   const renderPage = useCallback(() => {
     const pageNumbers = [];
-    let maxPages = 5;
+    let maxPages = 3;
 
-    if (totalPages <= 5) {
+    if (totalPages <= 3) {
       maxPages = totalPages;
     } else if (currentPage > 3) {
       maxPages = Math.min(currentPage + 2, totalPages);
@@ -91,11 +91,11 @@ const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <div className="flex justify-end mt-6 mb-2">
-      <nav>
-        <ul className="bg-[white] shadow-lg py-4 px-6 rounded-2xl shadow-[#0000000c] flex items-center space-x-4">
+      <nav className="w-full lg:w-auto">
+        <ul className="bg-[white] shadow-lg py-4 px-6 rounded-2xl shadow-[#0000000c] flex items-center justify-center space-x-4 w-full lg:w-auto">
           <li className=" mr-4">
             <button
-              className={`p-3 rounded-lg flex items-center ${
+              className={`w-10 h-10 p-3 rounded-lg flex items-center justify-center ${
                 isFirstPage
                   ? "disabled bg-[#eaeaea] hover:bg-[#d4d4d4]"
                   : "bg-[#c2c1c1] hover:bg-[#999999]"
@@ -109,7 +109,7 @@ const Pagination: React.FC<PaginationProps> = ({
           {renderPage()}
           <li className="ml-4">
             <button
-              className={`p-3 rounded-lg flex items-center ${
+              className={`w-10 h-10 p-3 rounded-lg flex items-center justify-center ${
                 isLastPage
                   ? "disabled bg-[#eaeaea] hover:bg-[#d4d4d4]"
                   : "bg-primary-100 hover:bg-primary-200"

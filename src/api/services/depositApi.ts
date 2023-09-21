@@ -33,7 +33,7 @@ export const depositApi = createApi({
     getDetailPayment: builder.query<IGetDetailPayment, number | null>({
       query: (id) => `api/deposit/detail/${id}`,
     }),
-    getCancel: builder.query<IGetCancel, number>({
+    getCancel: builder.query<IGetCancel, number | null>({
       query: (id) => `api/deposit/cancel/${id}`,
     }),
   }),
@@ -45,4 +45,6 @@ export const {
   usePostNewPaymentMutation,
   useGetDetailPaymentQuery,
   useGetCancelQuery,
+  useLazyGetCancelQuery,
+  useLazyGetDetailPaymentQuery,
 } = depositApi;

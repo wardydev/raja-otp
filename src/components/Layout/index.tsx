@@ -22,7 +22,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
   }, [isOpenModal, setIsOpen]);
 
   return (
-    <div className="container h-screen bg-gradient-to-l from-primary-100 to-secondary-100 overflow-y-hidden max-w-full w-full relative">
+    <div className="container h-auto lg:h-screen bg-gradient-to-l from-primary-100 to-secondary-100 overflow-y-hidden max-w-full w-full relative">
       <Header
         handleDrawer={toggleSidebarDrawer}
         onCloseModal={handleCloseModal}

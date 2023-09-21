@@ -16,7 +16,7 @@ const ButtonCopy = ({ textToCopy }: { textToCopy: number }) => {
     <button
       className={`${
         isCopied ? "bg-[#03b703]" : "bg-gradient-to-tr"
-      } from-primary-100 hover:from-primary-200 to-secondary-100 hover:to-secondary-200 p-2 rounded`}
+      } from-primary-100 hover:from-primary-200 to-secondary-100 hover:to-secondary-200 lg:w-8 lg:h-8 h-12 w-14 flex items-center justify-center rounded`}
       onClick={() => handleCopyNumbe(textToCopy)}
     >
       {isCopied ? (

@@ -55,7 +55,13 @@ const Table: React.FC<ITableDeposit> = ({
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Tanggal Dibuat
+              Action
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              ID
             </th>
             <th
               scope="col"
@@ -73,7 +79,7 @@ const Table: React.FC<ITableDeposit> = ({
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Detail
+              Tanggal
             </th>
           </tr>
         </thead>
@@ -82,9 +88,16 @@ const Table: React.FC<ITableDeposit> = ({
             return (
               <tr key={item.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
-                    {formatTimestamp(item.created_at)}
-                  </div>
+                  {
+                    <RenderDetailAction
+                      item={item}
+                      depositId={depositId}
+                      page={page}
+                    />
+                  }
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">{item.id}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">
@@ -94,14 +107,11 @@ const Table: React.FC<ITableDeposit> = ({
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{item.payment}</div>
                 </td>
+
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {
-                    <RenderDetailAction
-                      item={item}
-                      depositId={depositId}
-                      page={page}
-                    />
-                  }
+                  <div className="text-sm text-gray-900">
+                    {formatTimestamp(item.created_at)}
+                  </div>
                 </td>
               </tr>
             );
