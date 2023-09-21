@@ -14,7 +14,7 @@ import { useGetMeQuery } from "../../api/services/userApi";
 const Header: React.FC<IHeader> = ({ handleDrawer, onCloseModal }) => {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [isShowCardProfile, setIsShowCardProfile] = useState<boolean>(false);
-  const { data } = useGetMeQuery();
+  const { data } = useGetMeQuery(undefined);
 
   const toggleFullscreen = useCallback(() => {
     if (!isFullscreen) {

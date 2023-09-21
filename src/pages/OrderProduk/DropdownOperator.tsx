@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { IDropdownOperator } from "../../utils/interfaces";
 
 const DropdownOperator: React.FC<IDropdownOperator> = ({
@@ -9,6 +9,9 @@ const DropdownOperator: React.FC<IDropdownOperator> = ({
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string | undefined>();
+  const [modifiedOptions, setModifiedOptions] = useState<
+    string[] | undefined
+  >();
 
   const toggleDropdown = useCallback(() => {
     setIsOpen(!isOpen);
@@ -16,9 +19,18 @@ const DropdownOperator: React.FC<IDropdownOperator> = ({
 
   const handleOptionClick = (option: string) => {
     optionChange(option);
-    setSelectedOption(option);
+    setSelectedOption(option === "any" ? "Semua Operator" : option);
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    const modifiedData = options?.map((item) => {
+      return item === "any" ? "Semua Operator" : item;
+    });
+    setModifiedOptions(modifiedData);
+  }, [options]);
+
+  console.log(modifiedOptions);
 
   return (
     <div className="relative inline-block text-left w-full mb-5">
@@ -59,12 +71,16 @@ const DropdownOperator: React.FC<IDropdownOperator> = ({
             aria-orientation="vertical"
             aria-labelledby="options-menu"
           >
-            {options.map((option, index) => (
+            {modifiedOptions?.map((option, index) => (
               <button
                 key={index}
                 className="block w-full text-left px-4 py-2 text-sm hover:bg-[#e9e9e9]"
                 role="menuitem"
-                onClick={() => handleOptionClick(option)}
+                onClick={() =>
+                  handleOptionClick(
+                    option === "Semua Operator" ? "any" : option
+                  )
+                }
               >
                 {option}
               </button>

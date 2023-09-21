@@ -1,5 +1,4 @@
 import React, { createContext, useState } from "react";
-import { toast } from "react-toastify";
 
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
@@ -8,7 +7,6 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 type AuthContextType = {
   isAuthenticated: boolean;
   login: (token: string) => void;
-  logout: () => void;
 };
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {

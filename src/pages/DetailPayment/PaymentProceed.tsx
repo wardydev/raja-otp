@@ -1,10 +1,16 @@
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import ITime from "/icons/ITime.svg";
-import { useGetDetailPaymentQuery } from "../../api/services/depositApi";
+import {
+  useGetDetailPaymentQuery,
+  useGetHistoryQuery,
+  useLazyGetCancelQuery,
+} from "../../api/services/depositApi";
 import { formatRupiah } from "../../utils/functions";
 import { itemsTutorialQris } from "../../utils/helper";
 import IQRCode from "/icons/IQRCode.svg";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { LoadingSpinner } from "../../components";
 
 const PaymentProceedPlaceholder = () => {
@@ -21,16 +27,51 @@ const PaymentProceedPlaceholder = () => {
 };
 
 const PaymentProceed = ({ depositId }: { depositId: number | null }) => {
-  const { data, isLoading, isSuccess } = useGetDetailPaymentQuery(depositId);
   const navigate = useNavigate();
 
+  const { data, isLoading, isSuccess, refetch } =
+    useGetDetailPaymentQuery(depositId);
+  const [getCancel, results] = useLazyGetCancelQuery();
+  const history = useGetHistoryQuery(1);
+
+  const handleCancelDeposit = () => {
+    try {
+      toast.promise(getCancel(depositId), {
+        pending: "Mohon menunggu",
+        success: "Deposit berhasil dibatalkan",
+        error: "Mohon maaf, sepertinya terjadi kesalahan!",
+      });
+    } catch (err) {
+      toast.error("Terjadi Kesalahan!");
+    }
+  };
+
   useEffect(() => {
+    if (results?.data?.success && results.isSuccess) {
+      history.refetch();
+      navigate("/deposit");
+    }
+  }, [results]);
+
+  useEffect(() => {
+    const pollingInterval = setInterval(() => {
+      if (depositId !== null) {
+        refetch();
+      }
+    }, 5000);
+
     if (isSuccess && data.success) {
-      if (data?.data.status === "success") {
+      if (data?.data.status === "sukses") {
+        toast.success("Pembayaran anda telah diterima");
+        clearInterval(pollingInterval);
         navigate("/order");
       }
     }
-  }, [data, isSuccess]);
+
+    return () => {
+      clearInterval(pollingInterval);
+    };
+  }, [data?.data.status, depositId]);
 
   if (depositId === null) return <PaymentProceedPlaceholder />;
   return (
@@ -65,6 +106,14 @@ const PaymentProceed = ({ depositId }: { depositId: number | null }) => {
         <div>
           <h2 className="font-bold text-xl mb-3">Tutorial Cara Order OTP</h2>
           <ul className="ml-5 list-decimal">{itemsTutorialQris.content}</ul>
+        </div>
+        <div className="order-3 mt-8">
+          <button
+            className="w-full rounded-xl py-4 border border-[#ff9898] text-[red] font-medium bg-[#ffe4e4] hover:bg-[#ffd7d7] transition-all"
+            onClick={handleCancelDeposit}
+          >
+            {results.isLoading ? "Loading..." : "Batalkan"}
+          </button>
         </div>
       </div>
     </div>

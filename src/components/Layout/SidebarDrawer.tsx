@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -18,6 +18,16 @@ const SidebarDrawer: React.FC<ISidebarDrawer> = ({
   const { data } = useGetMeQuery(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
+  const handleCloseDrawer = useCallback(
+    (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      if (event.target === sidebarRef.current) {
+        handleDrawer();
+      }
+    },
+    [handleDrawer]
+  );
 
   const handleLogout = async () => {
     setIsLoading(true);
@@ -46,6 +56,8 @@ const SidebarDrawer: React.FC<ISidebarDrawer> = ({
       className={`z-50 w-full h-screen fixed top-0 left-0 transition ${
         isOpen ? "bg-[#0000007e] visible" : "bg-[#0000007e] invisible"
       }`}
+      ref={sidebarRef}
+      onClick={handleCloseDrawer}
     >
       <div
         className={`w-80 h-full px-4 bg-[white] text-white transition-transform transform ${

@@ -17,7 +17,7 @@ const CardContiner: React.FC<ICardContainer> = ({
         isCustomBackground
           ? `bg-[${customBackground}]`
           : "bg-[white]" ?? "bg-[white]"
-      } shadow-lg shadow-primary-100/10 rounded-3xl p-6 min-h-[500px]`}
+      } shadow-lg shadow-primary-100/10 rounded-3xl p-6`}
     >
       {children}
     </div>

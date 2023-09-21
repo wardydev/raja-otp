@@ -2,7 +2,6 @@ import React from "react";
 import { IHistoryDataItem } from "../../api/services/types";
 import { formatRupiah, formatTimestamp } from "../../utils/functions";
 import { ITableHistory } from "../../utils/interfaces";
-import { Button } from "../../components";
 
 const Table: React.FC<ITableHistory> = ({ data }) => {
   return (
@@ -14,7 +13,7 @@ const Table: React.FC<ITableHistory> = ({ data }) => {
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Tanggal Dibuat
+              ID
             </th>
             <th
               scope="col"
@@ -32,7 +31,7 @@ const Table: React.FC<ITableHistory> = ({ data }) => {
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Deskripsi
+              Harga
             </th>
             <th
               scope="col"
@@ -44,7 +43,7 @@ const Table: React.FC<ITableHistory> = ({ data }) => {
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Nominal
+              Tanggal
             </th>
           </tr>
         </thead>
@@ -52,9 +51,7 @@ const Table: React.FC<ITableHistory> = ({ data }) => {
           {data?.map((item: IHistoryDataItem) => (
             <tr key={item.id}>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">
-                  {formatTimestamp(item.created_at)}
-                </div>
+                <div className="text-sm text-gray-900">{item.id}</div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">{item.number}</div>
@@ -62,8 +59,10 @@ const Table: React.FC<ITableHistory> = ({ data }) => {
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">{item.sv_name}</div>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap w-2/4">
-                <div className="text-sm text-gray-900">{item.inbox}</div>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="text-sm text-gray-900">
+                  {formatRupiah(item.order_price)}
+                </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">
@@ -86,7 +85,7 @@ const Table: React.FC<ITableHistory> = ({ data }) => {
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">
-                  {formatRupiah(item.order_price)}
+                  {formatTimestamp(item.created_at)}
                 </div>
               </td>
             </tr>
