@@ -7,6 +7,7 @@ const DropdownInput: React.FC<IDropdown> = ({
   options,
   defaultValue,
   optionChange,
+  defaultValueTrigger,
 }) => {
   const [selectedOption, setSelectedOption] =
     useState<ServiceByCountryResponse | null>(null);
@@ -38,6 +39,12 @@ const DropdownInput: React.FC<IDropdown> = ({
       );
     }
   }, [inputValue, options]);
+
+  useEffect(() => {
+    if (defaultValueTrigger) {
+      setSelectedOption(null);
+    }
+  }, [defaultValueTrigger]);
 
   return (
     <div className="relative inline-block text-left w-full mb-5">

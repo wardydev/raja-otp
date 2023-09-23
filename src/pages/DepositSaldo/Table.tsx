@@ -137,7 +137,6 @@ const RenderDetailAction: React.FC<IRenderDetailAction> = ({
   depositId,
   page,
 }) => {
-  console.log("GUWE ITEM", item);
   const [temporaryId, setTemporaryId] = useState<number | undefined | null>();
   const { isLoading, isSuccess } = useGetCancelQuery(temporaryId);
   const { refetch } = useGetHistoryQuery(page);
