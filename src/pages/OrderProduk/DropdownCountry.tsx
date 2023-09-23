@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { CountryResponseItem, IDropdownCountry } from "../../utils/interfaces";
 
 const DropdownCountry: React.FC<IDropdownCountry> = ({
@@ -6,6 +6,7 @@ const DropdownCountry: React.FC<IDropdownCountry> = ({
   options,
   defaultValue,
   optionChange,
+  defaultValueTrigger,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<
@@ -21,6 +22,12 @@ const DropdownCountry: React.FC<IDropdownCountry> = ({
     setSelectedOption(option);
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    if (defaultValue) {
+      setSelectedOption(undefined);
+    }
+  }, [defaultValueTrigger]);
 
   return (
     <div className="relative inline-block text-left w-full mb-5">

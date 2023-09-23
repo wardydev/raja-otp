@@ -11,6 +11,7 @@ interface IDropdown {
   optionChange: (option: any) => void;
   options: any;
   defaultValue: string | undefined;
+  defaultValueTrigger: boolean;
 }
 interface ISidebarDrawer {
   isOpen: boolean;
@@ -50,14 +51,16 @@ interface ServiceByCountryResponse {
 interface IDropdownOperator {
   label: string;
   optionChange: (option: string) => void;
-  options: [];
-  defaultValue: string | undefined;
+  options: string[];
+  defaultValue?: string | undefined;
+  defaultValueTrigger: boolean;
 }
 interface IDropdownCountry {
   label: string;
   optionChange: (option: CountryResponseItem) => void;
   options: CountryResponseItem[];
   defaultValue: string | undefined;
+  defaultValueTrigger: boolean;
 }
 interface ITableOrderProducts {
   data: IOrderResponseItem[];

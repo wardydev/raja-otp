@@ -28,8 +28,12 @@ const OrderProduk = () => {
   const [selectedCountryService, setSelectedCountryService] = useState<
     ServiceByCountryResponse | undefined
   >();
-  const me = useGetMeQuery(undefined);
+  const [modifiedOptions, setModifiedOptions] = useState<
+    string[] | undefined
+  >();
+  const [isDefaultValue, setIsDefaultValue] = useState<boolean>(false);
 
+  const me = useGetMeQuery(undefined);
   const { data } = useGetCountryQuery(undefined);
   const operator = useGetOperatorQuery(selectedCountry.id ?? 0);
   const serviceByCountry = useGetServiceCountryIdQuery(selectedCountry.id ?? 0);
@@ -54,6 +58,7 @@ const OrderProduk = () => {
       };
 
       postNewOrder(body);
+      setIsDefaultValue(true);
     } catch (err) {
       toast.error("Terjadi kesalahan, Pastikan internet");
     }
@@ -71,6 +76,13 @@ const OrderProduk = () => {
     }
   }, [newOrder]);
 
+  useEffect(() => {
+    const modifiedData = operator?.data?.data?.map((item) => {
+      return item === "any" ? "Semua Operator" : item;
+    });
+    setModifiedOptions(modifiedData);
+  }, [operator?.data?.data]);
+
   return (
     <Layout>
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-y-6 lg:gap-y-0 gap-x-0 md:gap-x-4 lg:gap-x-6">
@@ -80,18 +92,23 @@ const OrderProduk = () => {
             options={data?.data ?? []}
             defaultValue={data?.data[0].country_name ?? "Server"}
             optionChange={handleSelectedCountryChange}
+            defaultValueTrigger={isDefaultValue}
           />
           <DropdownOperator
             label="Pilih Operator :"
-            options={operator?.data?.data ?? []}
-            defaultValue={"Pilih Operator"}
+            options={modifiedOptions ?? []}
+            defaultValue={
+              modifiedOptions ? modifiedOptions[0] : "Pilih Operator"
+            }
             optionChange={handleSelectedOperatorChange}
+            defaultValueTrigger={isDefaultValue}
           />
           <DropdownInput
             label="*) Pilih Layanan Aplikasi :"
             options={serviceByCountry.data?.data ?? []}
             defaultValue="Pilih layanan"
             optionChange={handleSelectedCountryByService}
+            defaultValueTrigger={isDefaultValue}
           />
           <div className="mt-3">
             <Button title="Order Nomor" handleButton={handleButtonSubmit} />
