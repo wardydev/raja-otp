@@ -240,20 +240,21 @@ const itemPackage = [
     name: "Paket Prajurit",
     price: 5000,
     description:
-      "Prajurit gak pernah ragu membela rajanya. Kalo Masih Ragu? Coba aja dulu!😏",
+      "Prajurit gak pernah ragu membela rajanya. Masih Ragu? Coba aja dulu!😏",
+    isSpecial: false,
+  },
+  {
+    name: "Paket Panglima",
+    price: 50000,
+    description:
+      "Jika menjadi panglima adalah pilihan terbaikmu. Coba paket ini!😉",
     isSpecial: false,
   },
   {
     name: "Paket Raja",
-    price: 50000,
-    description:
-      "Jika menjadi raja adalah pilihan terbaikmu. Coba paket ini! 🙄",
-    isSpecial: false,
-  },
-  {
-    name: "Paket Sultan",
     price: 100000,
-    description: "Woww! Kamu berada di level yang berbeda. Nikmatilah! 😊",
+    description:
+      "Congrats! Kamu berada di level yang tertinggi. Nikmatilah! 😊",
     isSpecial: true,
   },
 ];

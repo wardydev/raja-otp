@@ -21,11 +21,11 @@ const Pricing: React.FC<PricingProps> = ({ packages }) => {
           <div className="mb-3">
             {pkg.isSpecial ? (
               <p className={"font-medium uppercase text-xs text-[#f1ecec]"}>
-                populer
+                Favorite🌟
               </p>
             ) : (
               <p className="font-medium uppercase text-xs text-[#b0b0b0]">
-                Untuk Pemula
+                Populer
               </p>
             )}
             <h3 className="text-xl font-semibold mb-4">{pkg.name}</h3>
@@ -57,7 +57,7 @@ const Pricing: React.FC<PricingProps> = ({ packages }) => {
       <div className="bg-[white] shadow-lg shadow-primary-100/10 rounded-xl p-6 text-dark">
         <div className="mb-3">
           <p className="font-medium uppercase text-xs text-[#b0b0b0]">
-            Lebih Fleksibel
+            Fleksibel
           </p>
           <h3 className="text-xl font-semibold mb-4">Paket Ratu</h3>
         </div>
@@ -78,7 +78,7 @@ const Pricing: React.FC<PricingProps> = ({ packages }) => {
           </p>
         </div>
         <div className="my-5">
-          <p>Yup! kalau yang ini cocok untuk semua kalangan 😄</p>
+          <p>Untuk pengalaman yang lebih fleksibel🤗</p>
         </div>
         {pricingFlex.length !== 0 && Number(pricingFlex) >= 5000 ? (
           <Link
