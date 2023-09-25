@@ -6,11 +6,7 @@ import IResend from "/icons/IResend.svg";
 import IDone from "/icons/IDone.svg";
 import ButtonCopy from "./ButtonCopy";
 import { Countdown, LoadingSpinner } from "../../components";
-import {
-  IActionColumn,
-  ICardDataTable,
-  IInboxColumn,
-} from "../../utils/interfaces";
+import { IActionColumn, IInboxColumn } from "../../utils/interfaces";
 import {
   useGetOrderQuery,
   useLazyGetCancelQuery,
@@ -31,7 +27,7 @@ const Table = () => {
             <th className="w-2 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               ID
             </th>
-            <th className="w-56 lg:w-24"></th>
+            <th></th>
             <th
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -67,7 +63,7 @@ const Table = () => {
                     {item.id}
                   </div>
                 </td>
-                <td className="w-20 lg:w-24 px-6 py-4 whitespace-nowrap flex justify-start">
+                <td className="px-2 py-4 whitespace-nowrap flex justify-start">
                   <ButtonCopy textToCopy={item.number} />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -102,9 +98,6 @@ const Table = () => {
         </tbody>
       </table>
       {data?.data?.length === 0 && <EmptyDataTable />}
-      <div className="block lg:hidden">
-        <CardDataTable data={data?.data} onChange={() => refetch()} />
-      </div>
     </div>
   );
 };
@@ -125,7 +118,7 @@ const InboxColumn: React.FC<IInboxColumn> = ({ status, inbox, onChange }) => {
   }, [status]);
   return (
     <td className="px-6 py-4 whitespace-nowrap w-2/4">
-      <div className="text-sm text-gray-900 flex flex-wrap lg:whitespace-pre-wrap">
+      <div className="text-sm text-gray-900 flex flex-wrap lg:whitespace-pre-wrap font-medium">
         {status === "2" ? "Menunggu SMS ..." : inbox}
       </div>
     </td>
@@ -188,96 +181,39 @@ const ActionColumn: React.FC<IActionColumn> = ({
     case status === "2" && inbox === null:
       return (
         <button
-          className="w-full lg:w-8 h-12 lg:h-8 flex items-center justify-center bg-[red] hover:bg-[#bb3b3b] text-light font-medium rounded-lg"
+          className="w-12 h-12 lg:h-10 lg:w-10 flex items-center justify-center bg-[red] hover:bg-[#bb3b3b] text-light font-medium rounded-lg"
           onClick={handleCancel}
         >
-          <img src={IClose} alt="" width={16} className="hidden lg:block" />
-          <span className="block lg:hidden">Batalkan</span>
+          <img src={IClose} alt="" width={16} className="block" />
         </button>
       );
     case status === "3":
       return (
         <div className="flex items-center space-x-2">
           <button
-            className="w-full lg:w-8 h-12 lg:h-8 flex items-center justify-center bg-[#3aa524] hover:bg-[#409130] text-light font-medium rounded-lg "
+            className="w-12 h-12 lg:h-10 lg:w-10 flex items-center justify-center bg-[#3aa524] hover:bg-[#409130] text-light font-medium rounded-lg "
             onClick={handleFinish}
           >
-            <img src={IDone} alt="" width={16} className="hidden lg:block" />
-            <span className="block lg:hidden">Selesai</span>
+            <img src={IDone} alt="" width={16} className="block" />
           </button>
           <button
-            className="w-full lg:w-8 h-12 lg:h-8 flex items-center justify-center bg-[#0077ff] hover:bg-[#0051ff] text-light font-medium rounded-lg "
+            className="w-12 h-12 lg:h-10 lg:w-10 flex items-center justify-center bg-[#0077ff] hover:bg-[#0051ff] text-light font-medium rounded-lg "
             onClick={handleResend}
           >
-            <img src={IResend} alt="" width={16} className="hidden lg:block" />
-            <span className="block lg:hidden">Kirim Ulang</span>
+            <img src={IResend} alt="" width={16} className="block" />
           </button>
         </div>
       );
     case status === "2" && inbox !== null:
       return (
         <button
-          className="w-8 h-8 flex items-center justify-center bg-[#3aa524] hover:bg-[#409130] text-light font-medium rounded-lg"
+          className="w-12 h-12 lg:h-10 lg:w-10 flex items-center justify-center bg-[#3aa524] hover:bg-[#409130] text-light font-medium rounded-lg"
           onClick={handleFinish}
         >
           <img src={IDone} alt="" width={16} />
         </button>
       );
   }
-};
-
-const CardDataTable: React.FC<ICardDataTable> = ({ data, onChange }) => {
-  return (
-    <>
-      {data?.length !== 0 &&
-        data?.map((item) => {
-          return (
-            <div className="w-full" key={item.id}>
-              <div className="mb-3">
-                <h5 className="text-[#878787] text-sm capitalize">ID</h5>
-                <p className="text-xl text-dark font-bold">{item.id}</p>
-              </div>
-              <div className="mb-5">
-                <h5 className="text-[#878787] text-sm capitalize mb-2">
-                  nomor virtual
-                </h5>
-                <div className="flex space-x-2">
-                  <div className="h-12 w-full rounded-lg border border-primary-100 text-primary-100 font-bold text-center flex items-center justify-center">
-                    {item.number}
-                  </div>
-                  <ButtonCopy textToCopy={item.number} />
-                </div>
-              </div>
-              <div className="mb-5">
-                <h5 className="text-[#878787] text-sm capitalize">isi pesan</h5>
-                <p className="text-xl text-dark font-bold font-mono">
-                  {item.inbox}
-                </p>
-              </div>
-              <div className="mb-5">
-                <h5 className="text-[#878787] text-sm capitalize">
-                  sisa waktu
-                </h5>
-                <Countdown
-                  initialMinutes={
-                    item.status === "3" ? 0 : item?.expired_at ?? 0
-                  }
-                  status={item.status}
-                />
-              </div>
-              <div className="flex flex-col space-y-4">
-                <ActionColumn
-                  inbox={item.inbox}
-                  itemId={item.id}
-                  status={item.status}
-                  onChange={onChange}
-                />
-              </div>
-            </div>
-          );
-        })}
-    </>
-  );
 };
 
 export default Table;

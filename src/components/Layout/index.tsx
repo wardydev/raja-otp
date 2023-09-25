@@ -47,7 +47,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
         openModal={handleCloseModal}
       />
       <a
-        href="https://wa.me/087754175829"
+        href="https://api.whatsapp.com/send/?phone=6285739515629"
         className="fixed bottom-8 right-8 w-[70px] h-[70px] rounded-full bg-[#479622] hover:bg-[green] p-5 shadow-xl shadow-[#00000033] transition-all"
         target="_blank"
       >
