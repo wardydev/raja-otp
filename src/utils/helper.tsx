@@ -63,7 +63,13 @@ const itemsTabbar = [
   },
   {
     title: "Official Group Chat",
-    content: "lorem ipsum Official Group Chat",
+    content: (
+      <a href="https://t.me/infosiotpid" target="_blank" className="">
+        <div className="w-full lg:w-1/5 px-0 lg:px-6 py-4 bg-gradient-to-tr from-[#30ADEC] to-[#088CCE] hover:from-[#3091ec] hover:to-[#086ece] rounded-xl text-light font-medium transition-all flex items-center justify-center">
+          Join Grup Telegram
+        </div>
+      </a>
+    ),
   },
 ];
 
