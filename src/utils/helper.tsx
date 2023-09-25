@@ -63,7 +63,13 @@ const itemsTabbar = [
   },
   {
     title: "Official Group Chat",
-    content: "lorem ipsum Official Group Chat",
+    content: (
+      <a href="https://t.me/infosiotpid" target="_blank" className="">
+        <div className="w-full lg:w-1/5 px-0 lg:px-6 py-4 bg-gradient-to-tr from-[#30ADEC] to-[#088CCE] hover:from-[#3091ec] hover:to-[#086ece] rounded-xl text-light font-medium transition-all flex items-center justify-center">
+          Join Grup Telegram
+        </div>
+      </a>
+    ),
   },
 ];
 
@@ -240,20 +246,21 @@ const itemPackage = [
     name: "Paket Prajurit",
     price: 5000,
     description:
-      "Prajurit gak pernah ragu membela rajanya. Kalo Masih Ragu? Coba aja dulu!😏",
+      "Prajurit gak pernah ragu membela rajanya. Masih Ragu? Coba aja dulu!😏",
+    isSpecial: false,
+  },
+  {
+    name: "Paket Panglima",
+    price: 50000,
+    description:
+      "Jika menjadi panglima adalah pilihan terbaikmu. Coba paket ini!😉",
     isSpecial: false,
   },
   {
     name: "Paket Raja",
-    price: 50000,
-    description:
-      "Jika menjadi raja adalah pilihan terbaikmu. Coba paket ini! 🙄",
-    isSpecial: false,
-  },
-  {
-    name: "Paket Sultan",
     price: 100000,
-    description: "Woww! Kamu berada di level yang berbeda. Nikmatilah! 😊",
+    description:
+      "Congrats! Kamu berada di level yang tertinggi. Nikmatilah! 😊",
     isSpecial: true,
   },
 ];
