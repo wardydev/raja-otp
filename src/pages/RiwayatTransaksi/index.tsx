@@ -31,20 +31,45 @@ const RiwayatTransaksi = () => {
   const [historyData, setHistoryData] = useState<IHistoryResponse | undefined>(
     data
   );
+  const [statusDataActive, setStatusDataActive] = useState<
+    "DEFAULT" | "NAME" | "DATE"
+  >("DEFAULT");
+  const [dateHistoryData, setDateHistoryData] = useState<
+    IHistoryResponse | undefined
+  >();
+  const [nameHistoryData, setNameHitoryData] = useState<
+    IHistoryResponse | undefined
+  >();
+
   const [selectedFilterType, setSelectedFilterType] = useState<string>("NAME");
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
 
-  const handlePageChange = useCallback(
-    (page: number) => {
+  const handlePageChange = (page: number) => {
+    if (statusDataActive === "DEFAULT") {
       setPage(page);
-    },
-    [setPage]
-  );
+    } else if (statusDataActive === "NAME") {
+      getHistorySearchByName({
+        name: inputSearch.toLowerCase(),
+        page,
+      });
+    } else {
+      const body = {
+        start_date: formatDate(startDate),
+        end_date: formatDate(endDate),
+      };
+      postHistoryByDate({ body, page });
+    }
+  };
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedFilterType(e.target.value);
     setHistoryData(data);
+    setStatusDataActive("DEFAULT");
+    setPage(1);
+    setInputSearch("");
+    setStartDate("");
+    setEndDate("");
   };
 
   const handleSearchByNameNumber = useCallback(async () => {
@@ -52,16 +77,22 @@ const RiwayatTransaksi = () => {
       if (inputSearch !== "") {
         await getHistorySearchByName({
           name: inputSearch.toLowerCase(),
-          page: page,
+          page: 1,
         });
-        setInputSearch("");
+        setStatusDataActive("NAME");
       } else {
         setHistoryData(data);
       }
     } catch (err) {
       toast.error(result.data?.messages);
     }
-  }, [getHistorySearchByName, inputSearch, result.data?.messages]);
+  }, [
+    getHistorySearchByName,
+    inputSearch,
+    result.data?.messages,
+    setPage,
+    page,
+  ]);
 
   const handleFilterByDate = useCallback(async () => {
     try {
@@ -69,31 +100,104 @@ const RiwayatTransaksi = () => {
         start_date: formatDate(startDate),
         end_date: formatDate(endDate),
       };
-      await postHistoryByDate({ body, page: page });
-      setStartDate("");
-      setEndDate("");
+      await postHistoryByDate({ body, page: 1 });
+      setStatusDataActive("DATE");
     } catch (err) {
       toast.error(historyDateResult.data?.messages);
     }
-  }, [postHistoryByDate, startDate, endDate]);
+  }, [postHistoryByDate, startDate, endDate, setPage, page]);
 
   useEffect(() => {
     if (isSuccess) {
       setHistoryData(data);
     }
-  }, [isSuccess]);
+  }, [isSuccess, data]);
 
   useEffect(() => {
     if (result.isSuccess) {
-      setHistoryData(result.data);
+      setNameHitoryData(result.data);
     }
-  }, [result.isSuccess, handleSearchByNameNumber]);
+  }, [result.isSuccess, result.data]);
 
   useEffect(() => {
     if (historyDateResult.isSuccess) {
-      setHistoryData(historyDateResult?.data);
+      setDateHistoryData(historyDateResult?.data);
     }
-  }, [historyDateResult.isSuccess, handleFilterByDate]);
+  }, [historyDateResult.isSuccess, historyDateResult.data]);
+
+  const renderTable = useCallback(() => {
+    switch (statusDataActive) {
+      case "DEFAULT":
+        return (
+          <div>
+            <div>
+              <Table data={historyData?.data?.data ?? []} />
+              {historyData?.data?.data.length === 0 ||
+                (isError && <EmptyDataTable />)}
+            </div>
+            <div>
+              {data?.data?.last_page !== undefined &&
+                data?.data?.last_page >= 2 && (
+                  <Pagination
+                    currentPage={data?.data.current_page ?? 1}
+                    totalPages={data?.data.last_page ?? 1}
+                    onPageChange={handlePageChange}
+                  />
+                )}
+            </div>
+          </div>
+        );
+      case "NAME":
+        return (
+          <div>
+            <div>
+              <Table data={nameHistoryData?.data?.data ?? []} />
+              {nameHistoryData?.data?.data.length === 0 ||
+                (isError && <EmptyDataTable />)}
+            </div>
+            <div>
+              {result?.data?.data.last_page !== undefined &&
+                result?.data?.data.last_page >= 2 && (
+                  <Pagination
+                    currentPage={result?.data?.data.current_page ?? 1}
+                    totalPages={result?.data?.data.last_page ?? 1}
+                    onPageChange={handlePageChange}
+                  />
+                )}
+            </div>
+          </div>
+        );
+      case "DATE":
+        return (
+          <div>
+            <div>
+              <Table data={dateHistoryData?.data?.data ?? []} />
+              {dateHistoryData?.data?.data.length === 0 ||
+                (isError && <EmptyDataTable />)}
+            </div>
+            <div>
+              {historyDateResult?.data?.data.last_page !== undefined &&
+                historyDateResult?.data?.data.last_page >= 2 && (
+                  <Pagination
+                    currentPage={
+                      historyDateResult?.data?.data.current_page ?? 1
+                    }
+                    totalPages={historyDateResult?.data?.data.last_page ?? 1}
+                    onPageChange={handlePageChange}
+                  />
+                )}
+            </div>
+          </div>
+        );
+    }
+  }, [
+    handlePageChange,
+    historyData,
+    nameHistoryData,
+    dateHistoryData,
+    page,
+    setPage,
+  ]);
 
   return (
     <Layout>
@@ -109,14 +213,14 @@ const RiwayatTransaksi = () => {
                 Riwayat Transaksi
               </h3>
             </div>
-            <div className="flex flex-col md:flex-row lg:flex-row mt-5 md:mt-0 lg:mt-0 items-start md:items-center lg:items-center space-x-0 md:space-x-4 lg:space-x-4 space-y-4 md:space-y-0 lg:space-y-0">
+            <div className="flex flex-col md:flex-row lg:flex-row mt-5 md:mt-0 lg:mt-0 items-start md:items-center lg:items-center w-full lg:w-auto">
               {selectedFilterType === "DATE" ? (
-                <div className="flex items-center space-x-2">
-                  <div className="flex items-center space-x-2">
-                    <div className="input-start_date ">
+                <div className="flex items-center space-x-2 order-2 lg:order-1 flex-col lg:flex-row w-full">
+                  <div className="flex items-center space-x-0 lg:space-x-2 space-y-4 lg:space-y-0 flex-col lg:flex-row relative w-full mb-6 lg:mb-0">
+                    <div className="input-start_date w-full">
                       <input
                         type="date"
-                        className="py-3 px-4 rounded-lg bg-[white] focus:outline-none border border-[#d8d8d8] text-dark font-medium"
+                        className="py-4 lg:py-3 px-4 rounded-lg bg-[white] focus:outline-none border border-[#d8d8d8] text-dark font-medium w-full"
                         value={startDate}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                           setStartDate(e.target.value)
@@ -126,7 +230,7 @@ const RiwayatTransaksi = () => {
                     <div className="input-end_date">
                       <input
                         type="date"
-                        className=" py-3 px-4 rounded-lg bg-[white] focus:outline-none border border-[#d8d8d8] text-dark font-medium"
+                        className="py-4 lg:py-3 px-4 rounded-lg bg-[white] focus:outline-none border border-[#d8d8d8] text-dark font-medium w-full"
                         value={endDate}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                           setEndDate(e.target.value)
@@ -141,16 +245,16 @@ const RiwayatTransaksi = () => {
                   />
                 </div>
               ) : (
-                <div className="flex items-center">
+                <div className="flex items-center order-2 lg:order-1 w-full -mt-4 lg:mt-0">
                   <input
                     type="text"
-                    className="py-3 px-4 rounded-tl-lg rounded-bl-lg bg-[white] focus:outline-none border-t border-b border-l border-[#d8d8d8]"
+                    className="py-4 lg:py-3 px-4 rounded-tl-lg rounded-bl-lg bg-[white] focus:outline-none border-t border-b border-l border-[#d8d8d8] w-full"
                     placeholder="Cari Transaksi"
                     onChange={(e) => setInputSearch(e.target.value)}
                     value={inputSearch}
                   />
                   <button
-                    className="text-white p-3 rounded-tr-lg rounded-br-lg hover:bg-primary-200 bg-primary-100 border-t-2 border-r-2 border-b-2 border-primary-100"
+                    className="text-white lg:p-3 p-4 rounded-tr-lg rounded-br-lg hover:bg-primary-200 bg-primary-100 border-t-4 border-r-4 border-b-4 border-primary-100"
                     onClick={handleSearchByNameNumber}
                   >
                     <img src={ISearch} alt="icon search" />
@@ -158,9 +262,9 @@ const RiwayatTransaksi = () => {
                 </div>
               )}
 
-              <div>
+              <div className="mb-8 lg:mb-0 flex justify-start w-full order-1 lg:order-2 ">
                 <select
-                  className="py-3 px-4 rounded-lg bg-[white] focus:outline-none border border-[#d8d8d8] ml-6"
+                  className="py-4 lg:py-3 px-4 rounded-lg bg-[white] focus:outline-none border border-[#d8d8d8] ml-0 lg:ml-6 w-full lg:w-auto"
                   value={selectedFilterType}
                   onChange={handleSelectChange}
                 >
@@ -170,21 +274,7 @@ const RiwayatTransaksi = () => {
               </div>
             </div>
           </div>
-          <div>
-            <Table data={historyData?.data?.data ?? []} />
-            {historyData?.data?.data.length === 0 ||
-              (isError && <EmptyDataTable />)}
-          </div>
-          <div>
-            {data?.data?.last_page !== undefined &&
-              data?.data?.last_page >= 2 && (
-                <Pagination
-                  currentPage={historyData?.data.current_page ?? 1}
-                  totalPages={historyData?.data.last_page ?? 1}
-                  onPageChange={handlePageChange}
-                />
-              )}
-          </div>
+          {renderTable()}
         </div>
       </CardContiner>
     </Layout>

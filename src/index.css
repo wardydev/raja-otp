@@ -128,6 +128,7 @@
 }
 .input-start_date, .input-end_date  {
   position: relative;
+  width: 100%;
 }
 .input-start_date::before {
   content: "Dari Tanggal";
