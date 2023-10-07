@@ -83,3 +83,12 @@ export function timestampToDateString(timestamp: number): any {
 
   return `${year}-${month}-${day}`;
 }
+
+export function formatDate(inputDateString: Date | string) {
+  const originalDate = new Date(inputDateString);
+  const year = originalDate.getFullYear();
+  const month = (originalDate.getMonth() + 1).toString().padStart(2, "0");
+  const day = originalDate.getDate().toString().padStart(2, "0");
+
+  return `${day}-${month}-${year}`;
+}
