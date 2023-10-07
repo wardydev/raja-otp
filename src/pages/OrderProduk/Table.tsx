@@ -5,7 +5,7 @@ import IClose from "/icons/IClose.svg";
 import IResend from "/icons/IResend.svg";
 import IDone from "/icons/IDone.svg";
 import ButtonCopy from "./ButtonCopy";
-import { Countdown, LoadingSpinner } from "../../components";
+import { LoadingSpinner } from "../../components";
 import { IActionColumn, IInboxColumn } from "../../utils/interfaces";
 import {
   useGetOrderQuery,
@@ -67,7 +67,9 @@ const Table = () => {
                   <ButtonCopy textToCopy={item.number} />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{item.number}</div>
+                  <div className="text-sm text-dark font-medium">
+                    {item.number}
+                  </div>
                 </td>
                 <InboxColumn
                   status={item.status}
@@ -75,12 +77,9 @@ const Table = () => {
                   onChange={() => refetch()}
                 />
                 <td className="px-6 py-4 whitespace-nowrap  flex justify-start">
-                  <Countdown
-                    initialMinutes={
-                      item.status === "3" ? 0 : item?.expired_at ?? 0
-                    }
-                    status={item.status}
-                  />
+                  <div className="text-sm font-medium text-[gray]">
+                    {item.expired_at}s
+                  </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">
@@ -106,7 +105,7 @@ const InboxColumn: React.FC<IInboxColumn> = ({ status, inbox, onChange }) => {
   useEffect(() => {
     const pollingInterval = setInterval(() => {
       onChange();
-    }, 5000);
+    }, 3000);
 
     if (status === "3") {
       clearInterval(pollingInterval);

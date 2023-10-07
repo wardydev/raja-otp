@@ -6,6 +6,7 @@ import { serviceApi } from "./services/serviceApi";
 import { orderApi } from "./services/orderApi";
 import { depositApi } from "./services/depositApi";
 import { rtkQueryErrorLogger } from "./rtkQueryErrorLogger";
+import { historyApi } from "./services/history";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     [serviceApi.reducerPath]: serviceApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
     [depositApi.reducerPath]: depositApi.reducer,
+    [historyApi.reducerPath]: historyApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -24,5 +26,6 @@ export const store = configureStore({
       .concat(serviceApi.middleware)
       .concat(orderApi.middleware)
       .concat(depositApi.middleware)
+      .concat(historyApi.middleware)
       .concat(rtkQueryErrorLogger),
 });
