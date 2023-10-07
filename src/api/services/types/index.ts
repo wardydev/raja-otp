@@ -272,6 +272,41 @@ interface IGetFinish {
   messages: string;
   data: string;
 }
+interface IHistorySearchByNameNumberItem {
+  id: number;
+  sv_name: string;
+  number: number;
+  inbox: null;
+  status: string;
+  created_at: number;
+  order_price: number;
+}
+interface IHistorySearchByNameNumber {
+  success: true;
+  messages: "Search Results";
+  data: IHistorySearchByNameNumberItem[];
+}
+interface ISearchFilterByDateBody {
+  body: {
+    start_date: string;
+    end_date: string;
+  };
+  page: number;
+}
+interface ISearchFilterByDateResponseItem {
+  id: number;
+  sv_name: string;
+  number: number;
+  inbox: string;
+  status: string;
+  created_at: number;
+  order_price: number;
+}
+interface ISearchFilterByDateResponse {
+  success: boolean;
+  messages: string;
+  data: ISearchFilterByDateResponseItem[];
+}
 
 export type {
   LoginBody,
@@ -300,4 +335,7 @@ export type {
   IGetResend,
   IGetFinish,
   ForgetPasswordResponse,
+  IHistorySearchByNameNumber,
+  ISearchFilterByDateBody,
+  ISearchFilterByDateResponse,
 };

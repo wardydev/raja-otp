@@ -126,6 +126,34 @@
 .dot4 {
   animation-delay: 0.7s;
 }
+.input-start_date, .input-end_date  {
+  position: relative;
+  width: 100%;
+}
+.input-start_date::before {
+  content: "Dari Tanggal";
+  position: absolute;
+  top: -8px;
+  left: 6px;
+  z-index: 99;
+  background-color: white;
+  padding: 0 10px;
+  font-size: 0.75em;
+  color: #a8a8a8;
+  font-weight: 500;
+}
+.input-end_date::before {
+  content: "Sampai Tanggal";
+  position: absolute;
+  top: -8px;
+  left: 6px;
+  z-index: 99;
+  background-color: white;
+  padding: 0 10px;
+  font-size: 0.75em;
+  color: #a8a8a8;
+  font-weight: 500;
+}
 
 @keyframes bounce {
   0%, 20%, 50%, 80%, 100% {
