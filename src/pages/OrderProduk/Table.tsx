@@ -15,6 +15,7 @@ import {
 } from "../../api/services/orderApi";
 import EmptyDataTable from "../../components/EmptyDataTable";
 import { useGetMeQuery } from "../../api/services/userApi";
+import Countdown from "./CountDown";
 
 const Table = () => {
   const { isLoading, data, refetch } = useGetOrderQuery(undefined);
@@ -56,8 +57,8 @@ const Table = () => {
         </thead>
         <tbody className="w-full">
           {(data?.data?.length !== 0 &&
-            data?.data?.map((item, index) => (
-              <tr key={index}>
+            data?.data?.map((item) => (
+              <tr key={item.id}>
                 <td className="w-2 px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900 text-left">
                     {item.id}
@@ -78,7 +79,7 @@ const Table = () => {
                 />
                 <td className="px-6 py-4 whitespace-nowrap  flex justify-start">
                   <div className="text-sm font-medium text-[gray]">
-                    {item.expired_at}s
+                    <Countdown initialSeconds={item?.expired_at ?? 1} />
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">

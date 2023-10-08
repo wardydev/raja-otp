@@ -49,10 +49,10 @@ const SidebarDrawerUnprotectRoutes: React.FC<ISidebarDrawer> = ({
         </div>
         <nav className="p-4 mt-4">
           <div>
-            {menuNavItemsUnprotectRoutes.map((item, index) => {
+            {menuNavItemsUnprotectRoutes.map((item) => {
               return (
                 <Link
-                  key={index}
+                  key={item.title}
                   to={item.path}
                   className={`flex items-center space-x-3 mb-3 px-4 py-3 rounded-lg ${
                     location.pathname === item.path
