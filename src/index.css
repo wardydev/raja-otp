@@ -14,22 +14,25 @@
 .menuItem.active::after {
   content: '';
   position: absolute;
-  bottom: -80px;
+  bottom: -20px;
+  left: 40px;
   width: 0;
   height: 0;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  border-bottom: 80px solid #faf3ec;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #faf3ec;
   transform: rotate(0);
+  z-index: 1;
 }
 .card-afiliasi {
   position: relative;
+  overflow: hidden;
 }
 .card-afiliasi::before {
   content: url("/public/icons/IKing2.svg");
   position: absolute;
-  top: 30px;
-  right: 10px;
+  top: -10px;
+  right: -10px;
 }
 .tab-item {
   position: relative;
@@ -135,7 +138,7 @@
   position: absolute;
   top: -8px;
   left: 6px;
-  z-index: 99;
+  z-index: 9;
   background-color: white;
   padding: 0 10px;
   font-size: 0.75em;
@@ -147,7 +150,7 @@
   position: absolute;
   top: -8px;
   left: 6px;
-  z-index: 99;
+  z-index: 9;
   background-color: white;
   padding: 0 10px;
   font-size: 0.75em;
@@ -165,26 +168,4 @@
   60% {
     transform: translateY(-10px);
   }
-}
-
-@media only screen and (max-width: 340px) {
-  .child-container {
-    height: 1800px;
-    height: auto;
-    overflow: visible;
-  }
-}
-@media only screen and (min-width: 640px) {
-  .child-container {
-    overflow: auto;
-    text-align:justify;
-    position: relative;
-    max-height: 27rem;
-  }
-}
-@media only screen and (min-width: 1883px) {
-  .child-container {
-    max-height: 41rem;
-  }
-  
 }

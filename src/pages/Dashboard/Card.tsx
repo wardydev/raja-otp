@@ -1,38 +1,20 @@
-import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const Card = () => {
-  const handleTestToast = () => {
-    toast.error("Error Notification !", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
   return (
-    <div className="card-afiliasi bg-gradient-to-l from-primary-100 to-secondary-100 rounded-xl px-6 py-8 shadow-2xl shadow-primary-100/50">
-      <div>
-        <h3 className="text-xl font-medium text-[white]">
-          Total Afiliasi Anda
-        </h3>
-        <div className="flex items-center space-x-3 my-4">
-          <img
-            src="https://wellgroomedgentleman.com/media/images/Tony_Stark_Beard_with_Quiff_Hairstyle.width-800.jpg"
-            alt="profile afiliasi"
-            className="rounded-full"
-            width={50}
-          />
-          <h2 className="text-5xl font-bold text-[white]">12</h2>
-        </div>
-        <p className="text-[#ffffffd1]">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime,
-          recusandae!
+    <div className="card-afiliasi bg-gradient-to-l from-primary-100 to-secondary-100 rounded-xl px-6 py-8 shadow-2xl shadow-primary-100/50 flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-light text-4xl lg:text-3xl font-bold">
+          Coming Soon 😉
+        </h1>
+        <p className="text-[#e9e8e8bb] text-lg lg:text-base leading-5 lg:leading-4 mt-3">
+          Fitur Afiliasi sedang dalam pengembangan
         </p>
-        <div className="mt-4">
-          <button
-            className="bg-[#ffffff93] text-primary-100 py-2 px-4 rounded-lg"
-            onClick={handleTestToast}
-          >
-            test Toast
-          </button>
-        </div>
+        <Link to="/order">
+          <div className="py-4 lg:py-3 mt-5 w-full rounded-xl bg-[#ffffff4f] hover:bg-[#ffffff2a] text-[#ec4d41] font-medium">
+            Cari Produk
+          </div>
+        </Link>
       </div>
     </div>
   );

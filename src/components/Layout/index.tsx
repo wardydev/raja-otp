@@ -22,7 +22,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
   }, [isOpenModal, setIsOpen]);
 
   return (
-    <div className="container h-auto lg:h-screen bg-gradient-to-l from-primary-100 to-secondary-100 overflow-y-hidden max-w-full w-full relative">
+    <div className="container h-auto lg:h-screen bg-gradient-to-l from-primary-100 to-secondary-100 overflow-y-hidden max-w-full w-full relative pb-0 lg:pb-16">
       <Header
         handleDrawer={toggleSidebarDrawer}
         onCloseModal={handleCloseModal}
@@ -35,9 +35,9 @@ const Layout: React.FC<ILayout> = ({ children }) => {
       <div className="px-6 block lg:hidden">
         <CardDrawer />
       </div>
-      <div className="bg-[#faf3ec] mt-10 lg:mt-5 rounded-t-2xl lg:rounded-tl-[40px] lg:rounded-tr-[0] pt-10 pb-6 overflow-auto px-4 md:px-10 lg:px-10 h-full">
-        <div className="child-container mb-6">{children}</div>
-        <div>
+      <div className="bg-[#faf3ec] mt-10 lg:mt-5 rounded-t-2xl lg:rounded-tl-[40px] lg:rounded-tr-[0] pt-10 pb-6 overflow-auto px-4 md:px-10 lg:px-10 h-4/5">
+        <div className="mb-6">{children}</div>
+        <div className="flex items-center justify-center">
           <p>&copy; 2023 - RAJAOTP</p>
         </div>
       </div>
