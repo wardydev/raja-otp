@@ -16,7 +16,7 @@ const TabsBar = () => {
       <div className="flex flex-wrap items-center justify-center lg:justify-normal space-x-0 lg:space-x-4 bg-[rgba(63,82,109,10%)] w-full lg:w-[78%] rounded-md h-auto lg:h-12">
         {itemsTabbar.map((item, index) => (
           <button
-            key={index}
+            key={item.title}
             className={`tab-item lg:h-full px-4 py-2 lg:py-0 rounded-md font-medium my-2 lg:my-0 ${
               activeTab === index
                 ? "bg-light text-primary-100 shadow-lg shadow-primary-100/10 active"

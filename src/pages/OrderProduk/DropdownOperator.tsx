@@ -27,6 +27,10 @@ const DropdownOperator: React.FC<IDropdownOperator> = ({
     }
   }, [defaultValueTrigger]);
 
+  useEffect(() => {
+    optionChange("any");
+  }, []);
+
   return (
     <div className="relative inline-block text-left w-full mb-5">
       <h4
@@ -66,9 +70,9 @@ const DropdownOperator: React.FC<IDropdownOperator> = ({
             aria-orientation="vertical"
             aria-labelledby="options-menu"
           >
-            {options?.map((option, index) => (
+            {options?.map((option) => (
               <button
-                key={index}
+                key={option}
                 className="block w-full text-left px-4 py-2 text-sm hover:bg-[#e9e9e9]"
                 role="menuitem"
                 onClick={() =>

@@ -42,7 +42,7 @@ const Table = () => {
           </tr>
         </thead>
         <tbody className="">
-          {data?.data.data.map((item) => {
+          {data?.data?.data?.map((item) => {
             return (
               <tr key={item.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -64,7 +64,7 @@ const Table = () => {
           })}
         </tbody>
       </table>
-      {data?.data.data.length === 0 && <EmptyDataTable />}
+      {data?.data?.data?.length === 0 && <EmptyDataTable />}
       {data?.data?.last_page !== undefined && data?.data?.last_page >= 1 && (
         <Pagination
           currentPage={data?.data.current_page ?? 1}

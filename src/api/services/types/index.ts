@@ -39,6 +39,11 @@ interface RegisterResponse {
     id: number;
   };
 }
+interface LogoutResponse {
+  success: boolean;
+  messages: string;
+  data: string;
+}
 interface ForgetPasswordResponse {
   success: boolean;
   messages: string;
@@ -338,4 +343,5 @@ export type {
   IHistorySearchByNameNumber,
   ISearchFilterByDateBody,
   ISearchFilterByDateResponse,
+  LogoutResponse,
 };

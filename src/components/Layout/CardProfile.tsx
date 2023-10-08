@@ -1,38 +1,35 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 import { Button } from "..";
 import IKingAvatar from "/icons/IkingAvatar2.png";
-import { useGetMeQuery } from "../../api/services/userApi";
+import {
+  useGetMeQuery,
+  useLazyGetLogoutQuery,
+} from "../../api/services/userApi";
 import { formatRupiah } from "../../utils/functions";
 import { toast } from "react-toastify";
-import { useState } from "react";
 
 const CardProfile = ({ onCloseModal }: { onCloseModal: () => void }) => {
   const navigate = useNavigate();
   const { data } = useGetMeQuery(undefined);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [getLogout, result] = useLazyGetLogoutQuery();
 
   const handleLogout = async () => {
-    setIsLoading(true);
     try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(
-        import.meta.env.VITE_API_URL + "api/auth/logout",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const resJson = await res.json();
-      if (resJson) {
-        setIsLoading(false);
-        toast.success(resJson.messages);
-        localStorage.removeItem("token");
-        navigate("/login");
-      }
+      await getLogout(undefined);
     } catch (err) {
       toast.error("Terjadi Kesalahan!");
     }
   };
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      toast.success(result.data.messages);
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
+  }, [result.isSuccess]);
 
   return (
     <div className="bg-[white] absolute top-[76px] w-[220px] -left-16 z-20 rounded-xl p-4 shadow-xl">
@@ -62,7 +59,7 @@ const CardProfile = ({ onCloseModal }: { onCloseModal: () => void }) => {
             className="text-[red] font-medium cursor-pointer hover:text-[#be4343]"
             onClick={handleLogout}
           >
-            {isLoading ? "Loading..." : "Logout"}
+            {result.isLoading ? "Loading..." : "Logout"}
           </span>
         </div>
       </div>

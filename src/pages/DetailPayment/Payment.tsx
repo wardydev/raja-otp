@@ -64,7 +64,7 @@ const Payment: React.FC<IPaymentProceed> = ({ setDeposit }) => {
   }, [postNewPayment, newPayment, setDeposit, historyDeposit]);
 
   return (
-    <div className="w-full lg:w-[454px] min-h-[578px] bg-[white] rounded-2xl p-4 lg:p-8 mb-6 lg:mb-0">
+    <div className="w-full lg:w-[454px] h-auto lg:min-h-[578px] bg-[white] rounded-2xl p-4 lg:p-8 mb-6 lg:mb-0 pb-10 lg:pb-0">
       <div>
         <div className="flex items-center space-x-2 mb-4">
           <Link to="/deposit" className="text-[#DEDEDE]">

@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -7,7 +7,10 @@ import { menuNavItems } from "../../utils/helper";
 import IClose from "/icons/IClose.svg";
 import { ISidebarDrawer } from "../../utils/interfaces";
 import IKingAvatar from "/icons/IkingAvatar2.png";
-import { useGetMeQuery } from "../../api/services/userApi";
+import {
+  useGetMeQuery,
+  useLazyGetLogoutQuery,
+} from "../../api/services/userApi";
 
 const SidebarDrawer: React.FC<ISidebarDrawer> = ({
   isOpen,
@@ -16,9 +19,9 @@ const SidebarDrawer: React.FC<ISidebarDrawer> = ({
 }) => {
   const location = useLocation();
   const { data } = useGetMeQuery(undefined);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const sidebarRef = useRef<HTMLDivElement>(null);
+  const [getLogout, result] = useLazyGetLogoutQuery();
 
   const handleCloseDrawer = useCallback(
     (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -30,26 +33,20 @@ const SidebarDrawer: React.FC<ISidebarDrawer> = ({
   );
 
   const handleLogout = async () => {
-    setIsLoading(true);
     try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(
-        import.meta.env.VITE_API_URL + "api/auth/logout",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const resJson = await res.json();
-      if (resJson) {
-        setIsLoading(false);
-        toast.success(resJson.messages);
-        localStorage.removeItem("token");
-        navigate("/login");
-      }
+      await getLogout(undefined);
     } catch (err) {
       toast.error("Terjadi Kesalahan!");
     }
   };
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      toast.success(result.data.messages);
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
+  }, [result.isSuccess]);
 
   return (
     <div
@@ -83,10 +80,10 @@ const SidebarDrawer: React.FC<ISidebarDrawer> = ({
         <CardDrawer />
         <nav className="p-4 mt-4">
           <div>
-            {menuNavItems.map((item, index) => {
+            {menuNavItems.map((item) => {
               return (
                 <Link
-                  key={index}
+                  key={item.title}
                   to={item.path}
                   className={`flex items-center space-x-3 mb-3 px-4 py-3 rounded-lg ${
                     location.pathname === item.path
@@ -110,7 +107,7 @@ const SidebarDrawer: React.FC<ISidebarDrawer> = ({
                 className="text-[red] bg-[#ff00004b] hover:bg-[#ff000027] rounded-lg w-full py-3 font-medium transition-all"
                 onClick={handleLogout}
               >
-                {isLoading ? "Loading..." : "Logout"}
+                {result.isLoading ? "Loading..." : "Logout"}
               </button>
             </div>
           </div>

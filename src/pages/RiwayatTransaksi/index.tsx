@@ -206,6 +206,7 @@ const RiwayatTransaksi = () => {
           {(isLoading && <LoadingSpinner />) ||
             (isFetching && <LoadingSpinner />) ||
             (result.isLoading && <LoadingSpinner />) ||
+            (result.isFetching && <LoadingSpinner />) ||
             (historyDateResult.isLoading && <LoadingSpinner />)}
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-8 px-0 lg:px-6">
             <div>
